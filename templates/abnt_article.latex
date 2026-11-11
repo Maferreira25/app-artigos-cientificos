@@ -1,0 +1,67 @@
+\documentclass[12pt,oneside,a4paper]{article}
+
+% Pacotes essenciais para LuaLaTeX e ABNT
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setmainlanguage{brazil}
+
+% Margens ABNT NBR 14724: Superior e Esquerda 3cm, Inferior e Direita 2cm
+\usepackage[top=3cm,left=3cm,bottom=2cm,right=2cm]{geometry}
+
+% Espaçamento de 1,5 linhas
+\usepackage{setspace}
+\onehalfspacing
+
+% Recuo de parágrafo (1,25 cm)
+\usepackage{indentfirst}
+\setlength{\parindent}{1.25cm}
+
+% Pacotes de links e cores
+\usepackage{xcolor}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    citecolor=black,
+    urlcolor=blue
+}
+
+% Citação direta longa (mais de 3 linhas): recuo de 4cm, fonte 10pt, espaçamento simples
+\usepackage{etoolbox}
+\AtBeginEnvironment{quote}{%
+  \par\vspace{0.5em}
+  \small\singlespacing
+  \leftskip=4cm\relax
+  \noindent\ignorespaces
+}
+\AtEndEnvironment{quote}{%
+  \par\vspace{0.5em}
+}
+
+% Cabeçalhos e Títulos
+\usepackage{titlesec}
+\titleformat{\section}{\bfseries\normalsize\uppercase}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\bfseries\normalsize}{\thesubsection.}{0.5em}{}
+\titleformat{\subsubsection}{\itshape\normalsize}{\thesubsubsection.}{0.5em}{}
+
+$if(title)$
+\title{\textbf{\uppercase{$title$}}}
+$endif$
+
+$if(author)$
+\author{$author$}
+$endif$
+
+\date{}
+
+\begin{document}
+
+$if(title)$
+\maketitle
+\thispagestyle{empty}
+$endif$
+
+$body$
+
+\end{document}
+

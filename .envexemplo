@@ -1,0 +1,35 @@
+# ==============================================================================
+# CONFIGURAÇÕES DO SERVIDOR MCP DE JURISPRUDÊNCIA (CLOUDFLARE BRIDGE HTTPS)
+# ==============================================================================
+MCP_URL=https://jurisprudencia.seu-dominio.workers.dev
+MCP_BEARER_TOKEN=seu_token_jwt_bearer_aqui
+MCP_TIMEOUT=120.0
+
+# ==============================================================================
+# DIRETÓRIOS DE TRABALHO LOCAIS
+# ==============================================================================
+OUTPUT_DIR=output
+CORPUS_DIR=corpus
+DRAFTS_DIR=drafts
+TEMPLATES_DIR=templates
+APPROVAL_THRESHOLD=85.0
+
+# ==============================================================================
+# BACKENDS DE LLM (PROVEDORES E CHAVES DE API)
+# ==============================================================================
+# Provedor ativo: openrouter | gemini | groq | deepseek | anthropic | openai
+LLM_PROVIDER=openrouter
+
+# Modelo para o Supervisor / Revisor Geral e Redação Profunda (Capítulos de 20 a 50 páginas)
+LLM_MODEL_HEAVY=anthropic/claude-3.7-sonnet
+# Modelo rápido para sanitização, extração de chunks e classificação preliminar
+LLM_MODEL_FAST=google/gemini-2.5-flash
+
+# Chaves de API para os provedores avaliados
+OPENROUTER_API_KEY=sk-or-v1-...
+GROQ_API_KEY=gsk_...
+GEMINI_API_KEY=AIzaSy...
+DEEPSEEK_API_KEY=sk-...
+ANTHROPIC_API_KEY=sk-ant-...
+OPENAI_API_KEY=sk-proj-...
+

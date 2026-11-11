@@ -54,3 +54,4 @@ python -m src.cli test-mcp --url http://localhost:8787
 - `corpus/`: Repositório local de precedentes autênticos indexados
 - `output/`: Documentos finais consolidados (Markdown e DOCX)
 - `tests/`: Bateria completa de testes unitários e de integração
+

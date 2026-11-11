@@ -98,3 +98,4 @@ def test_gate_6_homologacao_com_etapas_anteriores_aprovadas(reviewer):
     assert parecer.status_decisao == StatusDecisaoEnum.APROVADO
     assert parecer.autorizacao_avanco is True
     assert parecer.score_global >= 90.0
+

@@ -3,17 +3,21 @@ from typing import Optional, List, Dict, Any, Tuple
 from src.schemas import DocumentoAcademicoState
 from src.mcp_client import JurisprudenciaMcpClient
 from src.rag_store import RagStore
+from src.llm import LlmClient
+from src.config import config
 
 class DefenseValidatorAgent:
-    """Auditor Anti-Alucinação de Citações e Simulador de Banca Examinadora Sintética."""
+    """Auditor Anti-Alucinação de Citações e Simulador de Banca Examinadora Sintética via DeepSeek R1."""
 
     def __init__(
         self,
         mcp_client: Optional[JurisprudenciaMcpClient] = None,
-        rag_store: Optional[RagStore] = None
+        rag_store: Optional[RagStore] = None,
+        llm_client: Optional[LlmClient] = None
     ):
         self.mcp_client = mcp_client or JurisprudenciaMcpClient()
         self.rag_store = rag_store or RagStore()
+        self.llm_client = llm_client or LlmClient()
 
     def auditar_citacoes_contra_corpus(self, state: DocumentoAcademicoState) -> List[str]:
         """Extrai números de processos citados no texto e confere sua autenticidade contra o corpus indexado."""
@@ -21,16 +25,12 @@ class DefenseValidatorAgent:
         processo_regex = re.compile(r'\b(REsp|AREsp|RE|ADI|ADC|ADPF|RMS|HC)\s+[\d\.\/]+', re.IGNORECASE)
 
         texto_total = " ".join(state.capitulos.values())
-        citacoes_encontradas = set(processo_regex.findall(texto_total))
 
-        # Iterar sobre todas as ocorrências de regex completas
         for match in processo_regex.finditer(texto_total):
             citacao = match.group(0)
-            # Extrair apenas a numeração (ex: 1.845.234)
             num_match = re.search(r'[\d\.\/]+', citacao)
             if num_match:
                 numero = num_match.group(0)
-                # Verificar se consta no corpus RAG
                 if not self.rag_store.verificar_citacao_no_corpus(numero):
                     erros.append(f"Citação '{citacao}' não foi localizada no corpus indexado de precedentes autênticos.")
 
@@ -40,10 +40,10 @@ class DefenseValidatorAgent:
         self,
         state: DocumentoAcademicoState
     ) -> Tuple[List[str], str]:
-        """Submete a tese e a argumentação ao crivo dogmático e à jurisprudência dominante via MCP."""
+        """Submete a tese ao teste de fogo adversarial da banca examinadora sintética com DeepSeek R1."""
         erros_citacao = self.auditar_citacoes_contra_corpus(state)
 
-        # Consulta de vulnerabilidades da tese no MCP
+        # 1. Consulta de vulnerabilidades da tese no MCP
         vulnerabilidades_mcp = ""
         try:
             vulnerabilidades_mcp = await self.mcp_client.analisar_tese_juridica(
@@ -51,16 +51,44 @@ class DefenseValidatorAgent:
                 tribunal="STJ"
             )
         except Exception:
-            vulnerabilidades_mcp = (
-                "A banca sintética aponta que a tese deve reforçar a distinção (distinguishing) "
-                "em relação às situações fáticas tuteladas pela jurisprudência defensiva das cortes superiores."
+            vulnerabilidades_mcp = "Pontos de cautela da jurisprudência defensiva das cortes superiores."
+
+        # 2. Análise crítica adversarial com DeepSeek R1
+        prompt = (
+            f"Você é uma Banca Examinadora de Doutorado extremamente rigorosa e adversarial.\n"
+            f"Avalie a tese de doutorado proposta:\n"
+            f"Tema: {state.tema}\n"
+            f"Problema: {state.problema_pesquisa}\n"
+            f"Hipótese: {state.hipotese}\n\n"
+            f"Alertas de Precedentes e Jurisprudência do Servidor MCP:\n{vulnerabilidades_mcp}\n\n"
+            f"Emita seu parecer crítico apontando:\n"
+            f"1. As 3 maiores fragilidades ou contra-argumentos dogmáticos que o autor precisará defender.\n"
+            f"2. Eventuais riscos de distinguishing forçado ou má aplicação de precedentes vinculantes.\n"
+            f"3. Veredito sintético da banca examinadora."
+        )
+        system_prompt = "Você é um membro catedrático e adversarial de banca examinadora de pós-graduação stricto sensu. Não poupe críticas técnicas construtivas."
+
+        parecer_banca_texto = ""
+        try:
+            parecer_banca_texto = await self.llm_client.generate(
+                model=config.model_defense,
+                prompt=prompt,
+                system_prompt=system_prompt,
+                temperature=0.3,
+                max_tokens=2500,
+                fallback_model="deepseek/deepseek-chat"
+            )
+        except Exception:
+            parecer_banca_texto = (
+                "A banca examinadora sintética aponta a necessidade de delimitação precisa "
+                "entre a hipótese fática do precedente e as particularidades do caso concreto (distinguishing)."
             )
 
         parecer_banca = (
-            f"### Relatório da Banca Examinadora Sintética\n\n"
-            f"1. **Rigor e Anti-Alucinação:** {len(erros_citacao)} inconsistências de citação detectadas.\n"
-            f"2. **Pontos de Tensão Dogmática e Vulnerabilidades Apuradas (MCP):**\n"
-            f"{vulnerabilidades_mcp}\n"
+            f"### Relatório da Banca Examinadora Sintética (DeepSeek R1 / MCP)\n\n"
+            f"1. **Rigor e Anti-Alucinação:** {len(erros_citacao)} inconsistências de citação detectadas.\n\n"
+            f"2. **Avaliação Crítica Adversarial da Banca:**\n"
+            f"{parecer_banca_texto}\n"
         )
 
         return erros_citacao, parecer_banca

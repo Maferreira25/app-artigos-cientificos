@@ -8,6 +8,7 @@ from src.schemas import (
 )
 from src.mcp_client import JurisprudenciaMcpClient
 from src.rag_store import RagStore
+from src.llm import LlmClient
 from src.agents.chief_academic_reviewer import ChiefAcademicReviewer
 from src.agents.epistemic_agent import EpistemicAgent
 from src.agents.literature_review_agent import LiteratureReviewAgent
@@ -22,17 +23,19 @@ class AcademicPipelineOrchestrator:
         self,
         mcp_client: Optional[JurisprudenciaMcpClient] = None,
         rag_store: Optional[RagStore] = None,
+        llm_client: Optional[LlmClient] = None,
         threshold: float = 85.0
     ):
         self.mcp_client = mcp_client or JurisprudenciaMcpClient()
         self.rag_store = rag_store or RagStore()
+        self.llm_client = llm_client or LlmClient()
         self.reviewer = ChiefAcademicReviewer(threshold=threshold)
         
-        self.epistemic_agent = EpistemicAgent(self.mcp_client)
-        self.lit_review_agent = LiteratureReviewAgent(self.mcp_client, self.rag_store)
-        self.methodology_agent = MethodologyAgent(self.mcp_client)
-        self.writer_agent = SectionalWriterAgent(self.mcp_client)
-        self.defense_agent = DefenseValidatorAgent(self.mcp_client, self.rag_store)
+        self.epistemic_agent = EpistemicAgent(self.mcp_client, self.llm_client)
+        self.lit_review_agent = LiteratureReviewAgent(self.mcp_client, self.rag_store, self.llm_client)
+        self.methodology_agent = MethodologyAgent(self.mcp_client, self.llm_client)
+        self.writer_agent = SectionalWriterAgent(self.mcp_client, self.llm_client)
+        self.defense_agent = DefenseValidatorAgent(self.mcp_client, self.rag_store, self.llm_client)
 
     async def executar_pipeline_completo(
         self,
@@ -43,8 +46,9 @@ class AcademicPipelineOrchestrator:
         state = DocumentoAcademicoState(titulo=titulo, tema=tema)
 
         # -------------------------------------------------------------
-        # Gate 1: Epistemologia e Problematização
+        # Gate 1: Epistemologia e Problematização (GPT-6 Astra)
         # -------------------------------------------------------------
+        print(f"[Gate 1] Epistemologia e Problematizacao ({self.llm_client.api_key and 'GPT-6 Astra' or 'Offline'})...")
         state.gate_atual = GateAvaliadoEnum.GATE_1_EPISTEMICO
         state = await self.epistemic_agent.formular_problema_e_hipotese(state, tema)
         parecer_g1 = self.reviewer.avaliar_gate_1_epistemico(state)
@@ -55,8 +59,9 @@ class AcademicPipelineOrchestrator:
             return state
 
         # -------------------------------------------------------------
-        # Gate 2: Revisão Bibliográfica e Precedentes MCP
+        # Gate 2: Revisão Bibliográfica e Precedentes MCP (Gemini 4 Argon)
         # -------------------------------------------------------------
+        print(f"[Gate 2] Revisao Bibliografica RSL e Precedentes MCP ({self.llm_client.api_key and 'Gemini 4 Argon' or 'Offline'})...")
         state.gate_atual = GateAvaliadoEnum.GATE_2_BIBLIOGRAFICO
         state = await self.lit_review_agent.conduzir_revisao_bibliografica(state)
         parecer_g2 = self.reviewer.avaliar_gate_2_bibliografico(state)
@@ -67,8 +72,9 @@ class AcademicPipelineOrchestrator:
             return state
 
         # -------------------------------------------------------------
-        # Gate 3: Metodologia e Jurimetria Empírica
+        # Gate 3: Metodologia e Jurimetria Empírica (GPT-6.1 Sol)
         # -------------------------------------------------------------
+        print(f"[Gate 3] Metodologia e Jurimetria Empirica ({self.llm_client.api_key and 'GPT-6.1 Sol' or 'Offline'})...")
         state.gate_atual = GateAvaliadoEnum.GATE_3_METODOLOGICO
         state = await self.methodology_agent.definir_metodologia(state)
         parecer_g3 = self.reviewer.avaliar_gate_3_metodologico(state)
@@ -79,8 +85,9 @@ class AcademicPipelineOrchestrator:
             return state
 
         # -------------------------------------------------------------
-        # Gate 4: Redação Seccional Modular
+        # Gate 4: Redação Seccional Modular (Claude Fable 5.2)
         # -------------------------------------------------------------
+        print(f"[Gate 4] Redacao Seccional Modular ({self.llm_client.api_key and 'Claude Fable 5.2' or 'Offline'})...")
         state.gate_atual = GateAvaliadoEnum.GATE_4_REDACAO_SECCIONAL
         state = await self.writer_agent.redigir_secoes(state)
         parecer_g4 = self.reviewer.avaliar_gate_4_redacao_seccional(state)
@@ -91,8 +98,9 @@ class AcademicPipelineOrchestrator:
             return state
 
         # -------------------------------------------------------------
-        # Gate 5: Auditoria Anti-Alucinação e Banca Sintética
+        # Gate 5: Auditoria Anti-Alucinação e Banca Sintética (DeepSeek)
         # -------------------------------------------------------------
+        print(f"[Gate 5] Auditoria Anti-Alucinacao e Banca Sintetica ({self.llm_client.api_key and 'DeepSeek' or 'Offline'})...")
         state.gate_atual = GateAvaliadoEnum.GATE_5_CITACOES_BANCA
         erros_citacao, parecer_banca = await self.defense_agent.submeter_a_banca_sintetica(state)
         parecer_g5 = self.reviewer.avaliar_gate_5_citacoes_banca(state, audit_erros=erros_citacao)
@@ -103,9 +111,9 @@ class AcademicPipelineOrchestrator:
             return state
 
         # -------------------------------------------------------------
-        # Gate 6: Homologação Final para Compilação
+        # Gate 6: Homologação Final para Compilação (Supervisor GPT-6 Astra)
         # -------------------------------------------------------------
-        state.gate_atual = GateAvaliadoEnum.GATE_6_HOMOLOGACAO_FINAL
+        print("[Gate 6] Homologacao Final do Revisor Geral...")
         parecer_g6 = self.reviewer.avaliar_gate_6_homologacao_final(state)
         state.pareceres_gates[GateAvaliadoEnum.GATE_6_HOMOLOGACAO_FINAL.value] = parecer_g6
         if not parecer_g6.autorizacao_avanco:

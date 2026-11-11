@@ -1,0 +1,12 @@
+# Ambiente Virtual e Cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.env
+
+# Saídas geradas dinamicamente
+output/
+
+# Logs e arquivos do sistema
+*.log

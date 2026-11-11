@@ -11,7 +11,7 @@ fonte_mcp: JurisprudênciaIA
 # REsp 1.845.234/SP
 
 ## Ementa
-RECURSO ESPECIAL REPRESENTATIVO DE CONTROVÉRSIA. TEMA AFETO A MODULACAO DE EFEITOS E SEGURANCA JURIDICA. Ementa oficial extraída via MCP.
+RECURSO ESPECIAL REPRESENTATIVO DE CONTROVÉRSIA. TEMA AFETO A CONFIANCA LEGITIMA E MODULACAO DE EFEITOS. Ementa oficial extraída via MCP.
 
 ## Fundamentação
 A tese fixada assenta a necessidade de respeito à estabilidade do precedente...

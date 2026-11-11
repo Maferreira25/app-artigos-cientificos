@@ -81,12 +81,16 @@ class AcademicExporter:
         pdf_path = md_path.with_suffix(".pdf")
         pdf_engines = ["lualatex", "xelatex", "pdflatex"]
         
+        latex_template = config.templates_dir / "abnt_article.latex"
         for engine in pdf_engines:
             if shutil.which(engine):
                 try:
                     cmd = [pandoc_bin, str(md_path), "-o", str(pdf_path), f"--pdf-engine={engine}"]
+                    if latex_template.exists():
+                        cmd.extend(["--template", str(latex_template)])
                     subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                     return pdf_path
                 except Exception:
                     continue
         return None
+

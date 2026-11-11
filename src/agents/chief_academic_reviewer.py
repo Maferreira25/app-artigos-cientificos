@@ -264,3 +264,4 @@ class ChiefAcademicReviewer:
             diag = "Gate 6 Aprovado: Obra acadêmica integralmente homologada para exportação em PDF e DOCX ABNT."
 
         return self._calcular_score_e_status(scores, diretrizes, diag, GateAvaliadoEnum.GATE_6_HOMOLOGACAO_FINAL, "chief_academic_reviewer")
+

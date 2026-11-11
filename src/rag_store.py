@@ -88,3 +88,4 @@ class RagStore:
             if termo_limpo in conteudo:
                 return True
         return False
+

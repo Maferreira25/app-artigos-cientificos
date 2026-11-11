@@ -34,10 +34,13 @@ async def test_orchestrator_end_to_end_flow(tmp_path):
     transport = httpx.MockTransport(mcp_handler)
     mcp_client = JurisprudenciaMcpClient(mcp_url="http://mock-mcp:8787", transport=transport)
     rag_store = RagStore(storage_dir=tmp_path / "corpus")
+    from src.llm import LlmClient
+    offline_llm = LlmClient(api_key="")
     
     orchestrator = AcademicPipelineOrchestrator(
         mcp_client=mcp_client,
         rag_store=rag_store,
+        llm_client=offline_llm,
         threshold=85.0
     )
 
@@ -69,3 +72,4 @@ async def test_orchestrator_end_to_end_flow(tmp_path):
     assert "A Eficácia Vinculante dos Precedentes Judiciais" in conteudo_exportado
     assert "Referências" in conteudo_exportado
     assert "DWORKIN, Ronald" in conteudo_exportado
+

@@ -94,3 +94,4 @@ def test_documento_academico_state_default():
     assert state.gate_atual == GateAvaliadoEnum.GATE_1_EPISTEMICO
     assert state.status_geral == "EM_ANDAMENTO"
     assert len(state.capitulos) == 0
+

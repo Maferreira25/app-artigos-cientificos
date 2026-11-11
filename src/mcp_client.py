@@ -24,6 +24,10 @@ class JurisprudenciaMcpClient:
 
     async def call_tool(self, tool_name: str, arguments: Dict[str, Any]) -> str:
         """Executa ferramenta remota via JSON-RPC 2.0 com fallback automático resiliente."""
+        # Se for a URL de exemplo placeholder, acionar fallback imediatamente
+        if "seu-dominio" in self.endpoint:
+            raise RuntimeError("Servidor MCP apontado para URL placeholder (.env precisa ser configurado com endpoint real)")
+
         payload = {
             "jsonrpc": "2.0",
             "id": 1,
@@ -34,7 +38,8 @@ class JurisprudenciaMcpClient:
             }
         }
 
-        async with httpx.AsyncClient(timeout=self.timeout, transport=self.transport) as client:
+        timeout_cfg = httpx.Timeout(10.0, connect=3.0)
+        async with httpx.AsyncClient(timeout=timeout_cfg, transport=self.transport) as client:
             response = await client.post(self.endpoint, json=payload, headers=self.headers)
             response.raise_for_status()
             data = response.json()

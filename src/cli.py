@@ -41,8 +41,8 @@ def run(
 
     async def _exec():
         orchestrator = AcademicPipelineOrchestrator(threshold=threshold)
-        with console.status("[bold green]Executando agentes e Quality Gates..."):
-            state = await orchestrator.executar_pipeline_completo(titulo=titulo, tema=tema)
+        console.print("[cyan]Iniciando orquestração autônoma com os modelos OpenRouter...[/cyan]")
+        state = await orchestrator.executar_pipeline_completo(titulo=titulo, tema=tema)
         return state
 
     state = asyncio.run(_exec())
@@ -124,3 +124,4 @@ def test_mcp(
 
 if __name__ == "__main__":
     app()
+

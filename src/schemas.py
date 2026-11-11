@@ -79,3 +79,4 @@ class DocumentoAcademicoState(BaseModel):
     gate_atual: GateAvaliadoEnum = GateAvaliadoEnum.GATE_1_EPISTEMICO
     status_geral: str = "EM_ANDAMENTO"
     refatoracao_pendente: bool = False
+
