@@ -1,4 +1,5 @@
 import asyncio
+from typing import Optional
 import typer
 from rich.console import Console
 from rich.table import Table
@@ -107,17 +108,22 @@ def corpus():
 
 @app.command()
 def test_mcp(
-    url: str = typer.Option("http://localhost:8787", "--url", help="URL do Servidor MCP")
+    url: Optional[str] = typer.Option(None, "--url", help="URL do Servidor MCP (padrão: MCP_URL do .env)"),
+    token: Optional[str] = typer.Option(None, "--token", help="Bearer Token MCP (padrão: MCP_BEARER_TOKEN do .env)"),
+    tema: str = typer.Option("modulação de efeitos", "--tema", help="Tema jurídico para testar consulta remota")
 ):
     """Testa a conectividade com o servidor JurisprudênciaIA MCP."""
-    console.print(f"[cyan]Conectando ao servidor MCP em {url}...[/cyan]")
-    client = JurisprudenciaMcpClient(mcp_url=url, timeout=10.0)
+    from src.config import config
+    target_url = url or config.mcp_url
+    target_token = token or config.mcp_bearer_token
+    console.print(f"[cyan]Conectando ao servidor MCP em {target_url}...[/cyan]")
+    client = JurisprudenciaMcpClient(mcp_url=target_url, bearer_token=target_token, timeout=45.0)
 
     async def _test():
         try:
-            res = await client.call_tool("pesquisar_jurisprudencia", {"query": "teste"})
+            res = await client.buscar_teses_vinculantes(tema)
             console.print("[green]Conexão MCP bem-sucedida![/green]")
-            console.print(Panel(res[:500] + ("..." if len(res) > 500 else ""), title="Resposta MCP"))
+            console.print(Panel(res[:600] + ("..." if len(res) > 600 else ""), title="Resposta MCP Oficial"))
         except Exception as e:
             console.print(f"[red]Falha na conexão com o servidor MCP: {e}[/red]")
 

@@ -10,7 +10,7 @@ load_dotenv(_base_dir / ".env", override=False)
 @dataclass
 class PipelineConfig:
     # Servidor MCP de Jurisprudência (Padrão: Bridge Cloudflare Workers HTTPS)
-    mcp_url: str = os.getenv("MCP_URL", os.getenv("JURISPRUDENCIA_MCP_URL", "https://jurisprudencia.seu-dominio.workers.dev"))
+    mcp_url: str = os.getenv("MCP_URL", os.getenv("MCP_SERVER_URL", os.getenv("JURISPRUDENCIA_MCP_URL", "https://jurisprudenciaia-mcp.michel-aires2012.workers.dev")))
     mcp_bearer_token: str | None = os.getenv("MCP_BEARER_TOKEN", None)
     mcp_timeout: float = float(os.getenv("MCP_TIMEOUT", "120.0"))
     

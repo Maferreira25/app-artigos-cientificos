@@ -6,11 +6,18 @@ class JurisprudenciaMcpClient:
     
     def __init__(
         self,
-        mcp_url: str = "http://localhost:8787",
+        mcp_url: Optional[str] = None,
         bearer_token: Optional[str] = None,
         timeout: float = 120.0,
         transport: Optional[httpx.AsyncBaseTransport] = None
     ):
+        if mcp_url is None:
+            from src.config import config
+            mcp_url = config.mcp_url
+        if bearer_token is None:
+            from src.config import config
+            bearer_token = config.mcp_bearer_token
+
         self.endpoint = mcp_url.rstrip("/") + "/mcp"
         self.timeout = timeout
         self.transport = transport
@@ -38,7 +45,7 @@ class JurisprudenciaMcpClient:
             }
         }
 
-        timeout_cfg = httpx.Timeout(10.0, connect=3.0)
+        timeout_cfg = httpx.Timeout(self.timeout, connect=5.0)
         async with httpx.AsyncClient(timeout=timeout_cfg, transport=self.transport) as client:
             response = await client.post(self.endpoint, json=payload, headers=self.headers)
             response.raise_for_status()
