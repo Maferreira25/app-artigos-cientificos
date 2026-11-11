@@ -99,3 +99,52 @@ def test_gate_6_homologacao_com_etapas_anteriores_aprovadas(reviewer):
     assert parecer.autorizacao_avanco is True
     assert parecer.score_global >= 90.0
 
+def test_gate_3_reprovado_por_metodologia_insuficiente(reviewer):
+    state = DocumentoAcademicoState(
+        desenho_metodologico="Pesquisa teórica simples."  # Menos de 80 caracteres
+    )
+    parecer = reviewer.avaliar_gate_3_metodologico(state)
+    assert parecer.status_decisao == StatusDecisaoEnum.REJEITADO_EXIGE_REFATORACAO
+    assert parecer.autorizacao_avanco is False
+    assert len(parecer.diretrizes_refatoracao) > 0
+
+def test_gate_4_reprovado_por_ausencia_de_capitulos(reviewer):
+    state = DocumentoAcademicoState(
+        capitulos={}  # Sem capítulos
+    )
+    parecer = reviewer.avaliar_gate_4_redacao_seccional(state)
+    assert parecer.status_decisao == StatusDecisaoEnum.REJEITADO_EXIGE_REFATORACAO
+    assert parecer.autorizacao_avanco is False
+
+def test_gate_4_reprovado_por_capitulo_curto(reviewer):
+    state = DocumentoAcademicoState(
+        capitulos={"Capítulo 1": "Texto extremamente curto sem profundidade."}  # < 150 caracteres
+    )
+    parecer = reviewer.avaliar_gate_4_redacao_seccional(state)
+    assert parecer.status_decisao == StatusDecisaoEnum.REJEITADO_EXIGE_REFATORACAO
+    assert parecer.autorizacao_avanco is False
+
+def test_gate_6_reprovado_com_gate_anterior_pendente(reviewer):
+    state = DocumentoAcademicoState()
+    # Apenas o Gate 1 configurado
+    state.pareceres_gates[GateAvaliadoEnum.GATE_1_EPISTEMICO.value] = ParecerRevisaoGeralSchema(
+        gate_avaliado=GateAvaliadoEnum.GATE_1_EPISTEMICO,
+        agente_submetido="agent",
+        status_decisao=StatusDecisaoEnum.APROVADO,
+        score_global=90.0,
+        scores_por_criterio=ScoresPorCriterioSchema(
+            rigor_conceitual=90.0,
+            coerencia_estrutural=90.0,
+            ineditismo=90.0,
+            fidelidade_metodologica=90.0
+        ),
+        diagnostico_critico="Aprovado",
+        diretrizes_refatoracao=[],
+        autorizacao_avanco=True
+    )
+    parecer = reviewer.avaliar_gate_6_homologacao_final(state)
+    assert parecer.status_decisao == StatusDecisaoEnum.REJEITADO_EXIGE_REFATORACAO
+    assert parecer.autorizacao_avanco is False
+    assert len(parecer.diretrizes_refatoracao) == 4  # Gates 2, 3, 4 e 5 faltantes
+
+

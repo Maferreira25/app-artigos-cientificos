@@ -22,12 +22,20 @@ class RagStore:
         content_markdown: str
     ) -> Path:
         """Salva documento estruturado em Markdown com YAML Frontmatter."""
-        # Sanitizar nome de arquivo
-        safe_id = re.sub(r'[^a-zA-Z0-9_\-\.]', '_', doc_id)
-        if not safe_id.endswith(".md"):
-            safe_id += ".md"
+        # Isolar estritamente o nome base para eliminar qualquer path traversal
+        raw_name = Path(doc_id).name
+        if raw_name.lower().endswith(".md"):
+            raw_name = raw_name[:-3]
+        safe_name = re.sub(r'[^a-zA-Z0-9_\-]', '_', raw_name).strip("._")
+        if not safe_name:
+            safe_name = "documento"
+        file_name = f"{safe_name}.md"
         
-        file_path = self.storage_dir / safe_id
+        file_path = (self.storage_dir / file_name).resolve()
+        # Garantir confinamento no storage_dir
+        if not str(file_path).startswith(str(self.storage_dir.resolve())):
+            file_path = self.storage_dir / f"sanitized_{file_name}"
+            
         yaml_header = yaml.dump(metadata, allow_unicode=True, sort_keys=False).strip()
         full_text = f"---\n{yaml_header}\n---\n\n{content_markdown.strip()}\n"
         

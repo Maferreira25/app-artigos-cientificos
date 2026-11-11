@@ -54,10 +54,11 @@ def run(
     table.add_column("Autorizado?", justify="center")
 
     for gate_name, parecer in state.pareceres_gates.items():
-        status_color = "green" if parecer.status_decisao == "APROVADO" else ("yellow" if "RESSALVAS" in parecer.status_decisao else "red")
+        status_val = parecer.status_decisao.value
+        status_color = "green" if status_val == "APROVADO" else ("yellow" if "RESSALVAS" in status_val else "red")
         table.add_row(
             gate_name,
-            f"[{status_color}]{parecer.status_decisao}[/{status_color}]",
+            f"[{status_color}]{status_val}[/{status_color}]",
             f"{parecer.score_global:.2f}",
             "✅" if parecer.autorizacao_avanco else "❌"
         )

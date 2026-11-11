@@ -77,3 +77,18 @@ def test_rag_store_save_and_load(tmp_path):
     # Teste de verificação no corpus
     assert store.verificar_citacao_no_corpus("1.845.234") is True
     assert store.verificar_citacao_no_corpus("REsp Inexistente 9999999") is False
+
+@pytest.mark.asyncio
+async def test_mcp_client_placeholder_url_immediate_error():
+    client = JurisprudenciaMcpClient(mcp_url="https://jurisprudencia.seu-dominio.workers.dev")
+    with pytest.raises(RuntimeError, match="URL placeholder"):
+        await client.call_tool("pesquisar_jurisprudencia", {"query": "teste"})
+
+def test_rag_store_path_traversal_prevention(tmp_path):
+    store = RagStore(storage_dir=tmp_path)
+    # Tentar escapar do diretório usando ../../
+    path_salvo = store.salvar_documento("../../documento_malicioso", {"tipo": "teste"}, "Corpo do texto")
+    assert path_salvo.exists()
+    # Deve estar estritamente contido dentro de tmp_path
+    assert path_salvo.parent == tmp_path
+    assert path_salvo.name == "documento_malicioso.md"

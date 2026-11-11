@@ -64,9 +64,10 @@ class LlmClient:
 
                     choices = data.get("choices", [])
                     if choices:
-                        content = choices[0].get("message", {}).get("content", "")
-                        # Remove blocos de raciocínio interno (<think>...</think>) do texto final se presentes
-                        content = re.sub(r'<think>.*?</think>', '', content, flags=re.DOTALL).strip()
+                        msg = choices[0].get("message", {})
+                        raw_content = msg.get("content") or msg.get("refusal") or ""
+                        # Remove blocos de raciocinio interno (<think>...</think>) do texto final se presentes
+                        content = re.sub(r'<think>.*?</think>', '', raw_content, flags=re.DOTALL).strip()
                         return content
             except Exception as e:
                 if attempt == 0 and fallback_model and fallback_model != model:
