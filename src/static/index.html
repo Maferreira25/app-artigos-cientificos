@@ -1,89 +1,154 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-theme="dark">
+<html lang="pt-BR" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>StrictoSensu · Laboratório Autônomo de Teses & Artigos (ABNT / Qualis A)</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <title>StrictoSensu · Plataforma Autônoma de Artigos & Teses</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
-    :root[data-theme="dark"] {
-      --bg-primary: #0a0e17;
-      --bg-secondary: #111726;
-      --bg-elevated: #172033;
-      --bg-glass: rgba(17, 23, 38, 0.86);
-      --border-subtle: rgba(212, 175, 55, 0.18);
-      --border-strong: rgba(212, 175, 55, 0.42);
-      --text-primary: #f7f4eb;
-      --text-secondary: #b4bdd0;
-      --text-muted: #78849e;
-      --accent-gold: #d4af37;
-      --accent-gold-hover: #e6c453;
-      --accent-gold-soft: rgba(212, 175, 55, 0.12);
-      --status-ok: #10b981;
-      --status-ok-bg: rgba(16, 185, 129, 0.13);
-      --status-run: #38bdf8;
-      --status-run-bg: rgba(56, 189, 248, 0.14);
-      --status-warn: #f59e0b;
-      --status-err: #ef4444;
-      --shadow-card: 0 20px 45px -15px rgba(0, 0, 0, 0.65);
+    /* ==========================================================================
+       IMPECCABLE DESIGN SYSTEM · OKLCH PALETTE (Seed-107 Hue 340° Creative Plum)
+       Zero Serif · Modular 1.333x Type Scale · Pure White / Pure Carbon Surfaces
+       ========================================================================== */
+    :root,
+    [data-theme="light"] {
+      --bg: oklch(1.000 0.000 0);
+      --surface: oklch(0.972 0.004 340);
+      --surface-elevated: oklch(0.948 0.007 340);
+      --ink: oklch(0.160 0.015 340);
+      --ink-secondary: oklch(0.360 0.014 340);
+      --muted: oklch(0.450 0.012 340);
+
+      --primary: oklch(0.490 0.195 340);
+      --primary-hover: oklch(0.430 0.195 340);
+      --primary-tint: oklch(0.950 0.030 340);
+      --on-primary: oklch(1.000 0.000 0);
+
+      --accent: oklch(0.460 0.165 255);
+      --accent-tint: oklch(0.945 0.030 255);
+      --on-accent: oklch(1.000 0.000 0);
+
+      --status-done: oklch(0.480 0.145 155);
+      --status-done-tint: oklch(0.945 0.035 155);
+      --status-run: oklch(0.490 0.195 340);
+      --status-run-tint: oklch(0.950 0.030 340);
+      --status-err: oklch(0.500 0.190 25);
+      --status-err-tint: oklch(0.950 0.030 25);
+
+      --border: oklch(0.895 0.008 340);
+      --border-strong: oklch(0.790 0.015 340);
+
+      --font-sans: 'Bricolage Grotesque', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+      /* Modular 1.333x (Perfect Fourth) Type Scale */
+      --text-xs: 0.75rem;
+      --text-sm: 0.875rem;
+      --text-base: 1rem;
+      --text-lg: 1.375rem;
+      --text-xl: 2rem;
+
+      /* Semantic z-index scale */
+      --z-sticky: 10;
+      --z-backdrop: 40;
+      --z-modal: 50;
     }
 
-    :root[data-theme="light"] {
-      --bg-primary: #f6f2e9;
-      --bg-secondary: #ffffff;
-      --bg-elevated: #efeae0;
-      --bg-glass: rgba(255, 255, 255, 0.92);
-      --border-subtle: rgba(138, 109, 27, 0.22);
-      --border-strong: rgba(138, 109, 27, 0.48);
-      --text-primary: #18181b;
-      --text-secondary: #3f3f46;
-      --text-muted: #71717a;
-      --accent-gold: #9a7418;
-      --accent-gold-hover: #7c5c10;
-      --accent-gold-soft: rgba(154, 116, 24, 0.1);
-      --status-ok: #059669;
-      --status-ok-bg: rgba(5, 150, 105, 0.12);
-      --status-run: #0284c7;
-      --status-run-bg: rgba(2, 132, 199, 0.12);
-      --status-warn: #d97706;
-      --status-err: #dc2626;
-      --shadow-card: 0 14px 34px -12px rgba(24, 24, 27, 0.12);
+    [data-theme="dark"] {
+      --bg: oklch(0.090 0.000 0);
+      --surface: oklch(0.140 0.006 340);
+      --surface-elevated: oklch(0.185 0.010 340);
+      --ink: oklch(0.955 0.005 340);
+      --ink-secondary: oklch(0.790 0.010 340);
+      --muted: oklch(0.680 0.010 340);
+
+      --primary: oklch(0.600 0.195 340);
+      --primary-hover: oklch(0.650 0.195 340);
+      --primary-tint: oklch(0.220 0.055 340);
+      --on-primary: oklch(1.000 0.000 0);
+
+      --accent: oklch(0.620 0.160 255);
+      --accent-tint: oklch(0.220 0.050 255);
+      --on-accent: oklch(1.000 0.000 0);
+
+      --status-done: oklch(0.640 0.150 155);
+      --status-done-tint: oklch(0.210 0.045 155);
+      --status-run: oklch(0.600 0.195 340);
+      --status-run-tint: oklch(0.220 0.055 340);
+      --status-err: oklch(0.630 0.185 25);
+      --status-err-tint: oklch(0.220 0.050 25);
+
+      --border: oklch(0.225 0.008 340);
+      --border-strong: oklch(0.320 0.015 340);
     }
 
-    * {
+    *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
-    body {
-      background-color: var(--bg-primary);
-      background-image:
-        radial-gradient(circle at 12% 8%, rgba(212, 175, 55, 0.08), transparent 35%),
-        radial-gradient(circle at 88% 15%, rgba(56, 189, 248, 0.05), transparent 35%);
-      color: var(--text-primary);
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      line-height: 1.6;
-      min-height: 100vh;
-      transition: background-color 0.25s ease, color 0.25s ease;
+    html {
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
-    /* Cabeçalho Editorial */
-    header.editorial-header {
-      border-bottom: 1px solid var(--border-subtle);
-      background: var(--bg-glass);
-      backdrop-filter: blur(12px);
+    body {
+      font-family: var(--font-sans);
+      font-size: var(--text-base);
+      line-height: 1.55;
+      color: var(--ink);
+      background-color: var(--bg);
+      font-kerning: normal;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: background-color 180ms cubic-bezier(0.22, 1, 0.36, 1),
+                  color 180ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    [data-theme="dark"] body {
+      line-height: 1.6;
+      letter-spacing: 0.008em;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: var(--font-sans);
+      text-wrap: balance;
+      letter-spacing: -0.025em;
+      line-height: 1.2;
+      color: var(--ink);
+    }
+
+    p {
+      text-wrap: pretty;
+      max-width: 68ch;
+    }
+
+    code, pre, .mono {
+      font-family: var(--font-mono);
+      font-variant-ligatures: none;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* ==========================================================================
+       TOP COMMAND BAR
+       ========================================================================== */
+    .topbar {
       position: sticky;
       top: 0;
-      z-index: 40;
+      z-index: var(--z-sticky);
+      background-color: var(--bg);
+      border-bottom: 1px solid var(--border);
     }
 
-    .header-inner {
+    .topbar-inner {
       max-width: 1440px;
       margin: 0 auto;
-      padding: 1.1rem 2rem;
+      padding: 0.875rem 2rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -91,318 +156,387 @@
       flex-wrap: wrap;
     }
 
-    .brand-group {
+    .brand {
       display: flex;
       align-items: center;
-      gap: 1rem;
+      gap: 0.875rem;
     }
 
-    .brand-crest {
-      width: 44px;
-      height: 44px;
+    .brand-mark {
+      width: 2.375rem;
+      height: 2.375rem;
       border-radius: 10px;
-      border: 1px solid var(--border-strong);
-      background: var(--accent-gold-soft);
+      background-color: var(--primary);
+      color: var(--on-primary);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: var(--text-sm);
+      letter-spacing: -0.02em;
+      flex-shrink: 0;
+    }
+
+    .brand-copy h1 {
+      font-size: var(--text-lg);
+      font-weight: 800;
+      letter-spacing: -0.02em;
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 700;
-      font-size: 1.55rem;
-      color: var(--accent-gold);
-      letter-spacing: -0.03em;
+      gap: 0.5rem;
     }
 
-    .brand-titles h1 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.65rem;
-      font-weight: 700;
-      letter-spacing: 0.01em;
-      color: var(--text-primary);
-      line-height: 1.15;
+    .brand-tag {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      font-weight: 600;
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      background-color: var(--primary-tint);
+      color: var(--primary);
     }
 
-    .brand-titles p {
-      font-size: 0.78rem;
-      color: var(--text-secondary);
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
+    .brand-sub {
+      font-size: var(--text-xs);
+      color: var(--muted);
+      font-weight: 500;
+      margin-top: 0.1rem;
     }
 
-    .header-meta {
+    .topbar-telemetry {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.625rem;
       flex-wrap: wrap;
     }
 
-    .status-pill {
+    .status-chip {
       display: inline-flex;
       align-items: center;
       gap: 0.45rem;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem;
-      padding: 0.4rem 0.75rem;
+      padding: 0.375rem 0.75rem;
       border-radius: 999px;
-      border: 1px solid var(--border-subtle);
-      background: var(--bg-secondary);
-      color: var(--text-secondary);
+      background-color: var(--surface);
+      border: 1px solid var(--border);
+      font-size: var(--text-xs);
+      font-weight: 600;
+      color: var(--ink-secondary);
+      font-variant-numeric: tabular-nums;
     }
 
     .status-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--status-ok);
-      box-shadow: 0 0 8px var(--status-ok);
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 999px;
+      background-color: var(--status-done);
     }
 
     .theme-btn {
-      cursor: pointer;
-      padding: 0.45rem 0.85rem;
+      font-family: var(--font-sans);
+      font-size: var(--text-xs);
+      font-weight: 700;
+      padding: 0.45rem 0.875rem;
       border-radius: 8px;
-      border: 1px solid var(--border-subtle);
-      background: var(--bg-elevated);
-      color: var(--text-primary);
-      font-size: 0.8rem;
-      font-weight: 500;
-      transition: all 0.2s;
+      border: 1px solid var(--border-strong);
+      background-color: var(--surface);
+      color: var(--ink);
+      cursor: pointer;
+      transition: background-color 160ms cubic-bezier(0.22, 1, 0.36, 1),
+                  border-color 160ms cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .theme-btn:hover {
-      border-color: var(--accent-gold);
+      background-color: var(--surface-elevated);
+      border-color: var(--primary);
     }
 
-    /* Layout Principal */
-    .workspace-container {
+    /* ==========================================================================
+       SPLIT ARCHITECTURAL WORKBENCH
+       ========================================================================== */
+    .workbench {
       max-width: 1440px;
+      width: 100%;
       margin: 0 auto;
       padding: 2rem;
       display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 2rem;
+      grid-template-columns: minmax(0, 1.35fr) minmax(360px, 0.95fr);
+      gap: 2.5rem;
       align-items: start;
+      flex: 1;
     }
 
-    @media (max-width: 1120px) {
-      .workspace-container {
+    @media (max-width: 1080px) {
+      .workbench {
         grid-template-columns: 1fr;
+        padding: 1.25rem;
       }
     }
 
-    /* Navegação por Abas */
+    /* ==========================================================================
+       SEGMENTED MODE SWITCHER
+       ========================================================================== */
     .nav-tabs {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 1.5rem;
-      border-bottom: 1px solid var(--border-subtle);
-      padding-bottom: 0.75rem;
+      display: inline-flex;
       flex-wrap: wrap;
+      gap: 0.375rem;
+      padding: 0.35rem;
+      border-radius: 12px;
+      background-color: var(--surface);
+      border: 1px solid var(--border);
+      margin-bottom: 2rem;
     }
 
     .tab-btn {
-      cursor: pointer;
-      padding: 0.7rem 1.25rem;
-      border-radius: 8px;
-      border: 1px solid transparent;
+      font-family: var(--font-sans);
+      font-size: var(--text-sm);
+      font-weight: 700;
+      padding: 0.625rem 1.125rem;
+      border-radius: 9px;
+      border: none;
       background: transparent;
-      color: var(--text-secondary);
-      font-weight: 600;
-      font-size: 0.9rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.55rem;
-      transition: all 0.2s ease;
+      color: var(--ink-secondary);
+      cursor: pointer;
+      transition: background-color 160ms cubic-bezier(0.22, 1, 0.36, 1),
+                  color 160ms cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .tab-btn:hover {
-      color: var(--text-primary);
-      background: var(--bg-elevated);
+      color: var(--ink);
+      background-color: var(--surface-elevated);
     }
 
     .tab-btn.active {
-      background: var(--accent-gold-soft);
-      color: var(--accent-gold);
-      border-color: var(--border-strong);
+      background-color: var(--primary);
+      color: var(--on-primary);
     }
 
-    /* Cards & Formulários */
-    .panel-card {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-subtle);
-      border-radius: 14px;
-      padding: 1.75rem;
-      box-shadow: var(--shadow-card);
+    /* ==========================================================================
+       PRIMARY WORKSPACE SURFACE (NO NESTED CARDS)
+       ========================================================================== */
+    .workspace-pane {
+      background-color: var(--bg);
     }
 
-    .panel-header {
-      margin-bottom: 1.4rem;
-      border-bottom: 1px solid var(--border-subtle);
-      padding-bottom: 0.9rem;
+    .hidden {
+      display: none !important;
     }
 
-    .panel-header h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.6rem;
-      font-weight: 700;
-      color: var(--text-primary);
+    .section-header {
+      margin-bottom: 1.75rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
     }
 
-    .panel-header p {
-      font-size: 0.88rem;
-      color: var(--text-secondary);
-      margin-top: 0.25rem;
+    .section-header h2 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-header p {
+      font-size: 0.875rem;
+      color: var(--ink-secondary);
+    }
+
+    /* ==========================================================================
+       FORM SYSTEM
+       ========================================================================== */
+    .form-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
     }
 
     .form-group {
-      margin-bottom: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
     }
 
     .form-label {
-      display: block;
-      font-size: 0.84rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 0.45rem;
+      font-size: var(--text-sm);
+      font-weight: 700;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
     .form-hint {
-      display: block;
-      font-size: 0.76rem;
-      color: var(--text-muted);
-      margin-top: 0.3rem;
+      font-size: var(--text-xs);
+      color: var(--muted);
     }
 
     .form-input,
-    .form-textarea,
-    .form-select {
+    .form-textarea {
       width: 100%;
-      padding: 0.78rem 1rem;
-      border-radius: 9px;
-      border: 1px solid var(--border-subtle);
-      background: var(--bg-primary);
-      color: var(--text-primary);
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 0.92rem;
-      transition: border-color 0.2s;
+      font-family: var(--font-sans);
+      font-size: var(--text-base);
+      color: var(--ink);
+      background-color: var(--surface);
+      border: 1px solid var(--border-strong);
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      transition: border-color 160ms cubic-bezier(0.22, 1, 0.36, 1),
+                  background-color 160ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .form-input::placeholder,
+    .form-textarea::placeholder {
+      color: var(--muted);
     }
 
     .form-input:focus,
     .form-textarea:focus {
-      outline: none;
-      border-color: var(--accent-gold);
+      outline: 2px solid var(--primary);
+      outline-offset: 1px;
+      border-color: var(--primary);
+      background-color: var(--bg);
     }
 
     .form-textarea {
-      min-height: 110px;
+      min-height: 7.5rem;
       resize: vertical;
+      line-height: 1.55;
     }
 
     .form-row {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      align-items: start;
     }
 
-    @media (max-width: 640px) {
-      .form-row {
-        grid-template-columns: 1fr;
-      }
+    .threshold-control {
+      background-color: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem;
     }
 
-    /* Checkboxes de Formato de Saída */
+    .threshold-badge {
+      font-family: var(--font-mono);
+      font-size: var(--text-sm);
+      font-weight: 700;
+      padding: 0.15rem 0.55rem;
+      border-radius: 6px;
+      background-color: var(--primary);
+      color: var(--on-primary);
+      font-variant-numeric: tabular-nums;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--primary);
+      margin: 0.75rem 0 0.35rem;
+      cursor: pointer;
+    }
+
+    /* Output Format Pills */
     .output-formats {
       display: flex;
-      gap: 0.9rem;
+      gap: 0.625rem;
       flex-wrap: wrap;
-      margin-top: 0.4rem;
+      margin-top: 0.25rem;
     }
 
     .format-Toggle {
-      display: flex;
+      display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      padding: 0.55rem 0.95rem;
+      padding: 0.625rem 0.95rem;
       border-radius: 8px;
-      border: 1px solid var(--border-subtle);
-      background: var(--bg-primary);
-      cursor: pointer;
-      font-size: 0.84rem;
+      border: 1px solid var(--border-strong);
+      background-color: var(--surface);
+      color: var(--ink);
+      font-size: var(--text-sm);
       font-weight: 600;
-      color: var(--text-primary);
+      cursor: pointer;
       user-select: none;
+      transition: border-color 150ms cubic-bezier(0.22, 1, 0.36, 1),
+                  background-color 150ms cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    .format-Toggle input {
-      accent-color: var(--accent-gold);
-      width: 16px;
-      height: 16px;
+    .format-Toggle:hover {
+      border-color: var(--primary);
+      background-color: var(--surface-elevated);
     }
 
-    /* Zona de Upload Drag & Drop */
+    .format-Toggle input[type="checkbox"] {
+      width: 1rem;
+      height: 1rem;
+      accent-color: var(--primary);
+    }
+
+    /* Dropzone */
     .dropzone {
       border: 1.5px dashed var(--border-strong);
       border-radius: 12px;
-      padding: 1.6rem;
+      padding: 2rem 1.5rem;
       text-align: center;
-      background: var(--accent-gold-soft);
+      background-color: var(--surface);
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: border-color 160ms cubic-bezier(0.22, 1, 0.36, 1),
+                  background-color 160ms cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .dropzone:hover,
     .dropzone.dragover {
-      background: rgba(212, 175, 55, 0.2);
-      border-color: var(--accent-gold);
+      border-color: var(--primary);
+      background-color: var(--primary-tint);
     }
 
     .dropzone-title {
-      font-weight: 600;
-      font-size: 0.95rem;
-      color: var(--text-primary);
+      font-size: var(--text-base);
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 0.35rem;
     }
 
     .dropzone-sub {
-      font-size: 0.8rem;
-      color: var(--text-secondary);
-      margin-top: 0.25rem;
+      font-size: var(--text-xs);
+      color: var(--muted);
     }
 
     .selected-file-pill {
-      margin-top: 0.75rem;
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      padding: 0.35rem 0.8rem;
+      gap: 0.4rem;
+      margin-top: 0.875rem;
+      padding: 0.35rem 0.85rem;
       border-radius: 999px;
-      background: var(--status-ok-bg);
-      color: var(--status-ok);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.78rem;
+      background-color: var(--primary);
+      color: var(--on-primary);
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      font-weight: 600;
     }
 
-    /* Botão Principal */
+    /* Primary Action Button */
     .btn-primary {
       width: 100%;
-      cursor: pointer;
-      padding: 0.95rem 1.4rem;
-      border-radius: 10px;
-      border: 1px solid var(--accent-gold);
-      background: linear-gradient(135deg, var(--accent-gold), #b8860b);
-      color: #0a0e17;
+      font-family: var(--font-sans);
+      font-size: var(--text-base);
       font-weight: 700;
-      font-size: 0.96rem;
-      letter-spacing: 0.02em;
-      display: flex;
+      padding: 0.95rem 1.5rem;
+      border-radius: 10px;
+      border: none;
+      background-color: var(--primary);
+      color: var(--on-primary);
+      cursor: pointer;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 0.6rem;
-      transition: transform 0.15s ease, filter 0.2s ease;
+      gap: 0.625rem;
+      transition: background-color 160ms cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 160ms cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .btn-primary:hover:not(:disabled) {
-      filter: brightness(1.08);
-      transform: translateY(-1px);
+      background-color: var(--primary-hover);
+    }
+
+    .btn-primary:active:not(:disabled) {
+      transform: translateY(1px);
     }
 
     .btn-primary:disabled {
@@ -410,71 +544,124 @@
       cursor: not-allowed;
     }
 
-    /* Monitor de Quality Gates em Tempo Real */
+    /* ==========================================================================
+       TELEMETRY & QUALITY GATES PIPELINE RAIL (RIGHT COLUMN)
+       ========================================================================== */
+    .telemetry-rail {
+      background-color: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem;
+      position: sticky;
+      top: 5.25rem;
+    }
+
+    .rail-header {
+      margin-bottom: 1.25rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .rail-header h2 {
+      font-size: 1.375rem;
+      font-weight: 800;
+      margin-bottom: 0.25rem;
+    }
+
+    .rail-header p {
+      font-size: var(--text-xs);
+      color: var(--muted);
+    }
+
     .gates-list {
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
-      margin-top: 1rem;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background-color: var(--bg);
+      overflow: hidden;
     }
 
     .gate-item {
-      border: 1px solid var(--border-subtle);
-      border-radius: 10px;
-      padding: 0.85rem 1rem;
-      background: var(--bg-primary);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 1rem;
-      transition: all 0.25s ease;
+      gap: 0.875rem;
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--border);
+      transition: background-color 160ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .gate-item:last-child {
+      border-bottom: none;
     }
 
     .gate-item.RUNNING {
-      border-color: var(--status-run);
-      background: var(--status-run-bg);
+      background-color: var(--status-run-tint);
     }
 
     .gate-item.DONE {
-      border-color: rgba(16, 185, 129, 0.4);
+      background-color: var(--bg);
     }
 
     .gate-item.FAILED {
-      border-color: var(--status-err);
+      background-color: var(--status-err-tint);
     }
 
     .gate-left {
       display: flex;
       align-items: center;
-      gap: 0.85rem;
+      gap: 0.75rem;
+      min-width: 0;
     }
 
     .gate-num {
-      width: 30px;
-      height: 30px;
-      border-radius: 8px;
-      background: var(--bg-elevated);
-      border: 1px solid var(--border-subtle);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.8rem;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--accent-gold);
+      width: 2rem;
+      height: 2rem;
+      border-radius: 7px;
+      background-color: var(--surface-elevated);
+      color: var(--ink);
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      font-weight: 700;
+      display: grid;
+      place-items: center;
       flex-shrink: 0;
     }
 
+    .gate-item.RUNNING .gate-num {
+      background-color: var(--primary);
+      color: var(--on-primary);
+    }
+
+    .gate-item.DONE .gate-num {
+      background-color: var(--status-done);
+      color: var(--on-primary);
+    }
+
+    .gate-item.FAILED .gate-num {
+      background-color: var(--status-err);
+      color: var(--on-primary);
+    }
+
+    .gate-info {
+      min-width: 0;
+    }
+
     .gate-info h4 {
-      font-size: 0.88rem;
-      font-weight: 600;
-      color: var(--text-primary);
+      font-size: var(--text-sm);
+      font-weight: 700;
+      color: var(--ink);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .gate-info span {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.72rem;
-      color: var(--text-muted);
+      display: block;
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--muted);
     }
 
     .gate-right {
@@ -484,125 +671,146 @@
 
     .gate-badge {
       display: inline-block;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.7rem;
-      font-weight: 600;
-      padding: 0.22rem 0.55rem;
-      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      font-weight: 700;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
       text-transform: uppercase;
+      letter-spacing: 0.04em;
     }
 
     .badge-PENDING {
-      background: var(--bg-elevated);
-      color: var(--text-muted);
+      background-color: var(--surface-elevated);
+      color: var(--muted);
     }
 
     .badge-RUNNING {
-      background: var(--status-run-bg);
-      color: var(--status-run);
-      animation: pulse 1.4s infinite;
+      background-color: var(--primary);
+      color: var(--on-primary);
     }
 
     .badge-DONE {
-      background: var(--status-ok-bg);
-      color: var(--status-ok);
+      background-color: var(--status-done);
+      color: var(--on-primary);
     }
 
     .badge-FAILED {
-      background: rgba(239, 68, 68, 0.15);
-      color: var(--status-err);
+      background-color: var(--status-err);
+      color: var(--on-primary);
     }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.55; }
+    .gate-score {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      font-weight: 700;
+      color: var(--ink);
+      margin-top: 0.2rem;
+      font-variant-numeric: tabular-nums;
     }
 
-    /* Console de Telemetria */
+    /* Live Telemetry Log Console */
     .telemetry-console {
       margin-top: 1.25rem;
-      background: #070a10;
-      border: 1px solid var(--border-subtle);
+      padding: 0.875rem 1rem;
       border-radius: 10px;
-      padding: 0.9rem 1rem;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.76rem;
-      color: #a3e635;
-      max-height: 190px;
+      background-color: var(--bg);
+      border: 1px solid var(--border);
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--ink-secondary);
+      max-height: 9.5rem;
       overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
     }
 
     .telemetry-line {
-      margin-bottom: 0.3rem;
+      line-height: 1.45;
       word-break: break-word;
     }
 
-    /* Box de Resultado & Download */
+    /* Result Banner */
     .result-banner {
       margin-top: 1.25rem;
       padding: 1.25rem;
-      border-radius: 12px;
-      border: 1px solid var(--border-strong);
-      background: var(--accent-gold-soft);
+      border-radius: 10px;
+      border: 1px solid var(--primary);
+      background-color: var(--primary-tint);
     }
 
     .result-banner h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.35rem;
-      color: var(--accent-gold);
-      margin-bottom: 0.4rem;
+      font-size: var(--text-base);
+      font-weight: 800;
+      color: var(--ink);
+      margin-bottom: 0.35rem;
     }
 
     .download-actions {
       display: flex;
-      gap: 0.6rem;
+      gap: 0.5rem;
       flex-wrap: wrap;
-      margin-top: 0.9rem;
+      margin-top: 0.875rem;
     }
 
     .btn-dl {
       text-decoration: none;
+      font-family: var(--font-sans);
+      font-size: var(--text-xs);
+      font-weight: 700;
+      padding: 0.5rem 0.875rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-strong);
+      background-color: var(--bg);
+      color: var(--ink);
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
-      padding: 0.5rem 0.9rem;
-      border-radius: 8px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      border: 1px solid var(--border-strong);
-      background: var(--bg-secondary);
-      color: var(--text-primary);
-      transition: all 0.2s;
+      gap: 0.375rem;
+      transition: background-color 150ms cubic-bezier(0.22, 1, 0.36, 1),
+                  border-color 150ms cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .btn-dl:hover {
-      background: var(--accent-gold);
-      color: #0a0e17;
+      border-color: var(--primary);
+      background-color: var(--surface-elevated);
     }
 
     .btn-dl.pdf-highlight {
-      background: var(--accent-gold);
-      color: #0a0e17;
+      background-color: var(--primary);
+      border-color: var(--primary);
+      color: var(--on-primary);
     }
 
-    /* Histórico de Artigos */
+    .btn-dl.pdf-highlight:hover {
+      background-color: var(--primary-hover);
+    }
+
+    /* ==========================================================================
+       ARCHIVE / HISTORY LIST (STRUCTURED LEDGER ROWS, NO CARD CLUTTER)
+       ========================================================================== */
     .history-grid {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      background-color: var(--bg);
     }
 
     .history-card {
-      border: 1px solid var(--border-subtle);
-      border-radius: 12px;
-      padding: 1.25rem;
-      background: var(--bg-primary);
-      transition: border-color 0.2s;
+      padding: 1.35rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      transition: background-color 150ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .history-card:last-child {
+      border-bottom: none;
     }
 
     .history-card:hover {
-      border-color: var(--border-strong);
+      background-color: var(--surface);
     }
 
     .history-top {
@@ -611,145 +819,177 @@
       justify-content: space-between;
       gap: 1rem;
       margin-bottom: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .history-badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      font-weight: 700;
+      padding: 0.18rem 0.55rem;
+      border-radius: 999px;
+      margin-bottom: 0.4rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .badge-paper {
+      background-color: var(--primary);
+      color: var(--on-primary);
+    }
+
+    .badge-dossie {
+      background-color: var(--accent);
+      color: var(--on-accent);
     }
 
     .history-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: var(--text-primary);
+      font-size: var(--text-lg);
+      font-weight: 800;
+      color: var(--ink);
     }
 
     .history-meta {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.73rem;
-      color: var(--text-muted);
-      margin-bottom: 0.65rem;
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
     }
 
     .history-preview {
-      font-size: 0.84rem;
-      color: var(--text-secondary);
-      margin-bottom: 0.9rem;
+      font-size: var(--text-sm);
+      color: var(--ink-secondary);
+      margin-bottom: 0.75rem;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
 
-    /* Modal Leitor Acadêmico */
+    /* ==========================================================================
+       READER DIALOG MODAL
+       ========================================================================== */
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.78);
-      backdrop-filter: blur(6px);
+      z-index: var(--z-backdrop);
+      background-color: oklch(0.08 0 0 / 0.68);
       display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-      z-index: 100;
+      place-items: center;
+      padding: 1.5rem;
     }
 
     .modal-backdrop.open {
-      display: flex;
+      display: grid;
     }
 
     .modal-reader {
-      width: 100%;
-      max-width: 960px;
+      z-index: var(--z-modal);
+      width: min(920px, 100%);
       max-height: 88vh;
-      background: var(--bg-secondary);
+      background-color: var(--bg);
       border: 1px solid var(--border-strong);
       border-radius: 14px;
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.75);
     }
 
     .modal-header {
-      padding: 1.1rem 1.5rem;
-      border-bottom: 1px solid var(--border-subtle);
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      background-color: var(--surface);
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
+      flex-wrap: wrap;
     }
 
     .modal-header h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.4rem;
-      color: var(--accent-gold);
+      font-size: var(--text-base);
+      font-weight: 800;
     }
 
     .modal-body {
-      padding: 2rem 2.5rem;
+      padding: 2rem;
       overflow-y: auto;
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.18rem;
-      line-height: 1.75;
-      color: var(--text-primary);
+      font-family: var(--font-sans);
+      font-size: var(--text-base);
+      line-height: 1.65;
+      color: var(--ink);
       white-space: pre-wrap;
+      max-width: 74ch;
+      margin: 0 auto;
+      width: 100%;
     }
 
-    .hidden {
-      display: none !important;
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Cabeçalho Editorial -->
-  <header class="editorial-header">
-    <div class="header-inner">
-      <div class="brand-group">
-        <div class="brand-crest">SS</div>
-        <div class="brand-titles">
-          <h1>StrictoSensu · Laboratório de Teses & Artigos</h1>
-          <p>Pipeline Multi-Agente · JurisprudênciaIA MCP · ABNT NBR 14724 / 6023 / 10520</p>
+  <!-- Barra de Comando Superior -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-mark">SS</div>
+        <div class="brand-copy">
+          <h1>
+            <span>StrictoSensu</span>
+            <span class="brand-tag">QUALIS A · ABNT</span>
+          </h1>
+          <div class="brand-sub">Orquestração Multi-Agente · JurisprudênciaIA MCP · Compilação Nativa LaTeX/PDF & DOCX</div>
         </div>
       </div>
 
-      <div class="header-meta">
-        <div class="status-pill" title="Bridge Cloudflare Workers">
+      <div class="topbar-telemetry">
+        <div class="status-chip">
           <span class="status-dot"></span>
-          <span id="mcp-status-text">MCP Cloudflare: Conectado</span>
+          <span>MCP Cloudflare: Conectado</span>
         </div>
-        <div class="status-pill">
-          <span id="corpus-count-text">Corpus RAG: -- docs</span>
+        <div class="status-chip mono" id="corpus-count-text">
+          Corpus RAG: 1 precedentes
         </div>
         <button class="theme-btn" onclick="toggleTheme()" id="theme-toggle-btn">
-          Modo Papiro Claro
+          Modo Carbono Escuro
         </button>
       </div>
     </div>
   </header>
 
-  <!-- Container Principal -->
-  <main class="workspace-container">
+  <!-- Workbench Principal -->
+  <main class="workbench">
 
-    <!-- Coluna Esquerda: Operações (Novo Paper, Revisar Paper, Histórico) -->
-    <section>
-      <nav class="nav-tabs">
+    <!-- Coluna Esquerda: Operações -->
+    <section class="workspace-pane">
+      <nav class="nav-tabs" aria-label="Modos de Operação">
         <button class="tab-btn active" id="tab-btn-new" onclick="switchTab('new')">
-          <span>✦ Gerar Novo Paper / Tese</span>
+          Gerar Novo Paper / Tese
         </button>
         <button class="tab-btn" id="tab-btn-improve" onclick="switchTab('improve')">
-          <span>⚖ Revisar & Elevar Paper Existente</span>
+          Revisar & Elevar Paper Existente
         </button>
         <button class="tab-btn" id="tab-btn-history" onclick="switchTab('history')">
-          <span>🏛 Histórico & Acervo Gerado</span>
+          Histórico & Acervo Gerado
         </button>
       </nav>
 
       <!-- ABA 1: GERAR NOVO PAPER -->
-      <div id="tab-panel-new" class="panel-card">
-        <div class="panel-header">
+      <div id="tab-panel-new">
+        <div class="section-header">
           <h2>Gerar Novo Artigo Científico ou Projeto de Tese</h2>
-          <p>Orquestração autônoma em 6 Quality Gates com pesquisa empírica no JurisprudênciaIA MCP e redação em nível de doutorado.</p>
+          <p>Execução autônoma governada por 6 Quality Gates eliminatórios, consulta de teses vinculantes via MCP e redação científica densa.</p>
         </div>
 
-        <form id="form-generate" onsubmit="handleGenerateSubmit(event)">
+        <form id="form-generate" class="form-stack" onsubmit="handleGenerateSubmit(event)">
           <div class="form-group">
             <label class="form-label" for="gen-titulo">Título Provisório ou Definitivo da Obra *</label>
             <input
@@ -775,19 +1015,23 @@
           </div>
 
           <div class="form-group">
-            <label class="form-label" for="gen-recorte">Recorte Epistemológico, Problema ou Hipótese Preliminar (Opcional)</label>
+            <label class="form-label" for="gen-recorte">
+              <span>Recorte Epistemológico, Problema ou Hipótese Preliminar</span>
+              <span class="form-hint">Opcional</span>
+            </label>
             <textarea
               id="gen-recorte"
               class="form-textarea"
-              placeholder="Especifique tribunais-alvo (STF/STJ), dispositivos legais (ex: art. 927, § 3º do CPC), ou sua hipótese de partida..."
+              placeholder="Especifique tribunais-alvo (STF/STJ), dispositivos legais (ex: art. 927, § 3º do CPC) ou sua hipótese de partida..."
             ></textarea>
-            <span class="form-hint">O Agente Epistemológico (GPT-6 Astra) refinará o problema e a hipótese falseável no Gate 1.</span>
+            <span class="form-hint">O Agente Epistemológico (GPT-6 Astra) formulará a problematização e a hipótese falseável no Gate 1.</span>
           </div>
 
           <div class="form-row">
-            <div class="form-group">
+            <div class="threshold-control">
               <label class="form-label" for="gen-threshold">
-                Limiar de Aprovação da Banca: <strong id="gen-threshold-val">85.0</strong>/100
+                <span>Limiar de Aprovação da Banca</span>
+                <span class="threshold-badge"><span id="gen-threshold-val">85.0</span>/100</span>
               </label>
               <input
                 type="range"
@@ -796,10 +1040,9 @@
                 max="95"
                 step="0.5"
                 value="85.0"
-                style="width: 100%; accent-color: var(--accent-gold); margin-top: 0.5rem;"
                 oninput="document.getElementById('gen-threshold-val').textContent = parseFloat(this.value).toFixed(1)"
               />
-              <span class="form-hint">Padrão Stricto Sensu / Qualis A: 85.0 pontos na Matriz Multidimensional.</span>
+              <span class="form-hint">Nota de corte mínima exigida em cada Gate na Matriz Multidimensional.</span>
             </div>
 
             <div class="form-group">
@@ -807,7 +1050,7 @@
               <div class="output-formats">
                 <label class="format-Toggle">
                   <input type="checkbox" id="gen-pdf" checked />
-                  <span>PDF (ABNT)</span>
+                  <span>PDF (LaTeX ABNT)</span>
                 </label>
                 <label class="format-Toggle">
                   <input type="checkbox" id="gen-docx" checked />
@@ -818,31 +1061,32 @@
                   <span>Markdown (.md)</span>
                 </label>
               </div>
+              <span class="form-hint">Compilação tipográfica automática nas margens e citações ABNT NBR 14724 / 10520.</span>
             </div>
           </div>
 
           <button type="submit" class="btn-primary" id="btn-submit-generate">
-            <span>Iniciar Pipeline Autônomo de Doutorado (Gates 1 a 6)</span>
+            <span>Iniciar Pipeline Autônomo de Doutorado (6 Quality Gates)</span>
           </button>
         </form>
       </div>
 
       <!-- ABA 2: REVISAR E ELEVAR PAPER EXISTENTE -->
-      <div id="tab-panel-improve" class="panel-card hidden">
-        <div class="panel-header">
+      <div id="tab-panel-improve" class="hidden">
+        <div class="section-header">
           <h2>Revisar, Auditar e Elevar Paper Existente para Banca de Doutorado</h2>
-          <p>Submete seu rascunho ou paper pronto à Banca Examinadora Sintética (DeepSeek), corrige citações via MCP e aprofunda a densidade dialética com o Claude Fable 5.2.</p>
+          <p>Submete seu manuscrito à Banca Examinadora Sintética (DeepSeek), corrige citações via JurisprudênciaIA MCP e aprofunda a densidade dialética com Claude Fable 5.2.</p>
         </div>
 
-        <form id="form-improve" onsubmit="handleImproveSubmit(event)">
+        <form id="form-improve" class="form-stack" onsubmit="handleImproveSubmit(event)">
           <div class="form-group">
-            <label class="form-label">1. Upload do Arquivo do Paper (.pdf, .docx, .md ou .txt)</label>
+            <label class="form-label">1. Upload do Manuscrito (.pdf, .docx, .md ou .txt)</label>
             <div
               class="dropzone"
               id="improve-dropzone"
               onclick="document.getElementById('imp-file').click()"
             >
-              <div class="dropzone-title">Clique para selecionar ou arraste seu arquivo aqui</div>
+              <div class="dropzone-title">Selecione um arquivo ou arraste seu paper aqui</div>
               <div class="dropzone-sub">Suporta documentos PDF (.pdf), Microsoft Word (.docx), Markdown (.md) e Texto (.txt)</div>
               <div id="imp-file-pill" class="selected-file-pill hidden"></div>
             </div>
@@ -856,7 +1100,10 @@
           </div>
 
           <div class="form-group">
-            <label class="form-label" for="imp-texto">OU Cole o Texto do Paper Diretamente Abaixo (Opcional se enviou arquivo)</label>
+            <label class="form-label" for="imp-texto">
+              <span>OU Cole o Texto do Paper Diretamente</span>
+              <span class="form-hint">Opcional se enviou arquivo</span>
+            </label>
             <textarea
               id="imp-texto"
               class="form-textarea"
@@ -871,13 +1118,14 @@
                 type="text"
                 id="imp-titulo"
                 class="form-input"
-                placeholder="Deixe em branco para extrair automaticamente do documento"
+                placeholder="Em branco extrai automaticamente do documento"
               />
             </div>
 
-            <div class="form-group">
+            <div class="threshold-control">
               <label class="form-label" for="imp-threshold">
-                Nota de Corte da Banca Examinadora: <strong id="imp-threshold-val">85.0</strong>/100
+                <span>Nota de Corte da Banca</span>
+                <span class="threshold-badge"><span id="imp-threshold-val">85.0</span>/100</span>
               </label>
               <input
                 type="range"
@@ -886,7 +1134,6 @@
                 max="95"
                 step="0.5"
                 value="85.0"
-                style="width: 100%; accent-color: var(--accent-gold); margin-top: 0.5rem;"
                 oninput="document.getElementById('imp-threshold-val').textContent = parseFloat(this.value).toFixed(1)"
               />
             </div>
@@ -897,7 +1144,7 @@
             <div class="output-formats">
               <label class="format-Toggle">
                 <input type="checkbox" id="imp-pdf" checked />
-                <span>PDF (ABNT)</span>
+                <span>PDF (LaTeX ABNT)</span>
               </label>
               <label class="format-Toggle">
                 <input type="checkbox" id="imp-docx" checked />
@@ -905,7 +1152,7 @@
               </label>
               <label class="format-Toggle">
                 <input type="checkbox" checked disabled />
-                <span>Dossiê da Banca (PDF / DOCX / MD)</span>
+                <span>Dossiê da Banca Examinadora (PDF / DOCX / MD)</span>
               </label>
             </div>
           </div>
@@ -917,31 +1164,29 @@
       </div>
 
       <!-- ABA 3: HISTÓRICO DE ARTIGOS E DOSSIÊS GERADOS -->
-      <div id="tab-panel-history" class="panel-card hidden">
-        <div class="panel-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+      <div id="tab-panel-history" class="hidden">
+        <div class="section-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
           <div>
             <h2>Histórico de Artigos, Teses e Dossiês de Banca</h2>
-            <p>Todos os trabalhos gerados ou revisados na pasta <code>output/</code> com exportação imediata em PDF, DOCX e Markdown.</p>
+            <p>Acervo completo de trabalhos gerados ou auditados em <code>output/</code> com download imediato em PDF, DOCX e Markdown.</p>
           </div>
-          <button class="theme-btn" onclick="loadHistory()">↻ Atualizar Acervo</button>
+          <button class="theme-btn" onclick="loadHistory()">Atualizar Acervo</button>
         </div>
 
         <div id="history-container" class="history-grid">
-          <p style="color: var(--text-muted);">Carregando acervo acadêmico...</p>
+          <div style="padding: 1.5rem; color: var(--muted);">Carregando acervo acadêmico...</div>
         </div>
       </div>
     </section>
 
     <!-- Coluna Direita: Monitor em Tempo Real dos 6 Quality Gates -->
-    <aside class="panel-card">
-      <div class="panel-header">
+    <aside class="telemetry-rail">
+      <div class="rail-header">
         <h2>Monitor de Quality Gates em Tempo Real</h2>
         <p id="active-job-subtitle">Aguardando submissão de novo paper ou auditoria de banca.</p>
       </div>
 
-      <div id="gates-stepper" class="gates-list">
-        <!-- Preenchido dinamicamente -->
-      </div>
+      <div id="gates-stepper" class="gates-list"></div>
 
       <!-- Console de Telemetria ao Vivo -->
       <div class="telemetry-console" id="telemetry-log">
@@ -951,8 +1196,8 @@
 
       <!-- Banner de Resultado Final e Botões de Download -->
       <div id="job-result-box" class="result-banner hidden">
-        <h3 id="res-box-title">Homologação Concluída!</h3>
-        <p id="res-box-summary" style="font-size: 0.86rem; color: var(--text-secondary);"></p>
+        <h3 id="res-box-title">Homologação Concluída</h3>
+        <p id="res-box-summary" style="font-size: var(--text-xs); color: var(--ink-secondary);"></p>
         <div class="download-actions" id="res-download-links"></div>
       </div>
     </aside>
@@ -966,7 +1211,7 @@
         <h3 id="reader-title">Leitor Acadêmico</h3>
         <div style="display:flex; gap:0.5rem; align-items:center;">
           <div id="reader-dl-buttons" style="display:flex; gap:0.4rem;"></div>
-          <button class="theme-btn" onclick="closeReader()">✕ Fechar</button>
+          <button class="theme-btn" onclick="closeReader()">Fechar</button>
         </div>
       </div>
       <div class="modal-body" id="reader-content"></div>
@@ -997,11 +1242,11 @@
 
     function toggleTheme() {
       const root = document.documentElement;
-      const current = root.getAttribute("data-theme") || "dark";
-      const next = current === "dark" ? "light" : "dark";
+      const current = root.getAttribute("data-theme") || "light";
+      const next = current === "light" ? "dark" : "light";
       root.setAttribute("data-theme", next);
       document.getElementById("theme-toggle-btn").textContent =
-        next === "dark" ? "Modo Papiro Claro" : "Modo Gabinete Noturno";
+        next === "light" ? "Modo Carbono Escuro" : "Modo Estúdio Claro";
     }
 
     function switchTab(tab) {
@@ -1025,19 +1270,19 @@
 
       container.innerHTML = gatesList.map((g) => {
         const scoreHtml = g.score !== null && g.score !== undefined
-          ? `<div style="font-family:'JetBrains Mono',monospace; font-size:0.78rem; font-weight:700; color:var(--accent-gold); margin-top:0.2rem;">${Number(g.score).toFixed(2)}/100</div>`
+          ? `<div class="gate-score">${Number(g.score).toFixed(2)}/100</div>`
           : "";
         return `
-          <div class="gate-item ${g.status}">
+          <div class="gate-item ${escapeHtml(g.status)}">
             <div class="gate-left">
-              <div class="gate-num">G${g.numero}</div>
+              <div class="gate-num">G${escapeHtml(g.numero)}</div>
               <div class="gate-info">
-                <h4>${g.titulo}</h4>
-                <span>Modelo: ${g.modelo}</span>
+                <h4>${escapeHtml(g.titulo)}</h4>
+                <span>${escapeHtml(g.modelo)}</span>
               </div>
             </div>
             <div class="gate-right">
-              <span class="gate-badge badge-${g.status}">${statusLabels[g.status] || g.status}</span>
+              <span class="gate-badge badge-${escapeHtml(g.status)}">${escapeHtml(statusLabels[g.status] || g.status)}</span>
               ${scoreHtml}
             </div>
           </div>
@@ -1048,14 +1293,13 @@
     function handleFileSelect(input) {
       const pill = document.getElementById("imp-file-pill");
       if (input.files && input.files[0]) {
-        pill.textContent = `📄 Selecionado: ${input.files[0].name}`;
+        pill.textContent = `Selecionado: ${input.files[0].name}`;
         pill.classList.remove("hidden");
       } else {
         pill.classList.add("hidden");
       }
     }
 
-    // Configurar Drag & Drop
     const dropzone = document.getElementById("improve-dropzone");
     if (dropzone) {
       dropzone.addEventListener("dragover", (e) => {
@@ -1122,7 +1366,7 @@
       const textoColado = document.getElementById("imp-texto").value.trim();
 
       if ((!fileInput.files || fileInput.files.length === 0) && textoColado.length < 30) {
-        alert("Por favor, selecione um arquivo (.docx, .md, .txt) ou cole o texto do paper (mínimo 30 caracteres).");
+        alert("Por favor, selecione um arquivo (.pdf, .docx, .md, .txt) ou cole o texto do paper (mínimo 30 caracteres).");
         return;
       }
 
@@ -1168,11 +1412,9 @@
           if (!res.ok) return;
           const job = await res.json();
 
-          // Atualizar Gates
           const orderedGates = Object.values(job.gates).sort((a, b) => a.numero - b.numero);
           renderGates(orderedGates);
 
-          // Atualizar Logs
           const logBox = document.getElementById("telemetry-log");
           logBox.innerHTML = (job.logs || [])
             .map((l) => `<div class="telemetry-line">${escapeHtml(l)}</div>`)
@@ -1213,13 +1455,13 @@
 
       if (job.mode === "IMPROVE") {
         titleEl.textContent = r.homologado
-          ? "✨ Paper Elevado e Aprovado pela Banca de Doutorado!"
-          : "✅ Paper Refatorado com Parecer da Banca Examinadora";
-        sumEl.textContent = `Score Evoluiu de ${Number(r.score_inicial).toFixed(2)}/100 para ${Number(r.score_medio).toFixed(2)}/100 · Inconsistências de citação: ${r.inconsistencias_antes} → ${r.inconsistencias_depois}`;
+          ? "Paper Elevado e Aprovado pela Banca de Doutorado"
+          : "Paper Refatorado com Parecer da Banca Examinadora";
+        sumEl.textContent = `Score evoluiu de ${Number(r.score_inicial).toFixed(2)}/100 para ${Number(r.score_medio).toFixed(2)}/100 · Inconsistências de citação: ${r.inconsistencias_antes} → ${r.inconsistencias_depois}`;
       } else {
         titleEl.textContent = r.homologado
-          ? "✨ Obra Homologada nos 6 Quality Gates!"
-          : "✅ Obra Compilada com Diretrizes do Revisor Geral";
+          ? "Obra Homologada nos 6 Quality Gates"
+          : "Obra Compilada com Diretrizes do Revisor Geral";
         sumEl.textContent = `Score Global Médio: ${Number(r.score_medio).toFixed(2)}/100 · Status: ${r.status_geral}`;
       }
 
@@ -1227,22 +1469,22 @@
       let buttonsHtml = "";
 
       if (files.md) {
-        buttonsHtml += `<button class="btn-dl" data-md="${escapeHtml(files.md)}" data-title="${escapeHtml(r.titulo)}" onclick="openReader(this.dataset.md, this.dataset.title)">📖 Ler Artigo na Tela</button>`;
+        buttonsHtml += `<button class="btn-dl" data-md="${escapeHtml(files.md)}" data-title="${escapeHtml(r.titulo)}" onclick="openReader(this.dataset.md, this.dataset.title)">Ler Artigo na Tela</button>`;
       }
       if (files.pdf) {
-        buttonsHtml += `<a class="btn-dl pdf-highlight" href="/api/download/${encodeURIComponent(files.pdf)}" download>⬇ Baixar PDF (ABNT)</a>`;
+        buttonsHtml += `<a class="btn-dl pdf-highlight" href="/api/download/${encodeURIComponent(files.pdf)}" download>Baixar PDF (ABNT)</a>`;
       }
       if (files.docx) {
-        buttonsHtml += `<a class="btn-dl" href="/api/download/${encodeURIComponent(files.docx)}" download>⬇ Baixar DOCX (Word)</a>`;
+        buttonsHtml += `<a class="btn-dl" href="/api/download/${encodeURIComponent(files.docx)}" download>Baixar DOCX (Word)</a>`;
       }
       if (files.md) {
-        buttonsHtml += `<a class="btn-dl" href="/api/download/${encodeURIComponent(files.md)}" download>⬇ Baixar Markdown</a>`;
+        buttonsHtml += `<a class="btn-dl" href="/api/download/${encodeURIComponent(files.md)}" download>Baixar Markdown</a>`;
       }
       if (files.dossie_md) {
-        buttonsHtml += `<button class="btn-dl" data-md="${escapeHtml(files.dossie_md)}" data-title="Dossiê da Banca Examinadora" onclick="openReader(this.dataset.md, this.dataset.title)">⚖ Ler Dossiê da Banca</button>`;
+        buttonsHtml += `<button class="btn-dl" data-md="${escapeHtml(files.dossie_md)}" data-title="Dossiê da Banca Examinadora" onclick="openReader(this.dataset.md, this.dataset.title)">Ler Dossiê da Banca</button>`;
       }
       if (files.dossie_pdf) {
-        buttonsHtml += `<a class="btn-dl" href="/api/download/${encodeURIComponent(files.dossie_pdf)}" download>⬇ Dossiê em PDF</a>`;
+        buttonsHtml += `<a class="btn-dl" href="/api/download/${encodeURIComponent(files.dossie_pdf)}" download>Dossiê em PDF</a>`;
       }
 
       linksEl.innerHTML = buttonsHtml;
@@ -1257,40 +1499,38 @@
         const items = data.items || [];
 
         if (items.length === 0) {
-          container.innerHTML = `<p style="color: var(--text-muted);">Nenhum documento encontrado em output/.</p>`;
+          container.innerHTML = `<div style="padding: 1.5rem; color: var(--muted);">Nenhum documento encontrado em output/.</div>`;
           return;
         }
 
         container.innerHTML = items.map((item) => {
-          const badgeColor = item.is_dossie ? "var(--status-run)" : "var(--accent-gold)";
+          const badgeClass = item.is_dossie ? "badge-dossie" : "badge-paper";
           const dossieBtn = item.files.dossie_md
-            ? `<button class="btn-dl" data-md="${escapeHtml(item.files.dossie_md)}" data-title="Dossiê da Banca" onclick="openReader(this.dataset.md, this.dataset.title)">⚖ Ver Dossiê da Banca</button>`
+            ? `<button class="btn-dl" data-md="${escapeHtml(item.files.dossie_md)}" data-title="Dossiê da Banca" onclick="openReader(this.dataset.md, this.dataset.title)">Ver Dossiê da Banca</button>`
             : "";
 
           return `
             <div class="history-card">
               <div class="history-top">
                 <div>
-                  <span style="font-family:'JetBrains Mono',monospace; font-size:0.7rem; font-weight:700; color:${badgeColor}; text-transform:uppercase;">
-                    ${escapeHtml(item.tipo)}
-                  </span>
+                  <span class="history-badge ${badgeClass}">${escapeHtml(item.tipo)}</span>
                   <h3 class="history-title">${escapeHtml(item.titulo)}</h3>
                 </div>
                 <span class="history-meta">${escapeHtml(item.created_at)} · ${escapeHtml(item.size_kb)} KB</span>
               </div>
               <p class="history-preview">${escapeHtml(item.preview)}</p>
               <div class="download-actions">
-                <button class="btn-dl" data-md="${escapeHtml(item.files.md)}" data-title="${escapeHtml(item.titulo)}" onclick="openReader(this.dataset.md, this.dataset.title)">📖 Ler na Tela</button>
-                <a class="btn-dl pdf-highlight" href="/api/download/${encodeURIComponent(item.files.pdf)}" download>⬇ PDF (ABNT)</a>
-                <a class="btn-dl" href="/api/download/${encodeURIComponent(item.files.docx)}" download>⬇ DOCX (Word)</a>
-                <a class="btn-dl" href="/api/download/${encodeURIComponent(item.files.md)}" download>⬇ Markdown (.md)</a>
+                <button class="btn-dl" data-md="${escapeHtml(item.files.md)}" data-title="${escapeHtml(item.titulo)}" onclick="openReader(this.dataset.md, this.dataset.title)">Ler na Tela</button>
+                <a class="btn-dl pdf-highlight" href="/api/download/${encodeURIComponent(item.files.pdf)}" download>PDF (ABNT)</a>
+                <a class="btn-dl" href="/api/download/${encodeURIComponent(item.files.docx)}" download>DOCX (Word)</a>
+                <a class="btn-dl" href="/api/download/${encodeURIComponent(item.files.md)}" download>Markdown (.md)</a>
                 ${dossieBtn}
               </div>
             </div>
           `;
         }).join("");
       } catch (err) {
-        container.innerHTML = `<p style="color: var(--status-err);">Erro ao carregar histórico: ${err.message}</p>`;
+        container.innerHTML = `<div style="padding: 1.5rem; color: var(--status-err);">Erro ao carregar histórico: ${escapeHtml(err.message)}</div>`;
       }
     }
 
@@ -1304,8 +1544,8 @@
         document.getElementById("reader-title").textContent = title || stem;
         document.getElementById("reader-content").textContent = data.content;
         document.getElementById("reader-dl-buttons").innerHTML = `
-          <a class="btn-dl pdf-highlight" href="/api/download/${encodeURIComponent(stem + '.pdf')}" download>⬇ PDF</a>
-          <a class="btn-dl" href="/api/download/${encodeURIComponent(stem + '.docx')}" download>⬇ DOCX</a>
+          <a class="btn-dl pdf-highlight" href="/api/download/${encodeURIComponent(stem + '.pdf')}" download>PDF</a>
+          <a class="btn-dl" href="/api/download/${encodeURIComponent(stem + '.docx')}" download>DOCX</a>
         `;
         document.getElementById("reader-modal").classList.add("open");
       } catch (err) {
@@ -1317,10 +1557,8 @@
       document.getElementById("reader-modal").classList.remove("open");
     }
 
-    // Inicializar tela
     renderGates(DEFAULT_GATES);
     loadSystemConfig();
   </script>
 </body>
 </html>
-
