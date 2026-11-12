@@ -148,9 +148,30 @@ def improve(
 
     console.print("\n[bold green]Documentos Gerados com Rigor de Doutorado:[/bold green]")
     console.print(f"- [cyan]Artigo Aprimorado (Markdown):[/cyan] {relatorio['artigo_md_path']}")
-    if relatorio["artigo_docx_path"]:
+    if relatorio.get("artigo_docx_path"):
         console.print(f"- [cyan]Artigo Aprimorado (DOCX ABNT):[/cyan] {relatorio['artigo_docx_path']}")
-    console.print(f"- [magenta]Dossiê da Banca Examinadora:[/magenta] {relatorio['dossie_path']}")
+    if relatorio.get("artigo_pdf_path"):
+        console.print(f"- [cyan]Artigo Aprimorado (PDF ABNT):[/cyan] {relatorio['artigo_pdf_path']}")
+    console.print(f"- [magenta]Dossiê da Banca Examinadora (Markdown):[/magenta] {relatorio['dossie_path']}")
+    if relatorio.get("dossie_docx_path"):
+        console.print(f"- [magenta]Dossiê da Banca Examinadora (DOCX):[/magenta] {relatorio['dossie_docx_path']}")
+    if relatorio.get("dossie_pdf_path"):
+        console.print(f"- [magenta]Dossiê da Banca Examinadora (PDF):[/magenta] {relatorio['dossie_pdf_path']}")
+
+@app.command()
+def web(
+    host: str = typer.Option("127.0.0.1", "--host", "-h", help="Host para vincular o servidor web"),
+    port: int = typer.Option(8000, "--port", "-p", help="Porta HTTP da interface web")
+):
+    """Inicia a Interface Web Editorial Stricto Sensu (FastAPI) para geração e aprimoramento de papers."""
+    import uvicorn
+    console.print(Panel.fit(
+        f"[bold blue]Interface Web — Sistema Autônomo de Teses e Artigos de Doutorado[/bold blue]\n"
+        f"Acesse no navegador: [bold green]http://{host}:{port}[/bold green]\n"
+        f"Exportação ativa: [cyan]PDF ABNT Nativo + DOCX Pandoc + Markdown + Dossiê da Banca[/cyan]",
+        border_style="green"
+    ))
+    uvicorn.run("src.web:app", host=host, port=port, reload=False)
 
 @app.command()
 def corpus():

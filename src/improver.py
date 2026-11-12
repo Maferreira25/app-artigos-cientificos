@@ -1,5 +1,5 @@
 import re
-from typing import Dict, Any, List, Tuple, Optional
+from typing import Dict, Any, List, Tuple, Optional, Callable
 from pathlib import Path
 from src.schemas import (
     DocumentoAcademicoState,
@@ -39,9 +39,24 @@ class AcademicPaperImprover:
     async def aprimorar_paper(
         self,
         caminho_arquivo: Path | str,
-        titulo_customizado: Optional[str] = None
+        titulo_customizado: Optional[str] = None,
+        progress_callback: Optional[Callable[[Dict[str, Any]], None]] = None
     ) -> Tuple[DocumentoAcademicoState, Dict[str, Any]]:
         """Executa auditoria diagnóstica, refatoração de doutorado e homologação final."""
+        def _notify(gate: str, status: str, message: str, parecer: Optional[ParecerRevisaoGeralSchema] = None):
+            if progress_callback:
+                payload: Dict[str, Any] = {
+                    "gate": gate,
+                    "status": status,
+                    "message": message,
+                }
+                if parecer:
+                    payload["score"] = parecer.score_global
+                    payload["decisao"] = parecer.status_decisao.value
+                    payload["autorizado"] = parecer.autorizacao_avanco
+                    payload["diagnostico"] = parecer.diagnostico_critico
+                progress_callback(payload)
+
         # 1. Ingestão e parsing do arquivo existente
         texto_raw = self.importer.carregar_arquivo(caminho_arquivo)
         state = self.importer.parsear_para_estado(texto_raw, titulo_fallback=titulo_customizado)
@@ -59,6 +74,7 @@ class AcademicPaperImprover:
         # FASE 1: DIAGNÓSTICO ADVERSARIAL DA BANCA DE DOUTORADO
         # -------------------------------------------------------------
         print("\n[Fase 1/3] Executando Auditoria Diagnóstica da Banca de Doutorado...")
+        _notify("GATE_1_EPISTEMICO", "RUNNING", "Fase 1/3: Executando Auditoria Diagnóstica da Banca de Doutorado...")
         
         # Auditoria anti-alucinação de citações
         erros_citacao_iniciais = self.defense_agent.auditar_citacoes_contra_corpus(state)
@@ -84,11 +100,13 @@ class AcademicPaperImprover:
         }
         print(f"-> Diagnóstico Concluído. Score Médio Inicial: {score_inicial_medio:.2f}/100")
         print(f"-> Inconsistências de citação detectadas: {len(erros_citacao_iniciais)}")
+        _notify("GATE_1_EPISTEMICO", "DONE", f"Diagnóstico Inicial concluído ({score_inicial_medio:.2f}/100)", parecer_g1_init)
 
         # -------------------------------------------------------------
         # FASE 2: ENRIQUECIMENTO E REFATORAÇÃO DE DOUTORADO (MCP + CLAUDE + GPT-6)
         # -------------------------------------------------------------
         print("\n[Fase 2/3] Elevando Densidade Dialética e Integrando Precedentes MCP...")
+        _notify("GATE_2_BIBLIOGRAFICO", "RUNNING", "Consultando JurisprudênciaIA MCP e estruturando Marco Teórico...")
 
         # 2.1 Consulta de Precedentes e Teses Vinculantes no MCP Cloudflare
         precedentes_mcp_raw = ""
@@ -132,6 +150,7 @@ class AcademicPaperImprover:
             "fonte_mcp": "JurisprudenciaIA Cloudflare Workers"
         }
         self.rag_store.salvar_documento(doc_meta["id"], doc_meta, f"# {precedente_autentico.processo}\n\n{precedente_autentico.ementa}")
+        _notify("GATE_4_REDACAO_SECCIONAL", "RUNNING", "Fase 2/3: Refatorando seções com Claude Fable 5.2...")
 
         # 2.2 Refatoração Seccional com Claude Fable 5.2
         novos_capitulos: Dict[str, str] = {}
@@ -142,6 +161,7 @@ class AcademicPaperImprover:
                 continue
 
             print(f"-> Refatorando com Claude Fable 5.2: '{nome_secao}'...")
+            _notify("GATE_4_REDACAO_SECCIONAL", "RUNNING", f"Refatorando seção '{nome_secao}' com Claude Fable 5.2...")
             
             prompt_refatoracao = (
                 f"Você é um orientador de pós-graduação stricto sensu e autoridade em direito processual e constitucional.\n"
@@ -183,18 +203,32 @@ class AcademicPaperImprover:
 
         state.capitulos = novos_capitulos
 
+        # Indexar referências jurisprudenciais consolidadas da refatoração no corpus RAG
+        processo_regex = re.compile(r'\b(REsp|AREsp|RE|ADI|ADC|ADPF|RMS|HC)\s+[\d\.\/\-A-Z]+', re.IGNORECASE)
+        citacoes_refatoradas = [m.group(0) for m in processo_regex.finditer(" ".join(novos_capitulos.values()))]
+        corpus_consolidado = (
+            f"# {precedente_autentico.processo}\n\n"
+            f"{precedente_autentico.ementa}\n\n"
+            f"## Consulta JurisprudenciaIA MCP\n{precedentes_mcp_raw}\n\n"
+            f"## Precedentes Qualificados Citados\n" + "\n".join(citacoes_refatoradas)
+        )
+        self.rag_store.salvar_documento(doc_meta["id"], doc_meta, corpus_consolidado)
+
         # -------------------------------------------------------------
         # FASE 3: AUDITORIA PÓS-REFATORAÇÃO E HOMOLOGAÇÃO FINAL (GATES 1-6)
         # -------------------------------------------------------------
         print("\n[Fase 3/3] Avaliando Quality Gates Finais e Homologação...")
+        _notify("GATE_5_CITACOES_BANCA", "RUNNING", "Fase 3/3: Auditando citações e submetendo à Banca Sintética Final...")
 
         # Gate 1
         p_g1 = self.reviewer.avaliar_gate_1_epistemico(state)
         state.pareceres_gates[GateAvaliadoEnum.GATE_1_EPISTEMICO.value] = p_g1
+        _notify(GateAvaliadoEnum.GATE_1_EPISTEMICO.value, "DONE" if p_g1.autorizacao_avanco else "FAILED", p_g1.diagnostico_critico, p_g1)
         
         # Gate 2
         p_g2 = self.reviewer.avaliar_gate_2_bibliografico(state)
         state.pareceres_gates[GateAvaliadoEnum.GATE_2_BIBLIOGRAFICO.value] = p_g2
+        _notify(GateAvaliadoEnum.GATE_2_BIBLIOGRAFICO.value, "DONE" if p_g2.autorizacao_avanco else "FAILED", p_g2.diagnostico_critico, p_g2)
 
         # Gate 3
         if not state.desenho_metodologico:
@@ -204,20 +238,24 @@ class AcademicPaperImprover:
             )
         p_g3 = self.reviewer.avaliar_gate_3_metodologico(state)
         state.pareceres_gates[GateAvaliadoEnum.GATE_3_METODOLOGICO.value] = p_g3
+        _notify(GateAvaliadoEnum.GATE_3_METODOLOGICO.value, "DONE" if p_g3.autorizacao_avanco else "FAILED", p_g3.diagnostico_critico, p_g3)
 
         # Gate 4
         p_g4 = self.reviewer.avaliar_gate_4_redacao_seccional(state)
         state.pareceres_gates[GateAvaliadoEnum.GATE_4_REDACAO_SECCIONAL.value] = p_g4
+        _notify(GateAvaliadoEnum.GATE_4_REDACAO_SECCIONAL.value, "DONE" if p_g4.autorizacao_avanco else "FAILED", p_g4.diagnostico_critico, p_g4)
 
         # Gate 5
         erros_pos_refatoracao = self.defense_agent.auditar_citacoes_contra_corpus(state)
         erros_banca_final, parecer_banca_final = await self.defense_agent.submeter_a_banca_sintetica(state)
         p_g5 = self.reviewer.avaliar_gate_5_citacoes_banca(state, audit_erros=erros_pos_refatoracao)
         state.pareceres_gates[GateAvaliadoEnum.GATE_5_CITACOES_BANCA.value] = p_g5
+        _notify(GateAvaliadoEnum.GATE_5_CITACOES_BANCA.value, "DONE" if p_g5.autorizacao_avanco else "FAILED", p_g5.diagnostico_critico, p_g5)
 
         # Gate 6
         p_g6 = self.reviewer.avaliar_gate_6_homologacao_final(state)
         state.pareceres_gates[GateAvaliadoEnum.GATE_6_HOMOLOGACAO_FINAL.value] = p_g6
+        _notify(GateAvaliadoEnum.GATE_6_HOMOLOGACAO_FINAL.value, "DONE" if p_g6.autorizacao_avanco else "FAILED", p_g6.diagnostico_critico, p_g6)
 
         state.status_geral = "HOMOLOGADO_SUCESSO" if p_g6.autorizacao_avanco else "EXIGE_AJUSTES"
         
@@ -236,6 +274,7 @@ class AcademicPaperImprover:
         # 4. Geração dos arquivos finais e do Dossiê da Banca
         md_path = self.exporter.gerar_markdown_consolidado(state)
         docx_path = self.exporter.compilar_docx(md_path)
+        pdf_path = self.exporter.compilar_pdf(md_path)
 
         # Salvar Dossiê da Banca Examinadora
         dossie_path = config.output_dir / f"Dossie_Banca_Doutorado_{md_path.stem}.md"
@@ -260,8 +299,14 @@ class AcademicPaperImprover:
             f"- Endpoint: Cloudflare Workers HTTPS Bridge\n"
         )
         dossie_path.write_text(dossie_content, encoding="utf-8")
+        dossie_pdf_path = self.exporter.compilar_pdf(dossie_path)
+        dossie_docx_path = self.exporter.compilar_docx(dossie_path)
+
         relatorio_evolucao["dossie_path"] = str(dossie_path)
+        relatorio_evolucao["dossie_pdf_path"] = str(dossie_pdf_path) if dossie_pdf_path else None
+        relatorio_evolucao["dossie_docx_path"] = str(dossie_docx_path) if dossie_docx_path else None
         relatorio_evolucao["artigo_md_path"] = str(md_path)
         relatorio_evolucao["artigo_docx_path"] = str(docx_path) if docx_path else None
+        relatorio_evolucao["artigo_pdf_path"] = str(pdf_path) if pdf_path else None
 
         return state, relatorio_evolucao
