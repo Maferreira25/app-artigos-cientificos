@@ -73,15 +73,22 @@ def test_exporter_pdf_fallback_nativo_direto(tmp_path, monkeypatch):
 
 @pytest.mark.asyncio
 async def test_web_index_and_config():
-    """Testa se a interface HTML principal e o endpoint de configuração carregam corretamente."""
+    """Testa se a interface HTML principal (Impeccable UI, zero serif) e o endpoint de configuração carregam corretamente."""
     transport = ASGITransport(app=app)
     async with AsyncClient(transport=transport, base_url="http://test") as client:
         res_index = await client.get("/")
         assert res_index.status_code == 200
-        assert "Stricto" in res_index.text
-        assert "Gerar Novo Paper" in res_index.text
-        assert "Revisar & Elevar Paper Existente" in res_index.text
-        assert "escapeHtml" in res_index.text
+        html = res_index.text
+        assert "Stricto" in html
+        assert "Gerar Novo Paper" in html
+        assert "Revisar & Elevar Paper Existente" in html
+        assert "escapeHtml" in html
+        assert "Bricolage Grotesque" in html
+        assert "IBM Plex Mono" in html
+        assert "Cormorant Garamond" not in html
+        assert "line-clamp: 2;" in html
+        assert 'role="dialog"' in html
+        assert 'aria-modal="true"' in html
 
         res_cfg = await client.get("/api/config")
         assert res_cfg.status_code == 200
