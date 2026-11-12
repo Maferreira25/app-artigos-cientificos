@@ -68,7 +68,9 @@ class LlmClient:
                         raw_content = msg.get("content") or msg.get("refusal") or ""
                         # Remove blocos de raciocinio interno (<think>...</think>) do texto final se presentes
                         content = re.sub(r'<think>.*?</think>', '', raw_content, flags=re.DOTALL).strip()
-                        return content
+                        if content:
+                            return content
+                    raise RuntimeError(f"Payload de resposta sem 'content' válido retornado pela API: {data}")
             except Exception as e:
                 if attempt == 0 and fallback_model and fallback_model != model:
                     payload["model"] = fallback_model

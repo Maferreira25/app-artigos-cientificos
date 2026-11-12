@@ -6,6 +6,7 @@ from rich.table import Table
 from rich.panel import Panel
 from pathlib import Path
 from src.orchestrator import AcademicPipelineOrchestrator
+from src.improver import AcademicPaperImprover
 from src.exporter import AcademicExporter
 from src.rag_store import RagStore
 from src.mcp_client import JurisprudenciaMcpClient
@@ -82,6 +83,74 @@ def run(
     else:
         console.print(f"[bold red]⛔ O pipeline foi interrompido com status: {state.status_geral}[/bold red]")
         console.print("[yellow]Verifique as diretrizes de refatoração no parecer do Revisor Geral.[/yellow]")
+
+@app.command()
+def improve(
+    arquivo: Path = typer.Option(
+        ...,
+        "--arquivo", "-a",
+        help="Caminho do arquivo do paper existente (.md, .txt ou .docx) a ser aprimorado",
+        exists=True,
+        readable=True
+    ),
+    titulo: Optional[str] = typer.Option(
+        None,
+        "--titulo", "-t",
+        help="Título customizado para a obra (opcional, por padrão extrai do arquivo)"
+    ),
+    threshold: float = typer.Option(
+        85.0,
+        "--threshold",
+        help="Nota de corte mínima da banca de examinadores (padrão 85.0)"
+    )
+):
+    """Eleva um paper existente ao padrão de aprovação em banca examinadora de doutorado."""
+    console.print(Panel.fit(
+        f"[bold blue]Aprimoramento e Elevação de Paper para Banca de Doutorado[/bold blue]\n"
+        f"Arquivo: [cyan]{arquivo}[/cyan]\n"
+        f"Nota de Corte Mínima: [yellow]{threshold}/100[/yellow]",
+        border_style="magenta"
+    ))
+
+    improver = AcademicPaperImprover(threshold=threshold)
+
+    async def _exec():
+        return await improver.aprimorar_paper(caminho_arquivo=arquivo, titulo_customizado=titulo)
+
+    state, relatorio = asyncio.run(_exec())
+
+    # Exibição do Painel da Banca
+    diag = relatorio["diagnostico_inicial"]
+    res = relatorio["resultado_final"]
+
+    table = Table(title="Evolução Acadêmica para Banca Examinadora de Doutorado", show_header=True, header_style="bold cyan")
+    table.add_column("Métrica de Avaliação", style="white")
+    table.add_column("Pré-Intervenção", justify="center", style="yellow")
+    table.add_column("Pós-Intervenção (Doutorado)", justify="center", style="bold green")
+
+    table.add_row(
+        "Score Médio dos Gates",
+        f"{diag['score_medio']:.2f}/100",
+        f"{res['score_medio_final']:.2f}/100"
+    )
+    table.add_row(
+        "Inconsistências de Citação",
+        str(diag["inconsistencias_citacao"]),
+        str(res["inconsistencias_citacao_finais"])
+    )
+    table.add_row(
+        "Veredito de Homologação",
+        "PENDENTE DE DEFESA",
+        "APROVADO COM LOUVOR" if res["homologado"] else "EXIGE AJUSTES"
+    )
+
+    console.print(table)
+
+    console.print("\n[bold green]Documentos Gerados com Rigor de Doutorado:[/bold green]")
+    console.print(f"- [cyan]Artigo Aprimorado (Markdown):[/cyan] {relatorio['artigo_md_path']}")
+    if relatorio["artigo_docx_path"]:
+        console.print(f"- [cyan]Artigo Aprimorado (DOCX ABNT):[/cyan] {relatorio['artigo_docx_path']}")
+    console.print(f"- [magenta]Dossiê da Banca Examinadora:[/magenta] {relatorio['dossie_path']}")
 
 @app.command()
 def corpus():
