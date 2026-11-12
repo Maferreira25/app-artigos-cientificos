@@ -836,20 +836,20 @@
 
         <form id="form-improve" onsubmit="handleImproveSubmit(event)">
           <div class="form-group">
-            <label class="form-label">1. Upload do Arquivo do Paper (.docx, .md ou .txt)</label>
+            <label class="form-label">1. Upload do Arquivo do Paper (.pdf, .docx, .md ou .txt)</label>
             <div
               class="dropzone"
               id="improve-dropzone"
               onclick="document.getElementById('imp-file').click()"
             >
               <div class="dropzone-title">Clique para selecionar ou arraste seu arquivo aqui</div>
-              <div class="dropzone-sub">Suporta documentos Microsoft Word (.docx), Markdown (.md) e Texto (.txt)</div>
+              <div class="dropzone-sub">Suporta documentos PDF (.pdf), Microsoft Word (.docx), Markdown (.md) e Texto (.txt)</div>
               <div id="imp-file-pill" class="selected-file-pill hidden"></div>
             </div>
             <input
               type="file"
               id="imp-file"
-              accept=".md,.txt,.markdown,.docx"
+              accept=".pdf,.docx,.md,.txt,.markdown"
               style="display: none;"
               onchange="handleFileSelect(this)"
             />
@@ -1314,3 +1314,4 @@
   </script>
 </body>
 </html>
+

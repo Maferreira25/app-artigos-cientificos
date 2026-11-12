@@ -28,9 +28,15 @@ def test_exporter_pdf_abnt_nativo(tmp_path):
     pdf_path = Path(pdf_path)
     assert pdf_path.exists()
     content_bytes = pdf_path.read_bytes()
-    assert content_bytes.startswith(b"%PDF-1.4")
+    assert content_bytes.startswith(b"%PDF-1.")
     assert b"%%EOF" in content_bytes
     assert len(content_bytes) > 500
+
+    # Também testa a extração de PDF pelo AcademicPaperImporter
+    from src.importer import AcademicPaperImporter
+    importer = AcademicPaperImporter()
+    extracted_md = importer.carregar_arquivo(pdf_path)
+    assert "Precedentes" in extracted_md or "Introdução" in extracted_md
 
 
 @pytest.mark.asyncio
@@ -78,7 +84,7 @@ async def test_web_history_preview_and_on_demand_pdf(tmp_path, monkeypatch):
         # 3. Download do PDF gera automaticamente o arquivo PDF sob demanda a partir do .md
         res_pdf = await client.get("/api/download/Paper_Doutorado_Teste.pdf")
         assert res_pdf.status_code == 200
-        assert res_pdf.content.startswith(b"%PDF-1.4")
+        assert res_pdf.content.startswith(b"%PDF-1.")
         assert (tmp_path / "Paper_Doutorado_Teste.pdf").exists()
 
         # 4. Proteção contra Path Traversal / extensão inválida

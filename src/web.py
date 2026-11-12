@@ -304,10 +304,10 @@ async def start_improve_paper(
 
     if arquivo and arquivo.filename:
         ext = Path(arquivo.filename).suffix.lower()
-        if ext not in (".md", ".txt", ".markdown", ".docx"):
+        if ext not in (".md", ".txt", ".markdown", ".docx", ".pdf"):
             raise HTTPException(
                 status_code=400,
-                detail=f"Extensão '{ext}' não suportada. Envie um arquivo .md, .txt ou .docx."
+                detail=f"Extensão '{ext}' não suportada. Envie um arquivo .pdf, .docx, .md ou .txt."
             )
         safe_name = Path(arquivo.filename).name
         saved_draft = config.drafts_dir / f"upload_{uuid.uuid4().hex[:8]}_{safe_name}"

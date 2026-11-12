@@ -6,22 +6,57 @@ from typing import Dict, Any, Tuple, Optional
 from src.schemas import DocumentoAcademicoState
 
 class AcademicPaperImporter:
-    """Importador e Parser de Documentos Acadêmicos Existentes (.md, .txt, .docx)."""
+    """Importador e Parser de Documentos Acadêmicos Existentes (.md, .txt, .docx, .pdf)."""
 
     def __init__(self):
         self.pandoc_bin = shutil.which("pandoc")
 
     def converter_docx_para_markdown(self, docx_path: Path) -> str:
-        """Converte documento DOCX para string Markdown via Pandoc."""
-        if not self.pandoc_bin:
-            raise RuntimeError("Pandoc não encontrado no sistema para converter arquivo .docx")
-        
-        cmd = [self.pandoc_bin, str(docx_path), "-f", "docx", "-t", "markdown", "--wrap=none"]
-        res = subprocess.run(cmd, capture_output=True, text=True, check=True, encoding="utf-8")
-        return res.stdout
+        """Converte documento DOCX para string Markdown via Pandoc ou python-docx."""
+        if self.pandoc_bin:
+            try:
+                cmd = [self.pandoc_bin, str(docx_path), "-f", "docx", "-t", "markdown", "--wrap=none"]
+                res = subprocess.run(cmd, capture_output=True, text=True, check=True, encoding="utf-8")
+                if res.stdout.strip():
+                    return res.stdout
+            except Exception:
+                pass
+
+        try:
+            import docx
+            doc = docx.Document(str(docx_path))
+            blocos = [p.text for p in doc.paragraphs if p.text.strip()]
+            return "\n\n".join(blocos)
+        except Exception as e:
+            raise RuntimeError(f"Não foi possível extrair texto do arquivo .docx: {e}")
+
+    def converter_pdf_para_markdown(self, pdf_path: Path) -> str:
+        """Extrai texto de um documento PDF via PyMuPDF (fitz) ou pypdf."""
+        try:
+            import fitz  # PyMuPDF
+            doc = fitz.open(str(pdf_path))
+            paginas = [page.get_text("text") for page in doc]
+            doc.close()
+            texto = "\n\n".join(p.strip() for p in paginas if p.strip())
+            if texto:
+                return texto
+        except Exception:
+            pass
+
+        try:
+            from pypdf import PdfReader
+            reader = PdfReader(str(pdf_path))
+            paginas = [p.extract_text() or "" for p in reader.pages]
+            texto = "\n\n".join(p.strip() for p in paginas if p.strip())
+            if texto:
+                return texto
+        except Exception as e:
+            raise RuntimeError(f"Não foi possível extrair texto do arquivo .pdf: {e}")
+
+        raise RuntimeError("O arquivo PDF não contém texto extraível.")
 
     def carregar_arquivo(self, arquivo_path: Path | str) -> str:
-        """Carrega o texto em Markdown a partir de arquivo .md, .txt ou .docx."""
+        """Carrega o texto em Markdown a partir de arquivo .md, .txt, .docx ou .pdf."""
         path = Path(arquivo_path)
         if not path.exists():
             raise FileNotFoundError(f"Arquivo não encontrado: {path}")
@@ -29,10 +64,12 @@ class AcademicPaperImporter:
         ext = path.suffix.lower()
         if ext == ".docx":
             return self.converter_docx_para_markdown(path)
+        elif ext == ".pdf":
+            return self.converter_pdf_para_markdown(path)
         elif ext in (".md", ".txt", ".markdown"):
             return path.read_text(encoding="utf-8")
         else:
-            raise ValueError(f"Extensão não suportada: '{ext}'. Use .md, .txt ou .docx.")
+            raise ValueError(f"Extensão não suportada: '{ext}'. Use .md, .txt, .docx ou .pdf.")
 
     def parsear_para_estado(self, texto_markdown: str, titulo_fallback: Optional[str] = None) -> DocumentoAcademicoState:
         """Analisa o texto do paper existente e decompõe em seções acadêmicas estruturadas."""

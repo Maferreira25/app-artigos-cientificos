@@ -1,3 +1,4 @@
+import os
 import re
 import shutil
 import subprocess
@@ -6,6 +7,24 @@ from pathlib import Path
 from typing import Dict, Any, Optional, List, Tuple
 from src.schemas import DocumentoAcademicoState
 from src.config import config
+
+
+def _resolver_ambiente_tex() -> Dict[str, str]:
+    """Garante que os diretórios do Scoop, MiKTeX e Pandoc estejam no PATH do processo atual."""
+    env = os.environ.copy()
+    home = Path.home()
+    extra_dirs = [
+        home / "scoop" / "shims",
+        home / "scoop" / "apps" / "miktex" / "current" / "texmfs" / "install" / "miktex" / "bin" / "x64",
+        home / "AppData" / "Local" / "Programs" / "MiKTeX" / "miktex" / "bin" / "x64",
+        home / "AppData" / "Local" / "Pandoc",
+    ]
+    current_path = env.get("PATH", "")
+    for d in extra_dirs:
+        if d.exists() and str(d) not in current_path:
+            current_path = f"{d}{os.pathsep}{current_path}"
+    env["PATH"] = current_path
+    return env
 
 
 class AcademicExporter:
@@ -68,14 +87,15 @@ class AcademicExporter:
 
     def compilar_docx(self, md_path: Path) -> Optional[Path]:
         """Converte o arquivo Markdown para DOCX formatado via Pandoc se disponível."""
-        pandoc_bin = shutil.which("pandoc")
-        if not pandoc_bin:
+        env = _resolver_ambiente_tex()
+        pandoc_bin = shutil.which("pandoc", path=env.get("PATH"))
+        if not pandoc_bin or not md_path.exists():
             return None
 
         docx_path = md_path.with_suffix(".docx")
         try:
             cmd = [pandoc_bin, str(md_path), "-o", str(docx_path), "--standalone"]
-            subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=env)
             return docx_path
         except Exception:
             return None
@@ -83,25 +103,28 @@ class AcademicExporter:
     def compilar_pdf(self, md_path: Path) -> Optional[Path]:
         """Converte o arquivo Markdown para PDF nas normas ABNT.
         
-        Tenta inicialmente Pandoc + LaTeX (LuaLaTeX/XeLaTeX/PDFLaTeX). Caso o ambiente
+        Tenta inicialmente Pandoc + LaTeX (Tectonic/LuaLaTeX/XeLaTeX/PDFLaTeX) ou Typst. Caso o ambiente
         não possua distribuição TeX instalada, utiliza o compilador PDF ABNT nativo em Python.
         """
         if not md_path.exists():
             return None
 
         pdf_path = md_path.with_suffix(".pdf")
-        pandoc_bin = shutil.which("pandoc")
+        env = _resolver_ambiente_tex()
+        search_path = env.get("PATH")
+        pandoc_bin = shutil.which("pandoc", path=search_path)
 
         if pandoc_bin:
-            pdf_engines = ["lualatex", "xelatex", "pdflatex"]
+            pdf_engines = ["tectonic", "lualatex", "xelatex", "pdflatex", "typst"]
             latex_template = config.templates_dir / "abnt_article.latex"
             for engine in pdf_engines:
-                if shutil.which(engine):
+                engine_bin = shutil.which(engine, path=search_path)
+                if engine_bin:
                     try:
-                        cmd = [pandoc_bin, str(md_path), "-o", str(pdf_path), f"--pdf-engine={engine}"]
-                        if latex_template.exists():
+                        cmd = [pandoc_bin, str(md_path), "-o", str(pdf_path), f"--pdf-engine={engine_bin}"]
+                        if engine != "typst" and latex_template.exists():
                             cmd.extend(["--template", str(latex_template)])
-                        subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                        subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=env)
                         if pdf_path.exists() and pdf_path.stat().st_size > 0:
                             return pdf_path
                     except Exception:
