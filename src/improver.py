@@ -40,7 +40,9 @@ class AcademicPaperImprover:
         self,
         caminho_arquivo: Path | str,
         titulo_customizado: Optional[str] = None,
-        progress_callback: Optional[Callable[[Dict[str, Any]], None]] = None
+        progress_callback: Optional[Callable[[Dict[str, Any]], None]] = None,
+        gerar_pdf: bool = True,
+        gerar_docx: bool = True,
     ) -> Tuple[DocumentoAcademicoState, Dict[str, Any]]:
         """Executa auditoria diagnóstica, refatoração de doutorado e homologação final."""
         def _notify(gate: str, status: str, message: str, parecer: Optional[ParecerRevisaoGeralSchema] = None):
@@ -273,8 +275,8 @@ class AcademicPaperImprover:
 
         # 4. Geração dos arquivos finais e do Dossiê da Banca
         md_path = self.exporter.gerar_markdown_consolidado(state)
-        docx_path = self.exporter.compilar_docx(md_path)
-        pdf_path = self.exporter.compilar_pdf(md_path)
+        docx_path = self.exporter.compilar_docx(md_path) if gerar_docx else None
+        pdf_path = self.exporter.compilar_pdf(md_path) if gerar_pdf else None
 
         # Salvar Dossiê da Banca Examinadora
         dossie_path = config.output_dir / f"Dossie_Banca_Doutorado_{md_path.stem}.md"
@@ -299,8 +301,8 @@ class AcademicPaperImprover:
             f"- Endpoint: Cloudflare Workers HTTPS Bridge\n"
         )
         dossie_path.write_text(dossie_content, encoding="utf-8")
-        dossie_pdf_path = self.exporter.compilar_pdf(dossie_path)
-        dossie_docx_path = self.exporter.compilar_docx(dossie_path)
+        dossie_pdf_path = self.exporter.compilar_pdf(dossie_path) if gerar_pdf else None
+        dossie_docx_path = self.exporter.compilar_docx(dossie_path) if gerar_docx else None
 
         relatorio_evolucao["dossie_path"] = str(dossie_path)
         relatorio_evolucao["dossie_pdf_path"] = str(dossie_pdf_path) if dossie_pdf_path else None

@@ -95,7 +95,7 @@ class AcademicExporter:
         docx_path = md_path.with_suffix(".docx")
         try:
             cmd = [pandoc_bin, str(md_path), "-o", str(docx_path), "--standalone"]
-            subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=env)
+            subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=env, timeout=60)
             return docx_path
         except Exception:
             return None
@@ -124,7 +124,7 @@ class AcademicExporter:
                         cmd = [pandoc_bin, str(md_path), "-o", str(pdf_path), f"--pdf-engine={engine_bin}"]
                         if engine != "typst" and latex_template.exists():
                             cmd.extend(["--template", str(latex_template)])
-                        subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=env)
+                        subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=env, timeout=90)
                         if pdf_path.exists() and pdf_path.stat().st_size > 0:
                             return pdf_path
                     except Exception:

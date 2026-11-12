@@ -985,6 +985,16 @@
 
     let activePollTimer = null;
 
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return "";
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
     function toggleTheme() {
       const root = document.documentElement;
       const current = root.getAttribute("data-theme") || "dark";
@@ -1165,7 +1175,7 @@
           // Atualizar Logs
           const logBox = document.getElementById("telemetry-log");
           logBox.innerHTML = (job.logs || [])
-            .map((l) => `<div class="telemetry-line">${l}</div>`)
+            .map((l) => `<div class="telemetry-line">${escapeHtml(l)}</div>`)
             .join("");
           logBox.scrollTop = logBox.scrollHeight;
 
@@ -1217,7 +1227,7 @@
       let buttonsHtml = "";
 
       if (files.md) {
-        buttonsHtml += `<button class="btn-dl" onclick="openReader('${files.md}', '${r.titulo.replace(/'/g, "")}')">📖 Ler Artigo na Tela</button>`;
+        buttonsHtml += `<button class="btn-dl" data-md="${escapeHtml(files.md)}" data-title="${escapeHtml(r.titulo)}" onclick="openReader(this.dataset.md, this.dataset.title)">📖 Ler Artigo na Tela</button>`;
       }
       if (files.pdf) {
         buttonsHtml += `<a class="btn-dl pdf-highlight" href="/api/download/${encodeURIComponent(files.pdf)}" download>⬇ Baixar PDF (ABNT)</a>`;
@@ -1229,7 +1239,7 @@
         buttonsHtml += `<a class="btn-dl" href="/api/download/${encodeURIComponent(files.md)}" download>⬇ Baixar Markdown</a>`;
       }
       if (files.dossie_md) {
-        buttonsHtml += `<button class="btn-dl" onclick="openReader('${files.dossie_md}', 'Dossiê da Banca Examinadora')">⚖ Ler Dossiê da Banca</button>`;
+        buttonsHtml += `<button class="btn-dl" data-md="${escapeHtml(files.dossie_md)}" data-title="Dossiê da Banca Examinadora" onclick="openReader(this.dataset.md, this.dataset.title)">⚖ Ler Dossiê da Banca</button>`;
       }
       if (files.dossie_pdf) {
         buttonsHtml += `<a class="btn-dl" href="/api/download/${encodeURIComponent(files.dossie_pdf)}" download>⬇ Dossiê em PDF</a>`;
@@ -1252,10 +1262,9 @@
         }
 
         container.innerHTML = items.map((item) => {
-          const safeTitle = item.titulo.replace(/'/g, "");
           const badgeColor = item.is_dossie ? "var(--status-run)" : "var(--accent-gold)";
           const dossieBtn = item.files.dossie_md
-            ? `<button class="btn-dl" onclick="openReader('${item.files.dossie_md}', 'Dossiê da Banca')">⚖ Ver Dossiê da Banca</button>`
+            ? `<button class="btn-dl" data-md="${escapeHtml(item.files.dossie_md)}" data-title="Dossiê da Banca" onclick="openReader(this.dataset.md, this.dataset.title)">⚖ Ver Dossiê da Banca</button>`
             : "";
 
           return `
@@ -1263,15 +1272,15 @@
               <div class="history-top">
                 <div>
                   <span style="font-family:'JetBrains Mono',monospace; font-size:0.7rem; font-weight:700; color:${badgeColor}; text-transform:uppercase;">
-                    ${item.tipo}
+                    ${escapeHtml(item.tipo)}
                   </span>
-                  <h3 class="history-title">${item.titulo}</h3>
+                  <h3 class="history-title">${escapeHtml(item.titulo)}</h3>
                 </div>
-                <span class="history-meta">${item.created_at} · ${item.size_kb} KB</span>
+                <span class="history-meta">${escapeHtml(item.created_at)} · ${escapeHtml(item.size_kb)} KB</span>
               </div>
-              <p class="history-preview">${item.preview}</p>
+              <p class="history-preview">${escapeHtml(item.preview)}</p>
               <div class="download-actions">
-                <button class="btn-dl" onclick="openReader('${item.files.md}', '${safeTitle}')">📖 Ler na Tela</button>
+                <button class="btn-dl" data-md="${escapeHtml(item.files.md)}" data-title="${escapeHtml(item.titulo)}" onclick="openReader(this.dataset.md, this.dataset.title)">📖 Ler na Tela</button>
                 <a class="btn-dl pdf-highlight" href="/api/download/${encodeURIComponent(item.files.pdf)}" download>⬇ PDF (ABNT)</a>
                 <a class="btn-dl" href="/api/download/${encodeURIComponent(item.files.docx)}" download>⬇ DOCX (Word)</a>
                 <a class="btn-dl" href="/api/download/${encodeURIComponent(item.files.md)}" download>⬇ Markdown (.md)</a>

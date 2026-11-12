@@ -4,19 +4,21 @@ import subprocess
 from pathlib import Path
 from typing import Dict, Any, Tuple, Optional
 from src.schemas import DocumentoAcademicoState
+from src.exporter import _resolver_ambiente_tex
 
 class AcademicPaperImporter:
     """Importador e Parser de Documentos Acadêmicos Existentes (.md, .txt, .docx, .pdf)."""
 
     def __init__(self):
-        self.pandoc_bin = shutil.which("pandoc")
+        self.env = _resolver_ambiente_tex()
+        self.pandoc_bin = shutil.which("pandoc", path=self.env.get("PATH"))
 
     def converter_docx_para_markdown(self, docx_path: Path) -> str:
         """Converte documento DOCX para string Markdown via Pandoc ou python-docx."""
         if self.pandoc_bin:
             try:
                 cmd = [self.pandoc_bin, str(docx_path), "-f", "docx", "-t", "markdown", "--wrap=none"]
-                res = subprocess.run(cmd, capture_output=True, text=True, check=True, encoding="utf-8")
+                res = subprocess.run(cmd, capture_output=True, text=True, check=True, encoding="utf-8", timeout=30, env=self.env)
                 if res.stdout.strip():
                     return res.stdout
             except Exception:

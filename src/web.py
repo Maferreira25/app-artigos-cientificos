@@ -1,4 +1,5 @@
 import asyncio
+import re
 import uuid
 from datetime import datetime
 from pathlib import Path
@@ -192,6 +193,8 @@ async def _executar_job_melhoria(
             caminho_arquivo=arquivo_path,
             titulo_customizado=titulo_customizado,
             progress_callback=lambda ev: _registrar_evento_job(job_id, ev),
+            gerar_pdf=gerar_pdf,
+            gerar_docx=gerar_docx,
         )
 
         md_path = Path(relatorio["artigo_md_path"])
@@ -309,11 +312,13 @@ async def start_improve_paper(
                 status_code=400,
                 detail=f"Extensão '{ext}' não suportada. Envie um arquivo .pdf, .docx, .md ou .txt."
             )
-        safe_name = Path(arquivo.filename).name
+        safe_name = re.sub(r"[^a-zA-Z0-9._\-]", "_", Path(arquivo.filename).name)
         saved_draft = config.drafts_dir / f"upload_{uuid.uuid4().hex[:8]}_{safe_name}"
         content_bytes = await arquivo.read()
         if not content_bytes:
             raise HTTPException(status_code=400, detail="O arquivo enviado está vazio.")
+        if len(content_bytes) > 25 * 1024 * 1024:
+            raise HTTPException(status_code=413, detail="O arquivo excede o limite máximo de 25 MB.")
         saved_draft.write_bytes(content_bytes)
     elif texto_colado and len(texto_colado.strip()) >= 30:
         saved_draft = config.drafts_dir / f"colado_{uuid.uuid4().hex[:8]}.md"
@@ -414,8 +419,13 @@ async def list_generated_history():
 def _resolver_caminho_seguro_output(filename: str) -> Path:
     """Garante confinamento estrito dentro de config.output_dir contra path traversal."""
     safe_name = Path(filename).name
-    target = (config.output_dir / safe_name).resolve()
-    if not str(target).startswith(str(config.output_dir.resolve())):
+    if not safe_name or safe_name in (".", ".."):
+        raise HTTPException(status_code=400, detail="Caminho de arquivo inválido.")
+    out_root = config.output_dir.resolve()
+    target = (out_root / safe_name).resolve()
+    try:
+        target.relative_to(out_root)
+    except ValueError:
         raise HTTPException(status_code=400, detail="Caminho de arquivo inválido.")
     return target
 
