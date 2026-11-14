@@ -4,7 +4,8 @@ from src.schemas import (
     DocumentoAcademicoState,
     GateAvaliadoEnum,
     StatusDecisaoEnum,
-    ParecerRevisaoGeralSchema
+    ParecerRevisaoGeralSchema,
+    TipoDocumentoEnum
 )
 from src.mcp_client import JurisprudenciaMcpClient
 from src.rag_store import RagStore
@@ -41,10 +42,11 @@ class AcademicPipelineOrchestrator:
         self,
         titulo: str,
         tema: str,
-        progress_callback: Optional[Callable[[Dict[str, Any]], None]] = None
+        progress_callback: Optional[Callable[[Dict[str, Any]], None]] = None,
+        tipo_documento: TipoDocumentoEnum = TipoDocumentoEnum.ARTIGO_CIENTIFICO
     ) -> DocumentoAcademicoState:
         """Executa a máquina de estados completa com supervisão passo a passo."""
-        state = DocumentoAcademicoState(titulo=titulo, tema=tema)
+        state = DocumentoAcademicoState(titulo=titulo, tema=tema, tipo_documento=tipo_documento)
 
         def _notify(gate: str, status: str, message: str, parecer: Optional[ParecerRevisaoGeralSchema] = None):
             if progress_callback:

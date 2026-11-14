@@ -11,7 +11,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from src.config import config
-from src.schemas import GateAvaliadoEnum
+from src.schemas import GateAvaliadoEnum, TipoDocumentoEnum
 from src.orchestrator import AcademicPipelineOrchestrator
 from src.improver import AcademicPaperImprover
 from src.exporter import AcademicExporter
@@ -26,6 +26,7 @@ app = FastAPI(
 
 STATIC_DIR = Path(__file__).resolve().parent / "static"
 STATIC_DIR.mkdir(parents=True, exist_ok=True)
+app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 
 # Armazenamento em memória do estado de jobs em execução / concluídos
 JOBS_STORE: Dict[str, Dict[str, Any]] = {}
@@ -76,6 +77,10 @@ GATE_LABELS = {
 class GeneratePaperRequest(BaseModel):
     titulo: str = Field(..., min_length=5, description="Título da tese ou artigo científico")
     tema: str = Field(..., min_length=5, description="Tema ou questão central de pesquisa")
+    tipo_documento: TipoDocumentoEnum = Field(
+        TipoDocumentoEnum.ARTIGO_CIENTIFICO,
+        description="Formato alvo: ARTIGO_CIENTIFICO (ABNT NBR 6022) ou PROJETO_TESE (ABNT NBR 15287 / 14724)"
+    )
     recorte_tematico: Optional[str] = Field(None, description="Problema, hipótese preliminar ou recorte opcional")
     threshold: float = Field(85.0, ge=50.0, le=100.0, description="Nota de corte mínima (padrão 85.0)")
     gerar_pdf: bool = Field(True, description="Compilar saída em PDF ABNT")
@@ -142,6 +147,7 @@ async def _executar_job_geracao(job_id: str, req: GeneratePaperRequest) -> None:
             titulo=req.titulo,
             tema=tema_efetivo,
             progress_callback=lambda ev: _registrar_evento_job(job_id, ev),
+            tipo_documento=req.tipo_documento,
         )
 
         # Mesmo que algum gate exija ajustes, geramos os arquivos para inspeção e download
@@ -182,6 +188,7 @@ async def _executar_job_melhoria(
     threshold: float,
     gerar_pdf: bool,
     gerar_docx: bool,
+    tipo_documento: TipoDocumentoEnum = TipoDocumentoEnum.ARTIGO_CIENTIFICO,
 ) -> None:
     job = JOBS_STORE[job_id]
     job["status"] = "RUNNING"
@@ -195,6 +202,7 @@ async def _executar_job_melhoria(
             progress_callback=lambda ev: _registrar_evento_job(job_id, ev),
             gerar_pdf=gerar_pdf,
             gerar_docx=gerar_docx,
+            tipo_documento=tipo_documento,
         )
 
         md_path = Path(relatorio["artigo_md_path"])
@@ -298,6 +306,7 @@ async def start_improve_paper(
     arquivo: Optional[UploadFile] = File(None),
     texto_colado: Optional[str] = Form(None),
     titulo: Optional[str] = Form(None),
+    tipo_documento: TipoDocumentoEnum = Form(TipoDocumentoEnum.ARTIGO_CIENTIFICO),
     threshold: float = Form(85.0),
     gerar_pdf: bool = Form(True),
     gerar_docx: bool = Form(True),
@@ -353,6 +362,7 @@ async def start_improve_paper(
         threshold,
         gerar_pdf,
         gerar_docx,
+        tipo_documento,
     )
     return {"job_id": job_id, "status": "QUEUED"}
 
@@ -395,10 +405,19 @@ async def list_generated_history():
         titulo_legivel = first_line.lstrip("#").strip() if first_line.startswith("#") else stem.replace("_", " ")
 
         stat = md_file.stat()
+        if is_dossie:
+            tipo_badge_hist = "DOSSIÊ DA BANCA"
+        elif "**Natureza da Obra:** Projeto de Tese" in text_content:
+            tipo_badge_hist = "PROJETO DE TESE"
+        elif "**Natureza da Obra:** Artigo Científico" in text_content:
+            tipo_badge_hist = "ARTIGO CIENTÍFICO"
+        else:
+            tipo_badge_hist = "ARTIGO / TESE"
+
         items.append({
             "id": stem,
             "titulo": titulo_legivel,
-            "tipo": "DOSSIÊ DA BANCA" if is_dossie else "ARTIGO / TESE",
+            "tipo": tipo_badge_hist,
             "is_dossie": is_dossie,
             "created_at": datetime.fromtimestamp(stat.st_mtime).strftime("%d/%m/%Y %H:%M"),
             "size_kb": round(stat.st_size / 1024.0, 1),

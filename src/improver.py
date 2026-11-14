@@ -6,7 +6,8 @@ from src.schemas import (
     GateAvaliadoEnum,
     StatusDecisaoEnum,
     ParecerRevisaoGeralSchema,
-    PrecedenteJudicialSchema
+    PrecedenteJudicialSchema,
+    TipoDocumentoEnum
 )
 from src.mcp_client import JurisprudenciaMcpClient
 from src.rag_store import RagStore
@@ -43,6 +44,7 @@ class AcademicPaperImprover:
         progress_callback: Optional[Callable[[Dict[str, Any]], None]] = None,
         gerar_pdf: bool = True,
         gerar_docx: bool = True,
+        tipo_documento: TipoDocumentoEnum = TipoDocumentoEnum.ARTIGO_CIENTIFICO,
     ) -> Tuple[DocumentoAcademicoState, Dict[str, Any]]:
         """Executa auditoria diagnóstica, refatoração de doutorado e homologação final."""
         def _notify(gate: str, status: str, message: str, parecer: Optional[ParecerRevisaoGeralSchema] = None):
@@ -62,6 +64,7 @@ class AcademicPaperImprover:
         # 1. Ingestão e parsing do arquivo existente
         texto_raw = self.importer.carregar_arquivo(caminho_arquivo)
         state = self.importer.parsear_para_estado(texto_raw, titulo_fallback=titulo_customizado)
+        state.tipo_documento = tipo_documento
         
         relatorio_evolucao: Dict[str, Any] = {
             "arquivo_origem": str(caminho_arquivo),
@@ -155,6 +158,12 @@ class AcademicPaperImprover:
         _notify("GATE_4_REDACAO_SECCIONAL", "RUNNING", "Fase 2/3: Refatorando seções com Claude Fable 5.2...")
 
         # 2.2 Refatoração Seccional com Claude Fable 5.2
+        is_tese = state.tipo_documento == TipoDocumentoEnum.PROJETO_TESE
+        formato_alvo_str = (
+            "Projeto de Tese de Final de Curso (ABNT NBR 15287 / 14724, enfatizando justificativa de ineditismo, objetivos e estrutura capitular)"
+            if is_tese else
+            "Artigo Científico de Periódico Qualis A (ABNT NBR 6022, enfatizando densidade analítica, confrontação dialética e jurimetria)"
+        )
         novos_capitulos: Dict[str, str] = {}
         for nome_secao, texto_original in state.capitulos.items():
             # Pular seções muito curtas de títulos
@@ -167,14 +176,14 @@ class AcademicPaperImprover:
             
             prompt_refatoracao = (
                 f"Você é um orientador de pós-graduação stricto sensu e autoridade em direito processual e constitucional.\n"
-                f"Refatore e aprofunde o seguinte trecho de um paper de nível de doutorado para aprovação em banca examinadora:\n\n"
+                f"Refatore e aprofunde o seguinte trecho no formato de {formato_alvo_str} para aprovação em banca examinadora:\n\n"
                 f"--- SEÇÃO ORIGINAL: {nome_secao} ---\n"
                 f"{texto_original}\n\n"
                 f"--- DIRETRIZES DA BANCA EXAMINADORA SINTÉTICA (DEEPSEEK) ---\n"
                 f"{parecer_banca_init[:800]}\n\n"
                 f"--- PRECEDENTES AUTÊNTICOS DO SERVIDOR JURISPRUDÊNCIAIA MCP ---\n"
                 f"{precedentes_mcp_raw[:1200]}\n\n"
-                f"EXIGÊNCIAS MANDATÓRIAS DE DOUTORADO:\n"
+                f"EXIGÊNCIAS MANDATÓRIAS DE DOUTORADO ({'PROJETO DE TESE' if is_tese else 'ARTIGO CIENTÍFICO'}):\n"
                 f"1. Aprofunde a confrontação dialética entre posições doutrinárias antagônicas.\n"
                 f"2. Aborde expressamente as técnicas de superação (overruling) e distinção (distinguishing).\n"
                 f"3. Cumpra o princípio da fidelidade jurisprudencial citando e interpretando o precedente autêntico indexado do STF/STJ.\n"

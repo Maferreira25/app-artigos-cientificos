@@ -5,7 +5,7 @@ import subprocess
 import textwrap
 from pathlib import Path
 from typing import Dict, Any, Optional, List, Tuple
-from src.schemas import DocumentoAcademicoState
+from src.schemas import DocumentoAcademicoState, TipoDocumentoEnum
 from src.config import config
 
 
@@ -44,15 +44,24 @@ class AcademicExporter:
             safe_titulo = "artigo_doutorado"
         md_file = self.output_dir / f"{safe_titulo}.md"
 
+        is_tese = state.tipo_documento == TipoDocumentoEnum.PROJETO_TESE
+        tipo_badge = (
+            "Projeto de Tese / Trabalho de Conclusão de Curso (ABNT NBR 15287 / 14724)"
+            if is_tese else
+            "Artigo Científico de Periódico Qualis A (ABNT NBR 6022)"
+        )
+        resumo_heading = "## Resumo Executivo do Projeto de Tese" if is_tese else "## Resumo"
+
         linhas = [
-            f"# {state.titulo or 'Projeto de Tese / Artigo Científico'}",
+            f"# {state.titulo or ('Projeto de Tese de Final de Curso' if is_tese else 'Artigo Científico')}",
             "",
+            f"**Natureza da Obra:** {tipo_badge}",
             f"**Tema Central:** {state.tema}",
             "",
             "---",
             "",
-            "## Resumo",
-            f"Este trabalho investiga o tema '{state.tema}' sob o enfoque da integridade do ordenamento jurídico e da segurança jurisprudencial. "
+            resumo_heading,
+            f"Este {'projeto de tese' if is_tese else 'artigo científico'} investiga o tema '{state.tema}' sob o enfoque da integridade do ordenamento jurídico e da segurança jurisprudencial. "
             f"A hipótese fundamental assevera a imperatividade de critérios uniformes na estabilização dos precedentes qualificados. "
             f"A metodologia articula a dogmática dedutiva com jurimetria descritiva das decisões dos tribunais superiores.",
             "",

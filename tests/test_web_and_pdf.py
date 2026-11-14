@@ -3,6 +3,8 @@ from pathlib import Path
 from httpx import AsyncClient, ASGITransport
 from src.exporter import AcademicExporter
 from src.importer import AcademicPaperImporter
+from src.schemas import DocumentoAcademicoState, TipoDocumentoEnum
+from src.agents.sectional_writer_agent import SectionalWriterAgent
 from src.web import app, _resolver_caminho_seguro_output
 from src.config import config
 from fastapi import HTTPException
@@ -83,9 +85,14 @@ async def test_web_index_and_config():
         assert "Gerar Novo Paper" in html
         assert "Revisar & Elevar Paper Existente" in html
         assert "escapeHtml" in html
-        assert "Bricolage Grotesque" in html
+        assert "Outfit" in html
         assert "IBM Plex Mono" in html
+        assert "/static/logo_emblem.png" in html
         assert "Cormorant Garamond" not in html
+
+        res_logo = await client.get("/static/logo_emblem.png")
+        assert res_logo.status_code == 200
+        assert res_logo.headers["content-type"].startswith("image/png")
         assert "line-clamp: 2;" in html
         assert 'role="dialog"' in html
         assert 'aria-modal="true"' in html
@@ -170,3 +177,78 @@ async def test_web_improve_validation_and_negative_cases():
         # Job inexistente
         res_job = await client.get("/api/jobs/job-id-inexistente")
         assert res_job.status_code == 404
+
+
+@pytest.mark.asyncio
+async def test_tipo_documento_artigo_vs_projeto_tese(tmp_path, monkeypatch):
+    """Garante que o seletor Artigo Científico vs Projeto de Tese orienta a estrutura de capítulos, exportação, histórico e validação de API."""
+    monkeypatch.setattr(config, "output_dir", tmp_path)
+    exporter = AcademicExporter(output_dir=tmp_path)
+
+    # Mockar clientes externos para teste determinístico e instantâneo
+    class DummyMcp:
+        async def pesquisar_ementas(self, *a, **kw):
+            return "Ementa oficial simulada via MCP."
+
+    class DummyLlm:
+        async def generate(self, *a, **kw):
+            raise RuntimeError("Offline fallback test")
+
+    writer = SectionalWriterAgent(mcp_client=DummyMcp(), llm_client=DummyLlm())
+
+    # 1. Artigo Científico (ABNT NBR 6022)
+    state_artigo = DocumentoAcademicoState(
+        titulo="Artigo sobre Precedentes",
+        tema="Segurança Jurídica",
+        tipo_documento=TipoDocumentoEnum.ARTIGO_CIENTIFICO,
+        problema_pesquisa="Qual o limite do overruling?",
+        hipotese="Exige modulação temporal estrita.",
+    )
+    state_artigo = await writer.redigir_secoes(state_artigo)
+    md_artigo = exporter.gerar_markdown_consolidado(state_artigo).read_text(encoding="utf-8")
+    assert "Artigo Científico de Periódico Qualis A (ABNT NBR 6022)" in md_artigo
+    assert "1. Introdução e Problematização Epistemológica" in md_artigo
+
+    # 2. Projeto de Tese de Final de Curso (ABNT NBR 15287 / 14724)
+    state_tese = DocumentoAcademicoState(
+        titulo="Projeto de Tese sobre Precedentes",
+        tema="Segurança Jurídica",
+        tipo_documento=TipoDocumentoEnum.PROJETO_TESE,
+        problema_pesquisa="Qual o limite do overruling?",
+        hipotese="Exige modulação temporal estrita.",
+    )
+    state_tese = await writer.redigir_secoes(state_tese)
+    md_tese = exporter.gerar_markdown_consolidado(state_tese).read_text(encoding="utf-8")
+    assert "Projeto de Tese / Trabalho de Conclusão de Curso (ABNT NBR 15287 / 14724)" in md_tese
+    assert "1. Introdução, Justificativa de Ineditismo e Objetivos da Tese" in md_tese
+    assert "Estrutura Capitular Proposta e Cronograma de Execução" in md_tese
+
+    # 3. Verificação da listagem do histórico (badges específicos) e validação de API (422 para tipo_documento inválido)
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as client:
+        res_hist = await client.get("/api/history")
+        assert res_hist.status_code == 200
+        tipos_listados = {item["id"]: item["tipo"] for item in res_hist.json()["items"]}
+        assert tipos_listados.get("Artigo_sobre_Precedentes") == "ARTIGO CIENTÍFICO"
+        assert tipos_listados.get("Projeto_de_Tese_sobre_Precedentes") == "PROJETO DE TESE"
+
+        # Caso negativo: tipo_documento inválido em /api/generate deve retornar HTTP 422
+        res_invalid_gen = await client.post(
+            "/api/generate",
+            json={
+                "titulo": "Título Válido de Teste",
+                "tema": "Tema Válido de Teste",
+                "tipo_documento": "FORMATO_INEXISTENTE",
+            },
+        )
+        assert res_invalid_gen.status_code == 422
+
+        # Caso negativo: tipo_documento inválido em /api/improve deve retornar HTTP 422
+        res_invalid_imp = await client.post(
+            "/api/improve",
+            data={
+                "texto_colado": "Texto longo suficiente para passar na validação de tamanho mínimo de trinta caracteres.",
+                "tipo_documento": "FORMATO_INEXISTENTE",
+            },
+        )
+        assert res_invalid_imp.status_code == 422

@@ -64,10 +64,15 @@ class ParecerRevisaoGeralSchema(BaseModel):
             raise ValueError(f"Score {score} inferior a 85 não pode autorizar avanço sem aprovação formal")
         return v
 
+class TipoDocumentoEnum(str, Enum):
+    ARTIGO_CIENTIFICO = "ARTIGO_CIENTIFICO"
+    PROJETO_TESE = "PROJETO_TESE"
+
 class DocumentoAcademicoState(BaseModel):
     """Estado global compartilhado entre os nós de agentes do pipeline."""
     titulo: str = ""
     tema: str = ""
+    tipo_documento: TipoDocumentoEnum = TipoDocumentoEnum.ARTIGO_CIENTIFICO
     problema_pesquisa: str = ""
     hipotese: str = ""
     marco_teorico: str = ""

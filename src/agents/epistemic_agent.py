@@ -1,5 +1,5 @@
 from typing import Optional
-from src.schemas import DocumentoAcademicoState
+from src.schemas import DocumentoAcademicoState, TipoDocumentoEnum
 from src.mcp_client import JurisprudenciaMcpClient
 from src.llm import LlmClient
 from src.config import config
@@ -27,6 +27,12 @@ class EpistemicAgent:
     ) -> DocumentoAcademicoState:
         """Formula o problema e a hipótese consultando o MCP e sintetizando via LLM."""
         state.tema = tema
+        is_tese = state.tipo_documento == TipoDocumentoEnum.PROJETO_TESE
+        formato_label = (
+            "um Projeto de Tese / Trabalho de Conclusão de Curso (ABNT NBR 15287 / 14724)"
+            if is_tese else
+            "um Artigo Científico de Periódico Qualis A (ABNT NBR 6022)"
+        )
         
         # 1. Consulta de viragem / precedentes no MCP para fundamentar a novidade
         overruling_info = ""
@@ -37,7 +43,7 @@ class EpistemicAgent:
 
         # 2. Síntese epistemológica via LLM
         prompt = (
-            f"Como epistemólogo jurídico e orientador de pós-graduação stricto sensu, estruture a fundação teórica para uma tese sobre o tema:\n"
+            f"Como epistemólogo jurídico e orientador de pós-graduação stricto sensu, estruture a fundação teórica para {formato_label} sobre o tema:\n"
             f"'{tema}'\n\n"
             f"Dados de Overruling / Precedentes obtidos do Servidor MCP:\n{overruling_info}\n\n"
             f"Forneça com máximo rigor acadêmico:\n"
@@ -45,7 +51,7 @@ class EpistemicAgent:
             f"2. HIPÓTESE CENTRAL: Uma proposição falseável com resposta dogmática sustentável (mínimo 40 palavras).\n"
             f"3. MARCO TEÓRICO PRELIMINAR: O tripé conceitual (doutrina clássica, contemporânea e teoria dos precedentes)."
         )
-        system_prompt = "Você é o Agente Epistemológico de um pipeline de teses de doutorado. Seja rigoroso, dialético e erudito."
+        system_prompt = f"Você é o Agente Epistemológico especializado na estruturação de {formato_label}. Seja rigoroso, dialético e erudito."
 
         try:
             resposta_llm = await self.llm_client.generate(
