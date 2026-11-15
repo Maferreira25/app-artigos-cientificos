@@ -54,11 +54,20 @@ Este pipeline resolve as três principais falhas de LLMs genéricos no meio acad
   2. **Given** a tese proposta, **When** submetida à banca sintética no Gate 5, **Then** os pontos de cautela e distinções devem ser emitidos e sanados.
 
 ### User Story 5 - Homologação e Compilação Final ABNT (Priority: P3)
-**Descrição:** Como pesquisador, quero exportar o projeto ou artigo completo em formato PDF tipográfico (via Pandoc + LuaLaTeX) e DOCX estritamente formatados nas normas ABNT.
+**Descrição:** Como pesquisador, quero exportar o projeto ou artigo completo em formato PDF tipográfico (via Pandoc + LuaLaTeX ou motor nativo Python) e DOCX estritamente formatados nas normas ABNT.
 - **Por que esta prioridade:** Entrega final pronta para protocolo acadêmico ou submissão a periódicos.
 - **Teste Independente:** Geração de arquivos `.pdf` e `.docx` a partir dos rascunhos consolidados aprovados no Gate 6.
 - **Cenários de Aceite:**
   1. **Given** o parecer final aprovado pelo Revisor Geral, **When** o compilador for invocado, **Then** os documentos finais devem ser gerados no diretório `output/` com sumário, referências e citações conformes à ABNT.
+
+### User Story 6 - Higiene Acadêmica, Ordem Canônica ABNT NBR 6022 e Zero Vazamento RAG (Priority: P1)
+**Descrição:** Como editor-chefe de periódico acadêmico Qualis A, exijo que o artigo científico respeite a ordem estrutural canônica (Introdução precedendo obrigatoriamente o desenvolvimento), apresente elementos pré-textuais normatizados (autoria qualificada, resumo vernáculo NBR 6028, abstract e keywords) e esteja 100% livre de comandos de depuração, metadados de API ou transcrições mecânicas de ementas.
+- **Por que esta prioridade:** O vazamento de logs de ferramentas ou a desordem estrutural quebra o decoro acadêmico e inviabiliza a submissão para periódicos de estrato superior.
+- **Teste Independente:** Execução de `sanitizar_texto_academico`, `verificar_vazamentos` e `calcular_proporcao_bullets` sobre o texto final gerado, avaliando reprovação imediata nos Gates 4 e 6 perante qualquer anomalia detectada.
+- **Cenários de Aceite:**
+  1. **Given** um texto gerado com comandos residuais como `# Resultado JurisprudenciaIA` ou `[J1 - STF]`, **When** submetido à auditoria do Revisor Geral, **Then** o Gate 4 ou Gate 6 deve reprovar a etapa com diretriz expressa de sanitização.
+  2. **Given** um documento em que a Seção 2 anteceda a Seção 1, **When** processado pelo `AcademicExporter`, **Then** o algoritmo de ordenação canônica deve corrigir a sequência garantindo a Seção 1 (Introdução) como primeiro capítulo.
+  3. **Given** capítulos com proporção de bullets superior a 15%, **When** avaliados no Gate 4, **Then** o sistema deve rejeitar o texto por estilo esquemático incompatível com o padrão *stricto sensu*.
 
 ---
 
@@ -81,8 +90,16 @@ Este pipeline resolve as três principais falhas de LLMs genéricos no meio acad
    - `diretrizes_refatoracao` (list de objetos com topico_ou_paragrafo, problema_identificado, instrucao_correcao)
    - `autorizacao_avanco` (bool)
 
-3. **`DocumentoAcademicoState` (LangGraph State):**
-   - Estado compartilhado contendo: tema, problema, hipótese, corpus RAG de precedentes e doutrinas, capítulos redigidos, histórico de pareceres dos gates, notas e status de avanço.
+3. **`DocumentoAcademicoState` (LangGraph / State Central):**
+   - `tema` (str), `titulo` (str), `tipo_documento` (TipoDocumentoEnum)
+   - `autores` (List[str]), `filiacoes` (List[str])
+   - `resumo` (str - NBR 6028), `palavras_chave` (List[str])
+   - `titulo_en` (str), `abstract` (str), `keywords` (List[str])
+   - `problema_pesquisa` (str), `hipotese` (str), `marco_teorico` (str)
+   - `desenho_metodologico` (str), `capitulos` (Dict[str, str]), `conclusao` (str)
+   - `precedentes_mcp` (List[PrecedenteJudicialSchema]), `teses_concorrentes` (List[str])
+   - `pareceres_gates` (Dict[str, ParecerRevisaoGeralSchema]), `scores_acumulados` (Dict[str, float])
+   - `status_geral` (str)
 
 ---
 
@@ -91,3 +108,5 @@ Este pipeline resolve as três principais falhas de LLMs genéricos no meio acad
 - **Execução Local:** O código opera integralmente no ambiente local (`c:\App_Artigos_Cientificos`), conectando-se a endpoints MCP via HTTP/HTTPS JSON-RPC 2.0.
 - **Resiliência a Falhas de Conexão:** Timeout configurável, tratamento de retries e fallbacks de tools de busca.
 - **Armazenamento Transparente:** Textos e referências gravados em Markdown legível e auditável pelo usuário.
+- **Zero Tool Leakage:** Nenhuma cadeia de depuração, parâmetro de busca bruto ou log de chamada de API pode estar presente nos arquivos finais (.md, .pdf, .docx).
+- **Prosa Dissertativa Contínua:** Decoro acadêmico de nível *stricto sensu*, limitando estruturas de tópicos/bullets a no máximo 15% das linhas do texto analítico.

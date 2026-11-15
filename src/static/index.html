@@ -9,48 +9,63 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
     /* ==========================================================================
-       IMPECCABLE DESIGN SYSTEM · OKLCH PALETTE (Hue 262° Royal Blue)
-       Zero Serif · Modular 1.333x Type Scale · Dark Slate Header Card
+       STRICTOSENSU ENTERPRISE ACADEMIC THEME
+       Layout Idêntico ao Print: Sidebar Dark Navy + Conteúdo Warm Alabaster
        ========================================================================== */
     :root,
     [data-theme="light"] {
-      --bg: oklch(0.845 0.008 262);
-      --surface: oklch(0.935 0.005 262);
-      --surface-elevated: oklch(0.968 0.003 262);
-      --ink: oklch(0.150 0.020 262);
-      --ink-secondary: oklch(0.320 0.018 262);
-      --muted: oklch(0.415 0.015 262);
+      --sidebar-bg: #091322;
+      --sidebar-surface: #0e1d33;
+      --sidebar-border: #1a2e4d;
+      --sidebar-text: #e2e8f0;
+      --sidebar-muted: #849bbb;
+      --sidebar-active-bg: #162b4c;
+      --sidebar-active-text: #ffffff;
+      --sidebar-active-border: #3b82f6;
 
-      --primary: oklch(0.470 0.215 262);
-      --primary-hover: oklch(0.410 0.215 262);
-      --primary-tint: oklch(0.925 0.038 262);
-      --on-primary: oklch(1.000 0.000 0);
+      --bg: #f8f6f0;
+      --bg-subtle: #f2efe7;
+      --surface: #ffffff;
+      --surface-elevated: #ffffff;
+      --surface-card: #fdfcf9;
+      --ink: #17202a;
+      --ink-secondary: #475569;
+      --muted: #64748b;
 
-      --accent: oklch(0.480 0.145 200);
-      --accent-tint: oklch(0.925 0.032 200);
-      --on-accent: oklch(1.000 0.000 0);
+      --primary: #003882;
+      --primary-hover: #002b66;
+      --primary-tint: #eff6ff;
+      --primary-active: #002252;
+      --on-primary: #ffffff;
 
-      --status-done: oklch(0.480 0.145 155);
-      --status-done-tint: oklch(0.925 0.035 155);
-      --status-run: oklch(0.470 0.215 262);
-      --status-run-tint: oklch(0.925 0.038 262);
-      --status-err: oklch(0.500 0.190 25);
-      --status-err-tint: oklch(0.930 0.035 25);
+      --accent: #d97706;
+      --accent-tint: #fef3c7;
+      --on-accent: #ffffff;
 
-      --border: oklch(0.695 0.018 262);
-      --border-strong: oklch(0.560 0.025 262);
+      --gold: #d4a017;
+      --gold-light: #fef9c3;
+      --gold-border: #eab308;
+
+      --status-done: #059669;
+      --status-done-tint: #d1fae5;
+      --status-run: #0284c7;
+      --status-run-tint: #e0f2fe;
+      --status-err: #dc2626;
+      --status-err-tint: #fee2e2;
+
+      --border: #e2ddd3;
+      --border-strong: #cbd5e1;
+      --card-border: #e5e0d5;
 
       --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
       --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
-      /* Modular 1.333x (Perfect Fourth) Type Scale */
       --text-xs: 0.75rem;
       --text-sm: 0.875rem;
       --text-base: 1rem;
-      --text-lg: 1.375rem;
-      --text-xl: 2rem;
+      --text-lg: 1.25rem;
+      --text-xl: 1.75rem;
 
-      /* Semantic z-index scale */
       --z-sticky: 10;
       --z-backdrop: 40;
       --z-modal: 50;
@@ -58,31 +73,48 @@
     }
 
     [data-theme="dark"] {
-      --bg: oklch(0.095 0.000 0);
-      --surface: oklch(0.215 0.006 262);
-      --surface-elevated: oklch(0.275 0.010 262);
-      --ink: oklch(0.960 0.006 262);
-      --ink-secondary: oklch(0.830 0.010 262);
-      --muted: oklch(0.720 0.010 262);
+      --sidebar-bg: #060c17;
+      --sidebar-surface: #0a1526;
+      --sidebar-border: #13243d;
+      --sidebar-text: #e2e8f0;
+      --sidebar-muted: #64748b;
+      --sidebar-active-bg: #0e203c;
+      --sidebar-active-text: #ffffff;
+      --sidebar-active-border: #3b82f6;
 
-      --primary: oklch(0.560 0.215 262);
-      --primary-hover: oklch(0.610 0.215 262);
-      --primary-tint: oklch(0.250 0.055 262);
-      --on-primary: oklch(1.000 0.000 0);
+      --bg: #0b111e;
+      --bg-subtle: #080d17;
+      --surface: #111a2c;
+      --surface-elevated: #152238;
+      --surface-card: #0f1827;
+      --ink: #f8fafc;
+      --ink-secondary: #cbd5e1;
+      --muted: #94a3b8;
 
-      --accent: oklch(0.600 0.145 200);
-      --accent-tint: oklch(0.240 0.050 200);
-      --on-accent: oklch(1.000 0.000 0);
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --primary-tint: #1e293b;
+      --primary-active: #1e40af;
+      --on-primary: #ffffff;
 
-      --status-done: oklch(0.640 0.150 155);
-      --status-done-tint: oklch(0.240 0.045 155);
-      --status-run: oklch(0.560 0.215 262);
-      --status-run-tint: oklch(0.250 0.055 262);
-      --status-err: oklch(0.630 0.185 25);
-      --status-err-tint: oklch(0.250 0.050 25);
+      --accent: #f59e0b;
+      --accent-tint: #3b2a08;
+      --on-accent: #ffffff;
 
-      --border: oklch(0.360 0.012 262);
-      --border-strong: oklch(0.460 0.018 262);
+      --gold: #facc15;
+      --gold-light: #2d2605;
+      --gold-border: #ca8a04;
+
+      --status-done: #10b981;
+      --status-done-tint: #064e3b;
+      --status-run: #38bdf8;
+      --status-run-tint: #082f49;
+      --status-err: #ef4444;
+      --status-err-tint: #450a0a;
+
+      --border: #1e293b;
+      --border-strong: #334155;
+      --card-border: #1e2d45;
     }
 
     *, *::before, *::after {
@@ -91,65 +123,191 @@
       padding: 0;
     }
 
-    html {
-      font-size: 16px;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    body {
+    html, body {
+      height: 100%;
       font-family: var(--font-sans);
-      font-size: var(--text-base);
-      line-height: 1.55;
+      font-size: 15px;
+      line-height: 1.5;
       color: var(--ink);
       background-color: var(--bg);
-      font-kerning: normal;
-      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Container Global em Grid com Barra Lateral */
+    .app-layout {
       display: flex;
-      flex-direction: column;
-      transition: background-color 180ms cubic-bezier(0.22, 1, 0.36, 1),
-                  color 180ms cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    [data-theme="dark"] body {
-      line-height: 1.6;
-      letter-spacing: 0.008em;
-    }
-
-    h1, h2, h3, h4 {
-      font-family: var(--font-sans);
-      text-wrap: balance;
-      letter-spacing: -0.025em;
-      line-height: 1.2;
-      color: var(--ink);
-    }
-
-    p {
-      text-wrap: pretty;
-      max-width: 68ch;
-    }
-
-    code, pre, .mono {
-      font-family: var(--font-mono);
-      font-variant-ligatures: none;
-      font-variant-numeric: tabular-nums;
+      min-height: 100vh;
+      width: 100%;
     }
 
     /* ==========================================================================
-       TOP COMMAND HEADER CARD (DARK SLATE / CHARCOAL)
+       1. SIDEBAR ESQUERDA (AZUL MARINHO ESCURO)
        ========================================================================== */
-    .topbar {
-      width: 100%;
-      max-width: 1440px;
-      margin: 0 auto;
-      padding: 1.5rem 2rem 0;
+    .sidebar {
+      width: 250px;
+      min-width: 250px;
+      background-color: var(--sidebar-bg);
+      border-right: 1px solid var(--sidebar-border);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 1.5rem 1rem 1.25rem;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      z-index: 20;
     }
 
-    .topbar-inner {
-      background-color: oklch(0.385 0.014 255);
-      border: 2px solid oklch(0.285 0.018 255);
-      border-radius: 14px;
-      padding: 1.15rem 1.75rem;
+    .sidebar-brand {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--sidebar-border);
+      margin-bottom: 1.25rem;
+    }
+
+    .sidebar-logo {
+      width: 58px;
+      height: 58px;
+      object-fit: contain;
+      margin-bottom: 0.6rem;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.4));
+    }
+
+    .sidebar-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .sidebar-badge {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 0.15rem 0.55rem;
+      border-radius: 999px;
+      background: rgba(59, 130, 246, 0.2);
+      color: #93c5fd;
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      margin-top: 0.45rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .sidebar-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      flex: 1;
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.7rem 0.85rem;
+      border-radius: 8px;
+      color: var(--sidebar-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 140ms ease;
+      background: transparent;
+      width: 100%;
+      text-align: left;
+    }
+
+    .sidebar-link svg {
+      width: 1.15rem;
+      height: 1.15rem;
+      flex-shrink: 0;
+      opacity: 0.85;
+    }
+
+    .sidebar-link:hover {
+      color: #ffffff;
+      background-color: var(--sidebar-surface);
+    }
+
+    .sidebar-link.active {
+      color: var(--sidebar-active-text);
+      background-color: var(--sidebar-active-bg);
+      border-color: var(--sidebar-active-border);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+
+    .sidebar-link.active svg {
+      opacity: 1;
+      stroke: #60a5fa;
+    }
+
+    .sidebar-footer {
+      padding-top: 1rem;
+      border-top: 1px solid var(--sidebar-border);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .sidebar-chip {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.4rem 0.65rem;
+      border-radius: 6px;
+      background: var(--sidebar-surface);
+      border: 1px solid var(--sidebar-border);
+      color: #cbd5e1;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+
+    .sidebar-theme-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      background: transparent;
+      border: 1px solid var(--sidebar-border);
+      color: #94a3b8;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 140ms ease;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .sidebar-theme-btn:hover {
+      color: #ffffff;
+      background: var(--sidebar-surface);
+      border-color: #3b82f6;
+    }
+
+    /* ==========================================================================
+       2. CONTEÚDO PRINCIPAL (HEADER SUPERIOR + WORKBENCH)
+       ========================================================================== */
+    .main-wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      background-color: var(--bg);
+    }
+
+    /* Topbar Superior Limpa (Sem card preto estufado) */
+    .topbar-clean {
+      padding: 1rem 2rem;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -157,258 +315,256 @@
       flex-wrap: wrap;
     }
 
-    .brand {
+    .topbar-title-group {
       display: flex;
       align-items: center;
-      gap: 1.15rem;
+      gap: 1rem;
     }
 
-    .brand-logo-img {
-      width: 4rem;
-      height: 4rem;
-      object-fit: contain;
-      flex-shrink: 0;
-      display: block;
-    }
-
-    .brand-copy {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .brand-copy h1 {
-      font-family: var(--font-sans);
-      font-size: var(--text-xl);
-      line-height: 1.08;
-      letter-spacing: -0.02em;
-      color: oklch(1.000 0.000 0);
-      display: flex;
-      align-items: center;
-      gap: 0.65rem;
-      flex-wrap: wrap;
-    }
-
-    .brand-title-wordmark {
-      display: inline-flex;
-      align-items: baseline;
-    }
-
-    .brand-stricto {
-      font-weight: 800;
-      color: oklch(1.000 0.000 0);
-    }
-
-    .brand-sensu {
-      font-weight: 300;
-      color: oklch(0.880 0.075 230);
-    }
-
-    .brand-tag {
-      font-family: var(--font-mono);
-      font-size: var(--text-xs);
-      font-weight: 600;
-      padding: 0.2rem 0.6rem;
+    .topbar-divider {
+      width: 3px;
+      height: 28px;
+      background: var(--gold);
       border-radius: 999px;
-      background-color: oklch(0.310 0.055 262);
-      color: oklch(0.950 0.035 230);
-      border: 1px solid oklch(0.520 0.095 262);
     }
 
-    .brand-sub-primary {
-      font-family: var(--font-sans);
-      font-size: var(--text-xs);
-      font-weight: 600;
-      letter-spacing: 0.08em;
+    .topbar-main-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      color: var(--ink);
       text-transform: uppercase;
-      color: oklch(0.890 0.055 230);
-      margin-top: 0.25rem;
+      line-height: 1.2;
     }
 
-    .brand-sub {
-      font-size: var(--text-xs);
-      color: oklch(0.910 0.010 255);
-      font-weight: 400;
-      margin-top: 0.12rem;
+    .topbar-sub {
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-weight: 500;
     }
 
-    .topbar-telemetry {
+    .topbar-pills {
       display: flex;
       align-items: center;
-      gap: 0.625rem;
+      gap: 0.6rem;
       flex-wrap: wrap;
     }
 
-    .status-chip {
+    .status-chip-clean {
       display: inline-flex;
       align-items: center;
       gap: 0.45rem;
-      padding: 0.42rem 0.85rem;
+      padding: 0.35rem 0.75rem;
       border-radius: 999px;
-      background-color: oklch(0.320 0.014 255);
-      border: 2px solid oklch(0.490 0.018 255);
-      font-size: var(--text-xs);
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      font-size: 0.75rem;
       font-weight: 600;
-      color: oklch(0.970 0.005 255);
-      font-variant-numeric: tabular-nums;
+      color: var(--ink-secondary);
     }
 
-    .status-dot {
-      width: 0.5rem;
-      height: 0.5rem;
+    .status-dot-green {
+      width: 7px;
+      height: 7px;
       border-radius: 999px;
-      background-color: oklch(0.720 0.175 155);
+      background-color: #10b981;
     }
 
-    .theme-btn {
-      font-family: var(--font-sans);
-      font-size: var(--text-xs);
-      font-weight: 700;
-      padding: 0.48rem 0.95rem;
-      border-radius: 8px;
-      border: 2px solid oklch(0.530 0.020 255);
-      background-color: oklch(0.320 0.014 255);
-      color: oklch(0.985 0.005 255);
-      cursor: pointer;
-      transition: background-color 160ms cubic-bezier(0.22, 1, 0.36, 1),
-                  border-color 160ms cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    .theme-btn:hover {
-      background-color: var(--primary);
-      border-color: var(--primary);
-      color: var(--on-primary);
-    }
-
-    .modal-header .theme-btn,
-    .section-header .theme-btn {
-      background-color: var(--surface-elevated);
-      color: var(--ink);
-      border-color: var(--border-strong);
-    }
-
-    .modal-header .theme-btn:hover,
-    .section-header .theme-btn:hover {
-      background-color: var(--primary);
-      color: var(--on-primary);
-      border-color: var(--primary);
-    }
-
-    @media (max-width: 1080px) {
-      .topbar {
-        padding: 1.25rem 1.25rem 0;
-      }
-    }
-
-    /* ==========================================================================
-       SPLIT ARCHITECTURAL WORKBENCH
-       ========================================================================== */
-    .workbench {
-      max-width: 1440px;
+    /* Workbench Principal */
+    .workbench-container {
+      max-width: 1480px;
       width: 100%;
       margin: 0 auto;
-      padding: 2rem;
-      display: grid;
-      grid-template-columns: minmax(0, 1.35fr) minmax(360px, 0.95fr);
-      gap: 2.5rem;
-      align-items: start;
+      padding: 1.75rem 2rem;
       flex: 1;
-    }
-
-    @media (max-width: 1080px) {
-      .workbench {
-        grid-template-columns: 1fr;
-        padding: 1.25rem;
-      }
-    }
-
-    /* ==========================================================================
-       SEGMENTED MODE SWITCHER
-       ========================================================================== */
-    .nav-tabs {
-      display: inline-flex;
-      flex-wrap: wrap;
-      gap: 0.375rem;
-      padding: 0.35rem;
-      border-radius: 12px;
-      background-color: var(--surface);
-      border: 2px solid var(--border);
-      margin-bottom: 2rem;
-    }
-
-    .tab-btn {
-      font-family: var(--font-sans);
-      font-size: var(--text-sm);
-      font-weight: 700;
-      padding: 0.625rem 1.125rem;
-      border-radius: 9px;
-      border: none;
-      background: transparent;
-      color: var(--ink-secondary);
-      cursor: pointer;
-      transition: background-color 160ms cubic-bezier(0.22, 1, 0.36, 1),
-                  color 160ms cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    .tab-btn:hover {
-      color: var(--ink);
-      background-color: var(--surface-elevated);
-    }
-
-    .tab-btn.active {
-      background-color: var(--primary);
-      color: var(--on-primary);
-    }
-
-    /* ==========================================================================
-       PRIMARY WORKSPACE SURFACE
-       ========================================================================== */
-    .workspace-pane {
-      background-color: var(--surface);
-      border: 2px solid var(--border);
-      border-radius: 14px;
-      /* compactação: menos espaço interno */
-      padding: 1rem 1.5rem;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    .section-header {
-      margin-bottom: 1.75rem;
-      padding-bottom: 1.25rem;
-      border-bottom: 2px solid var(--border);
-    }
-
-    .section-header h2 {
-      font-size: 2rem;
-      font-weight: 800;
-      margin-bottom: 0.5rem;
-    }
-
-    .section-header p {
-      font-size: 0.875rem;
-      color: var(--ink-secondary);
-    }
-
-    /* ==========================================================================
-       FORM SYSTEM
-       ========================================================================== */
-    .form-stack {
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
+    }
+
+    /* Modo Switcher Superior (Abas Pílula) */
+    .mode-pills-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .mode-pill-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.55rem 1.1rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--ink-secondary);
+      cursor: pointer;
+      transition: all 140ms ease;
+    }
+
+    .mode-pill-btn svg {
+      width: 1rem;
+      height: 1rem;
+    }
+
+    .mode-pill-btn:hover {
+      background: var(--bg-subtle);
+      color: var(--ink);
+    }
+
+    .mode-pill-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 2px 8px rgba(0, 56, 130, 0.25);
+    }
+
+    .mode-pill-btn.active svg {
+      stroke: #ffffff;
+    }
+
+    /* Grid de Duas Colunas Alinhadas */
+    .workbench-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(380px, 0.95fr);
+      gap: 1.75rem;
+      align-items: stretch;
+    }
+
+    @media (max-width: 1100px) {
+      .app-layout {
+        flex-direction: column;
+      }
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        border-right: none;
+        border-bottom: 1px solid var(--sidebar-border);
+      }
+      .workbench-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ==========================================================================
+       3. CARD ESQUERDO (WORKSPACE PANE)
+       ========================================================================== */
+    .card-workspace {
+      background: var(--surface);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1.5rem 1.75rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    /* Banner Azul Royal Estilizado com Emblema Dourado Qualis A */
+    .hero-banner-blue {
+      background: linear-gradient(135deg, #002d6b 0%, #004b99 100%);
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.25rem;
+      box-shadow: 0 4px 14px rgba(0, 45, 107, 0.2);
+    }
+
+    .hero-banner-left {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .hero-icon-box {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+
+    .hero-icon-box svg {
+      width: 24px;
+      height: 24px;
+      stroke: #ffffff;
+    }
+
+    .hero-copy h2 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      margin-bottom: 0.3rem;
+    }
+
+    .hero-copy p {
+      font-size: 0.8rem;
+      color: #dbeafe;
+      line-height: 1.45;
+    }
+
+    /* Emblema Dourado com Louros Qualis A / ABNT */
+    .hero-badge-gold {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .wreath-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.5rem 0.8rem;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-align: center;
+      letter-spacing: 0.05em;
+      line-height: 1.1;
+    }
+
+    .wreath-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .wreath-inner span {
+      display: block;
+    }
+
+    /* Formulário e Campos */
+    .form-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
     }
 
     .form-group {
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 0.45rem;
     }
 
     .form-label {
-      font-size: var(--text-sm);
+      font-size: 0.85rem;
       font-weight: 700;
       color: var(--ink);
       display: flex;
@@ -417,92 +573,58 @@
       gap: 0.5rem;
     }
 
-    .label-with-tip {
+    .label-with-icon {
       display: inline-flex;
       align-items: center;
       gap: 0.45rem;
     }
 
-    .tooltip-wrap {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
+    .label-icon {
+      width: 1.1rem;
+      height: 1.1rem;
+      color: #b45309;
+      stroke: #b45309;
+      flex-shrink: 0;
     }
 
-    .tooltip-trigger {
-      width: 1.25rem;
-      height: 1.25rem;
-      border-radius: 999px;
-      border: 2px solid var(--border-strong);
-      background-color: var(--surface);
-      color: var(--primary);
-      font-family: var(--font-mono);
-      font-size: var(--text-xs);
-      font-weight: 700;
-      line-height: 1;
-      display: inline-grid;
-      place-items: center;
-      cursor: help;
-      padding: 0;
-      transition: background-color 150ms cubic-bezier(0.22, 1, 0.36, 1),
-                  color 150ms cubic-bezier(0.22, 1, 0.36, 1),
-                  border-color 150ms cubic-bezier(0.22, 1, 0.36, 1);
+    .form-hint {
+      font-size: 0.72rem;
+      color: var(--muted);
+      font-weight: 400;
     }
 
-    .tooltip-trigger:hover,
-    .tooltip-trigger:focus-visible {
-      background-color: var(--primary);
-      border-color: var(--primary);
-      color: var(--on-primary);
-      outline: none;
-    }
-
-    .tooltip-bubble {
-      position: absolute;
-      bottom: calc(100% + 0.6rem);
-      left: 0;
-      z-index: var(--z-tooltip);
-      width: min(370px, 84vw);
-      padding: 0.9rem 1.05rem;
-      border-radius: 10px;
-      background-color: oklch(0.790 0.008 262);
-      color: oklch(0.080 0.000 0);
-      border: 2px solid oklch(0.280 0.015 262);
+    .form-input,
+    .form-textarea {
+      width: 100%;
       font-family: var(--font-sans);
-      font-size: var(--text-xs);
-      font-weight: 500;
-      line-height: 1.55;
-      text-align: justify;
-      hyphens: auto;
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(4px);
-      pointer-events: none;
-      transition: opacity 150ms cubic-bezier(0.22, 1, 0.36, 1),
-                  transform 150ms cubic-bezier(0.22, 1, 0.36, 1),
-                  visibility 150ms;
+      font-size: 0.9rem;
+      color: var(--ink);
+      background-color: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.65rem 0.9rem;
+      transition: all 140ms ease;
     }
 
-    .tooltip-bubble strong {
-      display: block;
-      font-weight: 800;
-      margin-bottom: 0.3rem;
-      color: oklch(0.050 0.000 0);
-      text-align: left;
+    .form-input:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(0, 56, 130, 0.12);
+      background-color: #ffffff;
     }
 
-    .tooltip-wrap:hover .tooltip-bubble,
-    .tooltip-trigger:focus-visible + .tooltip-bubble {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
+    .form-textarea {
+      min-height: 6rem;
+      resize: vertical;
+      line-height: 1.5;
     }
 
-    /* Document Type Selector (Artigo Científico vs Projeto de Tese) */
+    /* Seletor de Tipo de Documento em Cards */
     .doctype-selector {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 0.875rem;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 0.75rem;
     }
 
     .doctype-option {
@@ -510,30 +632,31 @@
       display: flex;
       align-items: flex-start;
       gap: 0.75rem;
-      padding: 0.95rem 1.1rem;
-      border-radius: 10px;
-      border: 2px solid var(--border);
-      background-color: var(--surface-elevated);
+      padding: 0.85rem 1rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background-color: var(--surface-card);
       color: var(--ink);
       cursor: pointer;
       user-select: none;
-      transition: border-color 150ms cubic-bezier(0.22, 1, 0.36, 1),
-                  background-color 150ms cubic-bezier(0.22, 1, 0.36, 1);
+      transition: all 140ms ease;
     }
 
     .doctype-option:hover {
       border-color: var(--primary);
+      background-color: #ffffff;
     }
 
     .doctype-option.selected {
       border-color: var(--primary);
       background-color: var(--primary-tint);
+      box-shadow: 0 0 0 1px var(--primary);
     }
 
     .doctype-option input[type="radio"] {
       margin-top: 0.2rem;
-      width: 1.1rem;
-      height: 1.1rem;
+      width: 1.05rem;
+      height: 1.05rem;
       accent-color: var(--primary);
       flex-shrink: 0;
       cursor: pointer;
@@ -546,336 +669,370 @@
     }
 
     .doctype-title {
-      font-size: var(--text-sm);
+      font-size: 0.85rem;
       font-weight: 800;
       color: var(--ink);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
     }
 
     .doctype-desc {
-      font-size: var(--text-xs);
+      font-size: 0.72rem;
       color: var(--ink-secondary);
-      line-height: 1.4;
+      line-height: 1.45;
+      text-align: justify;
+      text-justify: inter-word;
+      hyphens: auto;
     }
 
-    .form-hint {
-      font-size: var(--text-xs);
-      color: var(--muted);
-    }
-
-    .form-input,
-    .form-textarea {
+    /* Botão de Ação Principal em Azul Royal Intenso */
+    .btn-submit-hero {
       width: 100%;
+      max-width: 380px;
+      margin: 0.75rem auto 0;
       font-family: var(--font-sans);
-      font-size: var(--text-base);
-      color: var(--ink);
-      background-color: var(--surface-elevated);
-      border: 2px solid var(--border);
-      border-radius: 10px;
-      padding: 0.75rem 1rem;
-      transition: border-color 160ms cubic-bezier(0.22, 1, 0.36, 1),
-                  background-color 160ms cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    .form-input::placeholder,
-    .form-textarea::placeholder {
-      color: var(--muted);
-    }
-
-    .form-input:focus,
-    .form-textarea:focus {
-      outline: 2px solid var(--primary);
-      outline-offset: 1px;
-      border-color: var(--primary);
-      background-color: var(--surface-elevated);
-    }
-
-    .form-textarea {
-      min-height: 7.5rem;
-      resize: vertical;
-      line-height: 1.55;
-    }
-
-    .form-row {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.5rem;
-      align-items: start;
-    }
-
-    .threshold-control {
-      background-color: var(--surface-elevated);
-      border: 2px solid var(--border);
-      border-radius: 10px;
-      padding: 1rem;
-    }
-
-    .threshold-badge {
-      font-family: var(--font-mono);
-      font-size: var(--text-sm);
+      font-size: 0.95rem;
       font-weight: 700;
-      padding: 0.15rem 0.55rem;
-      border-radius: 6px;
-      background-color: var(--primary);
-      color: var(--on-primary);
-      font-variant-numeric: tabular-nums;
-    }
-
-    input[type="range"] {
-      width: 100%;
-      accent-color: var(--primary);
-      margin: 0.75rem 0 0.35rem;
-      cursor: pointer;
-    }
-
-    /* Output Format Pills */
-    .output-formats {
-      display: flex;
-      gap: 0.625rem;
-      flex-wrap: wrap;
-      margin-top: 0.25rem;
-    }
-
-    .format-Toggle {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.625rem 0.95rem;
-      border-radius: 8px;
-      border: 2px solid var(--border);
-      background-color: var(--surface-elevated);
-      color: var(--ink);
-      font-size: var(--text-sm);
-      font-weight: 600;
-      cursor: pointer;
-      user-select: none;
-      transition: border-color 150ms cubic-bezier(0.22, 1, 0.36, 1),
-                  background-color 150ms cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    .format-Toggle:hover {
-      border-color: var(--primary);
-      background-color: var(--primary-tint);
-    }
-
-    .format-Toggle input[type="checkbox"] {
-      width: 1rem;
-      height: 1rem;
-      accent-color: var(--primary);
-    }
-
-    /* Dropzone */
-    .dropzone {
-      border: 2px dashed var(--border-strong);
-      border-radius: 12px;
-      padding: 2rem 1.5rem;
-      text-align: center;
-      background-color: var(--surface-elevated);
-      cursor: pointer;
-      transition: border-color 160ms cubic-bezier(0.22, 1, 0.36, 1),
-                  background-color 160ms cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    .dropzone:hover,
-    .dropzone.dragover {
-      border-color: var(--primary);
-      background-color: var(--primary-tint);
-    }
-
-    .dropzone-title {
-      font-size: var(--text-base);
-      font-weight: 700;
-      color: var(--ink);
-      margin-bottom: 0.35rem;
-    }
-
-    .dropzone-sub {
-      font-size: var(--text-xs);
-      color: var(--muted);
-    }
-
-    .selected-file-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      margin-top: 0.875rem;
-      padding: 0.35rem 0.85rem;
+      padding: 0.85rem 1.5rem;
       border-radius: 999px;
-      background-color: var(--primary);
-      color: var(--on-primary);
-      font-family: var(--font-mono);
-      font-size: var(--text-xs);
-      font-weight: 600;
-    }
-
-    /* Primary Action Button */
-    .btn-primary {
-      width: 100%;
-      font-family: var(--font-sans);
-      font-size: var(--text-base);
-      font-weight: 700;
-      padding: 0.95rem 1.5rem;
-      border-radius: 10px;
       border: none;
       background-color: var(--primary);
-      color: var(--on-primary);
+      color: #ffffff;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 0.625rem;
-      transition: background-color 160ms cubic-bezier(0.22, 1, 0.36, 1),
-                  transform 160ms cubic-bezier(0.22, 1, 0.36, 1);
+      gap: 0.65rem;
+      box-shadow: 0 4px 12px rgba(0, 56, 130, 0.28);
+      transition: all 160ms ease;
     }
 
-    .btn-primary:hover:not(:disabled) {
+    .btn-submit-hero svg {
+      width: 1.1rem;
+      height: 1.1rem;
+      fill: #ffffff;
+    }
+
+    .btn-submit-hero:hover:not(:disabled) {
       background-color: var(--primary-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(0, 56, 130, 0.35);
     }
 
-    .btn-primary:active:not(:disabled) {
+    .btn-submit-hero:active:not(:disabled) {
       transform: translateY(1px);
     }
 
-    .btn-primary:disabled {
-      opacity: 0.55;
+    .btn-submit-hero:disabled {
+      opacity: 0.6;
       cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    /* Tooltip */
+    .tooltip-wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .tooltip-trigger {
+      width: 1.15rem;
+      height: 1.15rem;
+      border-radius: 999px;
+      border: 1px solid var(--border-strong);
+      background-color: var(--bg-subtle);
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 700;
+      line-height: 1;
+      display: inline-grid;
+      place-items: center;
+      cursor: help;
+      padding: 0;
+    }
+
+    .tooltip-trigger:hover {
+      background-color: var(--primary);
+      border-color: var(--primary);
+      color: #ffffff;
+    }
+
+    .tooltip-bubble {
+      position: absolute;
+      bottom: calc(100% + 0.6rem);
+      left: 0;
+      z-index: var(--z-tooltip);
+      width: min(360px, 80vw);
+      padding: 0.85rem 1rem;
+      border-radius: 8px;
+      background-color: #1e293b;
+      color: #ffffff;
+      border: 1px solid #334155;
+      font-size: 0.75rem;
+      line-height: 1.5;
+      text-align: justify;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(4px);
+      pointer-events: none;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+      transition: all 150ms ease;
+    }
+
+    .tooltip-bubble strong {
+      display: block;
+      color: #93c5fd;
+      margin-bottom: 0.3rem;
+      font-weight: 700;
+      text-align: left;
+    }
+
+    .tooltip-wrap:hover .tooltip-bubble {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
     }
 
     /* ==========================================================================
-       TELEMETRY & QUALITY GATES PIPELINE RAIL (RIGHT COLUMN)
+       4. CARD DIREITO (MONITOR DE QUALITY GATES EM TEMPO REAL)
        ========================================================================== */
-    .telemetry-rail {
-      background-color: var(--surface);
-      border: 2px solid var(--border);
-      border-radius: 14px;
-      padding: 1.75rem 2rem;
-      /* Fixed positioning to align with left card */
-      position: static;
-    }
-
-    .rail-header {
-      margin-bottom: 1.25rem;
-      padding-bottom: 1rem;
-      border-bottom: 2px solid var(--border);
-    }
-
-    .rail-header h2 {
-      font-size: 1.375rem;
-      font-weight: 800;
-      margin-bottom: 0.25rem;
-    }
-
-    .rail-header p {
-      font-size: var(--text-xs);
-      color: var(--muted);
-    }
-
-    .gates-list {
+    .card-monitor {
+      background: var(--surface);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1.5rem 1.75rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
       display: flex;
       flex-direction: column;
-      border: 2px solid var(--border);
-      border-radius: 10px;
-      background-color: oklch(1.000 0.000 0);
-      overflow: hidden;
+      gap: 1.25rem;
+      height: 100%;
     }
 
-    [data-theme="dark"] .gates-list {
-      background-color: var(--surface-elevated);
-    }
-
-    .gate-item {
+    .monitor-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 0.875rem;
-      padding: 0.85rem 1rem;
-      border-bottom: 2px solid var(--border);
-      background-color: oklch(1.000 0.000 0);
-      transition: background-color 160ms cubic-bezier(0.22, 1, 0.36, 1);
+      gap: 1rem;
+      padding-bottom: 0.85rem;
+      border-bottom: 1px solid var(--border);
     }
 
-    [data-theme="dark"] .gate-item {
-      background-color: var(--surface-elevated);
+    .monitor-title-box {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
     }
 
-    .gate-item:last-child {
-      border-bottom: none;
+    .monitor-icon-badge {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: #002d6b;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
     }
 
-    .gate-item.RUNNING {
-      background-color: var(--status-run-tint);
+    .monitor-icon-badge svg {
+      width: 20px;
+      height: 20px;
+      stroke: #60a5fa;
     }
 
-    .gate-item.DONE {
-      background-color: oklch(1.000 0.000 0);
+    .monitor-titles h2 {
+      font-size: clamp(0.92rem, 1.1vw, 1.05rem);
+      font-weight: 800;
+      color: var(--ink);
+      line-height: 1.2;
+      white-space: nowrap;
     }
 
-    [data-theme="dark"] .gate-item.DONE {
-      background-color: var(--surface-elevated);
+    .monitor-titles p {
+      font-size: 0.72rem;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
-    .gate-item.FAILED {
-      background-color: var(--status-err-tint);
+    .monitor-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      color: #065f46;
+      font-size: 0.72rem;
+      font-weight: 700;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
-    /* ==========================================================================
-       FULL-WIDTH BOTTOM EXECUTION CARD (SPANS BOTH COLUMNS)
-       ========================================================================== */
-    .execution-footer-card {
-      grid-column: 1 / -1;
-      background-color: var(--surface);
-      border: 2px solid var(--border);
-      border-radius: 14px;
-      padding: 1.75rem 2rem;
+    .monitor-status-pill .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #10b981;
     }
 
-    .execution-footer-inner {
+    /* Stepper Horizontal de Progresso (G1 .. G6) */
+    .progress-stepper-box {
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.9rem 1.2rem;
+    }
+
+    .stepper-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+    }
+
+    .stepper-header span {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .stepper-counter {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #d97706;
+    }
+
+    .stepper-track-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .stepper-line {
+      position: absolute;
+      left: 10px;
+      right: 10px;
+      top: 50%;
+      height: 2px;
+      background: #cbd5e1;
+      transform: translateY(-50%);
+      z-index: 1;
+    }
+
+    .stepper-node {
+      position: relative;
+      z-index: 2;
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
+      align-items: center;
+      gap: 0.3rem;
     }
 
-    .gate-left {
+    .stepper-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 999px;
+      background: #ffffff;
+      border: 3px solid #94a3b8;
+      transition: all 150ms ease;
+    }
+
+    .stepper-node.active .stepper-dot {
+      border-color: #0284c7;
+      background: #38bdf8;
+    }
+
+    .stepper-node.done .stepper-dot {
+      border-color: #059669;
+      background: #10b981;
+    }
+
+    .stepper-label {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--muted);
+    }
+
+    /* Linha do Tempo Vertical com Gates G1 a G6 */
+    .timeline-gates-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      position: relative;
+    }
+
+    .timeline-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 0.65rem 0.85rem;
+      background: var(--surface-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      transition: all 140ms ease;
+    }
+
+    .timeline-item:hover {
+      background: #ffffff;
+      border-color: var(--primary);
+    }
+
+    .timeline-item.RUNNING {
+      border-color: #38bdf8;
+      background: #f0f9ff;
+    }
+
+    .timeline-item.DONE {
+      border-color: #a7f3d0;
+      background: #f0fdf4;
+    }
+
+    .timeline-item.FAILED {
+      border-color: #fca5a5;
+      background: #fef2f2;
+    }
+
+    .timeline-left {
       display: flex;
       align-items: center;
       gap: 0.75rem;
       min-width: 0;
     }
 
-    .gate-num {
-      width: 2rem;
-      height: 2rem;
-      border-radius: 7px;
-      background-color: var(--surface-elevated);
-      color: var(--ink);
+    .gate-badge-pill {
       font-family: var(--font-mono);
-      font-size: var(--text-xs);
-      font-weight: 700;
-      display: grid;
-      place-items: center;
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fde68a;
       flex-shrink: 0;
     }
 
-    .gate-item.RUNNING .gate-num {
-      background-color: var(--primary);
-      color: var(--on-primary);
+    .gate-icon-svg {
+      width: 1.15rem;
+      height: 1.15rem;
+      stroke: var(--ink-secondary);
+      flex-shrink: 0;
     }
 
-    .gate-item.DONE .gate-num {
-      background-color: var(--status-done);
-      color: var(--on-primary);
-    }
-
-    .gate-item.FAILED .gate-num {
-      background-color: var(--status-err);
-      color: var(--on-primary);
-    }
-
-    .gate-info {
+    .timeline-details {
       min-width: 0;
     }
 
-    .gate-info h4 {
-      font-size: var(--text-sm);
+    .timeline-details h4 {
+      font-size: 0.82rem;
       font-weight: 700;
       color: var(--ink);
       white-space: nowrap;
@@ -883,1173 +1040,1037 @@
       text-overflow: ellipsis;
     }
 
-    .gate-info span {
+    .timeline-details span {
       display: block;
       font-family: var(--font-mono);
-      font-size: var(--text-xs);
+      font-size: 0.68rem;
       color: var(--muted);
     }
 
-    .gate-right {
+    .timeline-right {
       text-align: right;
       flex-shrink: 0;
     }
 
-    .gate-badge {
-      display: inline-block;
+    .timeline-status {
       font-family: var(--font-mono);
-      font-size: var(--text-xs);
+      font-size: 0.65rem;
       font-weight: 700;
-      padding: 0.2rem 0.55rem;
+      padding: 0.15rem 0.5rem;
       border-radius: 999px;
       text-transform: uppercase;
       letter-spacing: 0.04em;
     }
 
-    .badge-PENDING {
-      background-color: var(--surface-elevated);
-      color: var(--muted);
+    .ts-PENDING { background: var(--bg-subtle); color: var(--muted); }
+    .ts-RUNNING { background: #0284c7; color: #ffffff; }
+    .ts-DONE { background: #059669; color: #ffffff; }
+    .ts-FAILED { background: #dc2626; color: #ffffff; }
+
+    /* Console de Atividade Terminal */
+    .terminal-console-box {
+      margin-top: auto;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface-card);
+      overflow: hidden;
     }
 
-    .badge-RUNNING {
-      background-color: var(--primary);
-      color: var(--on-primary);
+    .terminal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 0.85rem;
+      background: var(--bg-subtle);
+      border-bottom: 1px solid var(--border);
     }
 
-    .badge-DONE {
-      background-color: var(--status-done);
-      color: var(--on-primary);
-    }
-
-    .badge-FAILED {
-      background-color: var(--status-err);
-      color: var(--on-primary);
-    }
-
-    .gate-score {
-      font-family: var(--font-mono);
-      font-size: var(--text-xs);
+    .terminal-header-title {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.78rem;
       font-weight: 700;
       color: var(--ink);
-      margin-top: 0.2rem;
-      font-variant-numeric: tabular-nums;
     }
 
-    /* Live Telemetry Log Console */
-    .telemetry-console {
-      margin-top: 1.25rem;
-      padding: 0.875rem 1rem;
-      border-radius: 10px;
-      background-color: var(--surface-elevated);
-      border: 2px solid var(--border);
+    .terminal-header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.7rem;
+      color: #059669;
+      font-weight: 600;
+    }
+
+    .terminal-body {
+      padding: 0.75rem 0.85rem;
       font-family: var(--font-mono);
-      font-size: var(--text-xs);
+      font-size: 0.72rem;
       color: var(--ink-secondary);
-      max-height: 9.5rem;
+      min-height: 9.5rem;
+      max-height: 12rem;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 0.35rem;
+      gap: 0.3rem;
     }
 
-    .telemetry-line {
-      line-height: 1.45;
-      word-break: break-word;
-    }
-
-    /* Result Banner */
-    .result-banner {
-      margin-top: 1.25rem;
-      padding: 1.25rem;
-      border-radius: 10px;
-      border: 1px solid var(--primary);
-      background-color: var(--primary-tint);
-    }
-
-    .result-banner h3 {
-      font-size: var(--text-base);
-      font-weight: 800;
-      color: var(--ink);
-      margin-bottom: 0.35rem;
-    }
-
-    .download-actions {
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-      margin-top: 0.875rem;
-    }
-
-    .btn-dl {
-      text-decoration: none;
-      font-family: var(--font-sans);
-      font-size: var(--text-xs);
-      font-weight: 700;
-      padding: 0.5rem 0.875rem;
-      border-radius: 8px;
-      border: 1px solid var(--border-strong);
-      background-color: var(--bg);
-      color: var(--ink);
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.375rem;
-      transition: background-color 150ms cubic-bezier(0.22, 1, 0.36, 1),
-                  border-color 150ms cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    .btn-dl:hover {
-      border-color: var(--primary);
-      background-color: var(--surface-elevated);
-    }
-
-    .btn-dl.pdf-highlight {
-      background-color: var(--primary);
-      border-color: var(--primary);
-      color: var(--on-primary);
-    }
-
-    .btn-dl.pdf-highlight:hover {
-      background-color: var(--primary-hover);
-    }
-
-    /* ==========================================================================
-       ARCHIVE / HISTORY LIST (STRUCTURED LEDGER ROWS, NO CARD CLUTTER)
-       ========================================================================== */
-    .history-grid {
-      display: flex;
-      flex-direction: column;
-      border: 2px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-      background-color: var(--surface);
-    }
-
-    .history-card {
-      padding: 1.35rem 1.5rem;
-      border-bottom: 2px solid var(--border);
-      transition: background-color 150ms cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    .history-card:last-child {
-      border-bottom: none;
-    }
-
-    .history-card:hover {
-      background-color: var(--surface-elevated);
-    }
-
-    .history-top {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 1rem;
-      margin-bottom: 0.5rem;
-      flex-wrap: wrap;
-    }
-
-    .history-badge {
-      display: inline-block;
-      font-family: var(--font-mono);
-      font-size: var(--text-xs);
-      font-weight: 700;
-      padding: 0.18rem 0.55rem;
-      border-radius: 999px;
-      margin-bottom: 0.4rem;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-
-    .badge-paper {
-      background-color: var(--primary);
-      color: var(--on-primary);
-    }
-
-    .badge-dossie {
-      background-color: var(--accent);
-      color: var(--on-accent);
-    }
-
-    .history-title {
-      font-size: var(--text-lg);
-      font-weight: 800;
-      color: var(--ink);
-    }
-
-    .history-meta {
-      font-family: var(--font-mono);
-      font-size: var(--text-xs);
-      color: var(--muted);
-      font-variant-numeric: tabular-nums;
-      white-space: nowrap;
-    }
-
-    .history-preview {
-      font-size: var(--text-sm);
-      color: var(--ink-secondary);
-      margin-bottom: 0.75rem;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    /* ==========================================================================
-       READER DIALOG MODAL
-       ========================================================================== */
+    /* Modal Leitor Acadêmico */
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      z-index: var(--z-backdrop);
-      background-color: oklch(0.08 0 0 / 0.68);
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: var(--z-modal);
       display: none;
-      place-items: center;
+      align-items: center;
+      justify-content: center;
       padding: 1.5rem;
     }
 
     .modal-backdrop.open {
-      display: grid;
+      display: flex;
     }
 
     .modal-reader {
-      z-index: var(--z-modal);
-      width: min(920px, 100%);
-      max-height: 88vh;
-      background-color: var(--bg);
-      border: 1px solid var(--border-strong);
-      border-radius: 14px;
+      background: var(--surface);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      max-width: 900px;
+      width: 100%;
+      max-height: 85vh;
       display: flex;
       flex-direction: column;
       overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
     }
 
     .modal-header {
       padding: 1rem 1.5rem;
-      border-bottom: 2px solid var(--border);
-      background-color: var(--surface);
+      border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 1rem;
-      flex-wrap: wrap;
+      background: var(--bg-subtle);
     }
 
     .modal-header h3 {
-      font-size: var(--text-base);
+      font-size: 1.1rem;
       font-weight: 800;
     }
 
     .modal-body {
-      padding: 2rem;
+      padding: 1.5rem;
       overflow-y: auto;
       font-family: var(--font-sans);
-      font-size: var(--text-base);
-      line-height: 1.65;
-      color: var(--ink);
+      font-size: 0.95rem;
+      line-height: 1.7;
       white-space: pre-wrap;
-      max-width: 74ch;
-      margin: 0 auto;
-      width: 100%;
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        transition-duration: 0.01ms !important;
-        animation-duration: 0.01ms !important;
-      }
+    .hidden {
+      display: none !important;
+    }
+
+    /* Utilitários e botões de download */
+    .btn-dl {
+      text-decoration: none;
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.45rem 0.8rem;
+      border-radius: 6px;
+      border: 1px solid var(--border-strong);
+      background: var(--surface);
+      color: var(--ink);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .btn-dl.pdf-highlight {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    .result-banner {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 8px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
     }
   </style>
 </head>
 <body>
 
-  <!-- Card de Comando Superior (Fundo Cinza Escuro, Emblema + Título e Subtítulo ao Lado) -->
-  <header class="topbar">
-    <div class="topbar-inner">
-      <div class="brand">
-        <img
-          src="/static/logo_emblem.png"
-          alt="Logomarca StrictoSensu"
-          class="brand-logo-img"
-        />
-        <div class="brand-copy">
-          <h1>
-            <span class="brand-title-wordmark"><span class="brand-stricto">Stricto</span><span class="brand-sensu">Sensu</span></span>
-            <span class="brand-tag">QUALIS A · ABNT</span>
-          </h1>
-          <div class="brand-sub-primary">SISTEMA DE GERAÇÃO CIENTÍFICA · AI SCIENTIFIC ENGINE</div>
-          <div class="brand-sub">Orquestração Multi-Agente · JurisprudênciaIA MCP · Compilação Nativa LaTeX/PDF & DOCX</div>
-        </div>
+<div class="app-layout">
+
+  <!-- ========================================================================
+       BARRA LATERAL ESQUERDA (SIDEBAR DARK NAVY)
+       ======================================================================== -->
+  <aside class="sidebar">
+    <div class="sidebar-top">
+      <div class="sidebar-brand">
+        <img src="/static/logo_emblem.png" alt="StrictoSensu" class="sidebar-logo" />
+        <div class="sidebar-title">StrictoSensu</div>
+        <div class="sidebar-badge">QUALIS A · ABNT</div>
       </div>
 
-      <div class="topbar-telemetry">
-        <div class="status-chip">
-          <span class="status-dot"></span>
-          <span>MCP Cloudflare: Conectado</span>
-        </div>
-        <div class="status-chip mono" id="corpus-count-text">
-          Corpus RAG: 1 precedentes
-        </div>
-        <button type="button" class="theme-btn" onclick="toggleTheme()" id="theme-toggle-btn">
-          Modo Carbono Escuro
+      <nav class="sidebar-nav" aria-label="Navegação Lateral">
+        <button type="button" class="sidebar-link active" id="side-btn-new" onclick="switchTab('new')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 20h9"></path>
+            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+          </svg>
+          <span>Gerar Paper / Tese</span>
         </button>
-      </div>
-    </div>
-  </header>
 
-  <!-- Workbench Principal -->
-  <main class="workbench">
+        <button type="button" class="sidebar-link" id="side-btn-improve" onclick="switchTab('improve')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="16 18 22 12 16 6"></polyline>
+            <polyline points="8 6 2 12 8 18"></polyline>
+          </svg>
+          <span>Revisar & Elevar Paper</span>
+        </button>
 
-    <!-- Coluna Esquerda: Operações -->
-    <section class="workspace-pane">
-      <nav class="nav-tabs" aria-label="Modos de Operação">
-        <button type="button" class="tab-btn active" id="tab-btn-new" onclick="switchTab('new')">
-          Gerar Novo Paper / Tese
+        <button type="button" class="sidebar-link" id="side-btn-history" onclick="switchTab('history')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          <span>Histórico & Acervo</span>
         </button>
-        <button type="button" class="tab-btn" id="tab-btn-improve" onclick="switchTab('improve')">
-          Revisar & Elevar Paper Existente
+
+        <button type="button" class="sidebar-link" onclick="scrollToMonitor()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+            <line x1="8" y1="21" x2="16" y2="21"></line>
+            <line x1="12" y1="17" x2="12" y2="21"></line>
+          </svg>
+          <span>Monitor de Quality Gates</span>
         </button>
-        <button type="button" class="tab-btn" id="tab-btn-history" onclick="switchTab('history')">
-          Histórico & Acervo Gerado
+
+        <button type="button" class="sidebar-link" onclick="alert('Painel de Configurações: Modelos OpenRouter e Conexão JurisprudênciaIA MCP em operação.')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+          <span>Configurações</span>
+        </button>
+
+        <button type="button" class="sidebar-link" onclick="alert('Suporte Acadêmico: A plataforma orquestra 6 Agentes Especialistas com 100% de aderência às normas ABNT NBR 6022 e 14724.')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+          <span>Suporte & Ajuda</span>
         </button>
       </nav>
-
-      <!-- ABA 1: GERAR NOVO PAPER -->
-      <div id="tab-panel-new">
-        <div class="section-header">
-          <h2 id="gen-heading-title">Gerar Novo Artigo Científico Qualis A</h2>
-          <p id="gen-heading-desc">Execução autônoma governada por 6 Quality Gates eliminatórios, consulta de teses vinculantes via MCP e redação científica densa (ABNT NBR 6022).</p>
-        </div>
-
-        <form id="form-generate" class="form-stack" onsubmit="handleGenerateSubmit(event)">
-          <div class="form-group">
-            <label class="form-label">
-              <span class="label-with-tip">
-                <span>Natureza e Formato da Obra *</span>
-                <span class="tooltip-wrap">
-                  <button type="button" class="tooltip-trigger" aria-label="Ajuda sobre a Natureza e Formato da Obra">?</button>
-                  <span class="tooltip-bubble" role="tooltip">
-                    <strong>Escolha da Estrutura Acadêmica ABNT</strong>
-                    Selecione se o sistema deve produzir um Artigo Científico de periódico (ABNT NBR 6022, com introdução analítica, confrontação dialética e jurimetria conclusiva) ou um Projeto de Tese de Final de Curso (ABNT NBR 15287 / 14724, com justificativa de ineditismo, objetivos, referencial teórico, plano de capítulos e cronograma).
-                  </span>
-                </span>
-              </span>
-            </label>
-            <div class="doctype-selector" role="radiogroup" aria-label="Natureza e Formato da Obra">
-              <label class="doctype-option selected" id="gen-opt-artigo">
-                <input
-                  type="radio"
-                  name="gen-tipo-documento"
-                  value="ARTIGO_CIENTIFICO"
-                  checked
-                  onchange="updateGenerateDocType(this.value)"
-                />
-                <span class="doctype-copy">
-                  <span class="doctype-title">Artigo Científico (Qualis A · ABNT NBR 6022)</span>
-                  <span class="doctype-desc">Estrutura enxuta e densa de periódico: Introdução, Confrontação Dialética, Jurimetria e Conclusão.</span>
-                </span>
-              </label>
-
-              <label class="doctype-option" id="gen-opt-tese">
-                <input
-                  type="radio"
-                  name="gen-tipo-documento"
-                  value="PROJETO_TESE"
-                  onchange="updateGenerateDocType(this.value)"
-                />
-                <span class="doctype-copy">
-                  <span class="doctype-title">Projeto de Tese de Final de Curso (ABNT NBR 15287 / 14724)</span>
-                  <span class="doctype-desc">Estrutura completa de tese: Justificativa de Ineditismo, Objetivos, Referencial Teórico, Metodologia e Plano Capitular.</span>
-                </span>
-              </label>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="gen-titulo">
-              <span class="label-with-tip">
-                <span>Título Provisório ou Definitivo da Obra *</span>
-                <span class="tooltip-wrap">
-                  <button type="button" class="tooltip-trigger" aria-label="Ajuda sobre o Título da Obra">?</button>
-                  <span class="tooltip-bubble" role="tooltip">
-                    <strong>Como definir o Título Acadêmico</strong>
-                    Informe o título completo indicando o objeto jurídico e o recorte espacial/institucional. Exemplo: &ldquo;A Eficácia Vinculante dos Precedentes Judiciais e a Modulação de Efeitos Tributários pelo STF e STJ&rdquo;.
-                  </span>
-                </span>
-              </span>
-            </label>
-            <input
-              type="text"
-              id="gen-titulo"
-              class="form-input"
-              required
-              placeholder="Ex: O Princípio da Confiança Legítima no Overruling Tributário pelo STF e STJ"
-              value="O Princípio da Confiança Legítima no Overruling Tributário"
-            />
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="gen-tema">
-              <span class="label-with-tip">
-                <span>Tema Central ou Questão Norteadora de Pesquisa *</span>
-                <span class="tooltip-wrap">
-                  <button type="button" class="tooltip-trigger" aria-label="Ajuda sobre o Tema Central">?</button>
-                  <span class="tooltip-bubble" role="tooltip">
-                    <strong>O que escrever no Tema Central</strong>
-                    Descreva o eixo dogmático e jurisprudencial que guiará a busca de acórdãos e teses vinculantes no servidor JurisprudênciaIA MCP (ex: &ldquo;Modulação temporal de efeitos em overruling tributário e proteção da confiança legítima&rdquo;).
-                  </span>
-                </span>
-              </span>
-            </label>
-            <input
-              type="text"
-              id="gen-tema"
-              class="form-input"
-              required
-              placeholder="Ex: Confiança Legítima, Segurança Jurídica e Modulação Temporal de Efeitos"
-              value="Confiança Legítima e Modulação de Efeitos em Matéria Tributária"
-            />
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="gen-recorte">
-              <span class="label-with-tip">
-                <span>Recorte Epistemológico, Problema ou Hipótese Preliminar</span>
-                <span class="tooltip-wrap">
-                  <button type="button" class="tooltip-trigger" aria-label="Ajuda sobre o Recorte Epistemológico">?</button>
-                  <span class="tooltip-bubble" role="tooltip">
-                    <strong>Como orientar a Tese e o Gate 1</strong>
-                    Detalhe a pergunta-problema que pretende responder, sua tese/hipótese central, artigos de lei (ex: art. 927, § 3º do CPC), autores de marco teórico (ex: Dworkin, Taruffo, MacCormick) ou julgados específicos que deseja enfrentar.
-                  </span>
-                </span>
-              </span>
-              <span class="form-hint">Opcional</span>
-            </label>
-            <textarea
-              id="gen-recorte"
-              class="form-textarea"
-              placeholder="Especifique tribunais-alvo (STF/STJ), dispositivos legais (ex: art. 927, § 3º do CPC) ou sua hipótese de partida..."
-            ></textarea>
-            <span class="form-hint">O Agente Epistemológico (GPT-6 Astra) formulará a problematização e a hipótese falseável no Gate 1.</span>
-          </div>
-        </form>
-      </div>
-
-      <!-- ABA 2: REVISAR E ELEVAR PAPER EXISTENTE -->
-      <div id="tab-panel-improve" class="hidden">
-        <div class="section-header">
-          <h2 id="imp-heading-title">Revisar, Auditar e Elevar Paper Existente para Banca de Doutorado</h2>
-          <p id="imp-heading-desc">Submete seu manuscrito à Banca Examinadora Sintética (DeepSeek), corrige citações via JurisprudênciaIA MCP e aprofunda a densidade dialética com Claude Fable 5.2.</p>
-        </div>
-
-        <form id="form-improve" class="form-stack" onsubmit="handleImproveSubmit(event)">
-          <div class="form-group">
-            <label class="form-label">
-              <span class="label-with-tip">
-                <span>Formato Alvo da Obra Refatorada *</span>
-                <span class="tooltip-wrap">
-                  <button type="button" class="tooltip-trigger" aria-label="Ajuda sobre o Formato Alvo da Obra Refatorada">?</button>
-                  <span class="tooltip-bubble" role="tooltip">
-                    <strong>Direcionamento da Refatoração Acadêmica</strong>
-                    Indique se o documento enviado deve ser auditado e reestruturado no padrão de Artigo Científico de periódico (ABNT NBR 6022) ou de Projeto de Tese de Final de Curso (ABNT NBR 15287 / 14724).
-                  </span>
-                </span>
-              </span>
-            </label>
-            <div class="doctype-selector" role="radiogroup" aria-label="Formato Alvo da Obra Refatorada">
-              <label class="doctype-option selected" id="imp-opt-artigo">
-                <input
-                  type="radio"
-                  name="imp-tipo-documento"
-                  value="ARTIGO_CIENTIFICO"
-                  checked
-                  onchange="updateImproveDocType(this.value)"
-                />
-                <span class="doctype-copy">
-                  <span class="doctype-title">Artigo Científico (Qualis A · ABNT NBR 6022)</span>
-                  <span class="doctype-desc">Eleva o manuscrito para submissão em periódico Qualis A com rigor dialético e jurimétrico.</span>
-                </span>
-              </label>
-
-              <label class="doctype-option" id="imp-opt-tese">
-                <input
-                  type="radio"
-                  name="imp-tipo-documento"
-                  value="PROJETO_TESE"
-                  onchange="updateImproveDocType(this.value)"
-                />
-                <span class="doctype-copy">
-                  <span class="doctype-title">Projeto de Tese de Final de Curso (ABNT NBR 15287 / 14724)</span>
-                  <span class="doctype-desc">Eleva o texto para defesa em banca de qualificação ou tese final com matriz de ineditismo.</span>
-                </span>
-              </label>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="imp-file">
-              <span class="label-with-tip">
-                <span>1. Upload do Manuscrito (.pdf, .docx, .md ou .txt)</span>
-                <span class="tooltip-wrap">
-                  <button type="button" class="tooltip-trigger" aria-label="Ajuda sobre o Upload do Manuscrito">?</button>
-                  <span class="tooltip-bubble" role="tooltip">
-                    <strong>Envio de Artigo ou Capítulo Existente</strong>
-                    Envie seu rascunho ou paper completo em PDF (.pdf), Word (.docx), Markdown (.md) ou Texto (.txt) de até 25 MB. O sistema extrairá todas as seções, auditará cada citação jurisprudencial e reescreverá os pontos fracos apontados pela banca.
-                  </span>
-                </span>
-              </span>
-            </label>
-            <div
-              class="dropzone"
-              id="improve-dropzone"
-              role="button"
-              tabindex="0"
-              aria-label="Selecionar ou arrastar arquivo do paper"
-              onclick="document.getElementById('imp-file').click()"
-              onkeydown="if(event.key === 'Enter' || event.key === ' ') { event.preventDefault(); document.getElementById('imp-file').click(); }"
-            >
-              <div class="dropzone-title">Selecione um arquivo ou arraste seu paper aqui</div>
-              <div class="dropzone-sub">Suporta documentos PDF (.pdf), Microsoft Word (.docx), Markdown (.md) e Texto (.txt)</div>
-              <div id="imp-file-pill" class="selected-file-pill hidden"></div>
-            </div>
-            <input
-              type="file"
-              id="imp-file"
-              accept=".pdf,.docx,.md,.txt,.markdown"
-              style="display: none;"
-              onchange="handleFileSelect(this)"
-            />
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="imp-texto">
-              <span class="label-with-tip">
-                <span>OU Cole o Texto do Paper Diretamente</span>
-                <span class="tooltip-wrap">
-                  <button type="button" class="tooltip-trigger" aria-label="Ajuda sobre Colar o Texto do Paper">?</button>
-                  <span class="tooltip-bubble" role="tooltip">
-                    <strong>Colagem Direta do Manuscrito</strong>
-                    Caso não queira fazer upload de arquivo, cole aqui o texto integral ou capítulos do seu artigo (mínimo de 30 caracteres). Use subtítulos (# ou ##) se desejar separar claramente cada capítulo.
-                  </span>
-                </span>
-              </span>
-              <span class="form-hint">Opcional se enviou arquivo</span>
-            </label>
-            <textarea
-              id="imp-texto"
-              class="form-textarea"
-              placeholder="Cole aqui o conteúdo do seu artigo ou capítulo de tese caso prefira não enviar arquivo..."
-            ></textarea>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="imp-titulo">
-              <span class="label-with-tip">
-                <span>Título Customizado da Obra (Opcional)</span>
-                <span class="tooltip-wrap">
-                  <button type="button" class="tooltip-trigger" aria-label="Ajuda sobre o Título Customizado">?</button>
-                  <span class="tooltip-bubble" role="tooltip">
-                    <strong>Substituição de Título</strong>
-                    Informe um novo título caso queira rebatizar a obra na versão final aprimorada. Se deixar em branco, o sistema preservará automaticamente o título original do seu documento.
-                  </span>
-                </span>
-              </span>
-            </label>
-            <input
-              type="text"
-              id="imp-titulo"
-              class="form-input"
-              placeholder="Em branco extrai automaticamente do documento"
-            />
-          </div>
-        </form>
-      </div>
-
-      <!-- ABA 3: HISTÓRICO DE ARTIGOS E DOSSIÊS GERADOS -->
-      <div id="tab-panel-history" class="hidden">
-        <div class="section-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
-          <div>
-            <h2>Histórico de Artigos, Teses e Dossiês de Banca</h2>
-            <p>Acervo completo de trabalhos gerados ou auditados em <code>output/</code> com download imediato em PDF, DOCX e Markdown.</p>
-          </div>
-          <button type="button" class="theme-btn" onclick="loadHistory()">Atualizar Acervo</button>
-        </div>
-
-        <div id="history-container" class="history-grid">
-          <div style="padding: 1.5rem; color: var(--muted);">Carregando acervo acadêmico...</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Coluna Direita: Monitor em Tempo Real dos 6 Quality Gates -->
-    <aside class="telemetry-rail">
-      <div class="rail-header">
-        <h2>Monitor de Quality Gates em Tempo Real</h2>
-        <p id="active-job-subtitle">Aguardando submissão de novo paper ou auditoria de banca.</p>
-      </div>
-
-      <div id="gates-stepper" class="gates-list"></div>
-
-      <!-- Console de Telemetria ao Vivo -->
-      <div class="telemetry-console" id="telemetry-log">
-        <div class="telemetry-line">[Sistema] Arquitetura Multi-Modelo OpenRouter pronta.</div>
-        <div class="telemetry-line">[Sistema] Servidor JurisprudênciaIA MCP vinculado.</div>
-      </div>
-
-      <!-- Banner de Resultado Final e Botões de Download -->
-      <div id="job-result-box" class="result-banner hidden">
-        <h3 id="res-box-title">Homologação Concluída</h3>
-        <p id="res-box-summary" style="font-size: var(--text-xs); color: var(--ink-secondary);"></p>
-        <div class="download-actions" id="res-download-links"></div>
-      </div>
-    </aside>
-
-    <!-- Card Inferior de Coluna Única (Ocupa as Duas Colunas: Limiar da Banca + Formatos ABNT + Botão de Ação) -->
-    <section class="execution-footer-card" id="execution-footer-card">
-      <!-- Rodapé de Execução para Aba 1 (Gerar Novo Paper / Tese) -->
-      <div id="footer-panel-new" class="execution-footer-inner">
-        <div class="form-row">
-          <div class="threshold-control">
-            <label class="form-label" for="gen-threshold">
-              <span class="label-with-tip">
-                <span>Limiar de Aprovação da Banca</span>
-                <span class="tooltip-wrap">
-                  <button type="button" class="tooltip-trigger" aria-label="Ajuda sobre o Limiar de Aprovação">?</button>
-                  <span class="tooltip-bubble" role="tooltip">
-                    <strong>Nota de Corte dos 6 Quality Gates</strong>
-                    Define a pontuação mínima (de 70 a 95) na Matriz Multidimensional para que o Revisor Geral autorize o avanço entre capítulos. O padrão Qualis A / Doutorado é 85.0 pontos.
-                  </span>
-                </span>
-              </span>
-              <span class="threshold-badge"><span id="gen-threshold-val">85.0</span>/100</span>
-            </label>
-            <input
-              type="range"
-              id="gen-threshold"
-              form="form-generate"
-              min="70"
-              max="95"
-              step="0.5"
-              value="85.0"
-              oninput="document.getElementById('gen-threshold-val').textContent = parseFloat(this.value).toFixed(1)"
-            />
-            <span class="form-hint">Nota de corte mínima exigida em cada Gate na Matriz Multidimensional.</span>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">
-              <span class="label-with-tip">
-                <span>Formatos de Exportação ABNT</span>
-                <span class="tooltip-wrap">
-                  <button type="button" class="tooltip-trigger" aria-label="Ajuda sobre os Formatos de Exportação">?</button>
-                  <span class="tooltip-bubble" role="tooltip">
-                    <strong>Arquivos Finais Compilados</strong>
-                    Escolha os formatos desejados: PDF compilado via LaTeX/Tectonic com margens ABNT (3cm/2cm e recuo de 4cm para citações longas), documento editável do Word (.docx) e código-fonte em Markdown (.md).
-                  </span>
-                </span>
-              </span>
-            </label>
-            <div class="output-formats">
-              <label class="format-Toggle">
-                <input type="checkbox" id="gen-pdf" form="form-generate" checked />
-                <span>PDF (LaTeX ABNT)</span>
-              </label>
-              <label class="format-Toggle">
-                <input type="checkbox" id="gen-docx" form="form-generate" checked />
-                <span>DOCX (Word)</span>
-              </label>
-              <label class="format-Toggle">
-                <input type="checkbox" checked disabled />
-                <span>Markdown (.md)</span>
-              </label>
-            </div>
-            <span class="form-hint">Compilação tipográfica automática nas margens e citações ABNT NBR 14724 / 10520.</span>
-          </div>
-        </div>
-
-        <button type="submit" form="form-generate" class="btn-primary" id="btn-submit-generate">
-          <span>Iniciar Pipeline Autônomo de Doutorado (6 Quality Gates)</span>
-        </button>
-      </div>
-
-      <!-- Rodapé de Execução para Aba 2 (Revisar & Elevar Paper Existente) -->
-      <div id="footer-panel-improve" class="execution-footer-inner hidden">
-        <div class="form-row">
-          <div class="threshold-control">
-            <label class="form-label" for="imp-threshold">
-              <span class="label-with-tip">
-                <span>Nota de Corte da Banca</span>
-                <span class="tooltip-wrap">
-                  <button type="button" class="tooltip-trigger" aria-label="Ajuda sobre a Nota de Corte da Banca">?</button>
-                  <span class="tooltip-bubble" role="tooltip">
-                    <strong>Rigor da Banca Examinadora</strong>
-                    Define a pontuação mínima (padrão 85.0/100) contra a qual o seu paper será diagnosticado antes e depois da refatoração doutoral pelos examinadores sintéticos.
-                  </span>
-                </span>
-              </span>
-              <span class="threshold-badge"><span id="imp-threshold-val">85.0</span>/100</span>
-            </label>
-            <input
-              type="range"
-              id="imp-threshold"
-              form="form-improve"
-              min="70"
-              max="95"
-              step="0.5"
-              value="85.0"
-              oninput="document.getElementById('imp-threshold-val').textContent = parseFloat(this.value).toFixed(1)"
-            />
-            <span class="form-hint">Nota de corte mínima exigida pela Banca Examinadora Sintética.</span>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">
-              <span class="label-with-tip">
-                <span>Formatos de Saída (Artigo Aprimorado + Dossiê da Banca Examinadora)</span>
-                <span class="tooltip-wrap">
-                  <button type="button" class="tooltip-trigger" aria-label="Ajuda sobre os Formatos de Saída da Revisão">?</button>
-                  <span class="tooltip-bubble" role="tooltip">
-                    <strong>Entregáveis da Elevação para Doutorado</strong>
-                    Além do seu Artigo Aprimorado em PDF (ABNT), DOCX e Markdown, o sistema gera automaticamente o Dossiê da Banca Examinadora contendo o comparativo de notas pré/pós-intervenção, citações corrigidas e o parecer analítico de defesa.
-                  </span>
-                </span>
-              </span>
-            </label>
-            <div class="output-formats">
-              <label class="format-Toggle">
-                <input type="checkbox" id="imp-pdf" form="form-improve" checked />
-                <span>PDF (LaTeX ABNT)</span>
-              </label>
-              <label class="format-Toggle">
-                <input type="checkbox" id="imp-docx" form="form-improve" checked />
-                <span>DOCX (Word)</span>
-              </label>
-              <label class="format-Toggle">
-                <input type="checkbox" checked disabled />
-                <span>Dossiê da Banca Examinadora (PDF / DOCX / MD)</span>
-              </label>
-            </div>
-            <span class="form-hint">Geração automática do paper homologado e do Dossiê Analítico da Banca.</span>
-          </div>
-        </div>
-
-        <button type="submit" form="form-improve" class="btn-primary" id="btn-submit-improve">
-          <span>Executar Auditoria de Banca & Elevação para Doutorado</span>
-        </button>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- Modal Leitor Acadêmico -->
-  <div class="modal-backdrop" id="reader-modal" role="dialog" aria-modal="true" aria-labelledby="reader-title" onclick="if(event.target === this) closeReader()">
-    <div class="modal-reader">
-      <div class="modal-header">
-        <h3 id="reader-title">Leitor Acadêmico</h3>
-        <div style="display:flex; gap:0.5rem; align-items:center;">
-          <div id="reader-dl-buttons" style="display:flex; gap:0.4rem;"></div>
-          <button type="button" class="theme-btn" onclick="closeReader()">Fechar</button>
-        </div>
-      </div>
-      <div class="modal-body" id="reader-content"></div>
     </div>
-  </div>
 
-  <script>
-    const DEFAULT_GATES = [
-      { gate: "GATE_1_EPISTEMICO", numero: 1, titulo: "Epistemologia & Problematização", modelo: "openai/gpt-6-astra", status: "PENDING", score: null },
-      { gate: "GATE_2_BIBLIOGRAFICO", numero: 2, titulo: "Revisão Sistemática PRISMA & MCP", modelo: "google/gemini-4-argon", status: "PENDING", score: null },
-      { gate: "GATE_3_METODOLOGICO", numero: 3, titulo: "Metodologia & Jurimetria Empírica", modelo: "openai/gpt-6.1-sol-pro", status: "PENDING", score: null },
-      { gate: "GATE_4_REDACAO_SECCIONAL", numero: 4, titulo: "Redação Seccional Dialética", modelo: "anthropic/claude-fable-5.2", status: "PENDING", score: null },
-      { gate: "GATE_5_CITACOES_BANCA", numero: 5, titulo: "Auditoria Anti-Alucinação & Banca", modelo: "deepseek/deepseek-chat", status: "PENDING", score: null },
-      { gate: "GATE_6_HOMOLOGACAO_FINAL", numero: 6, titulo: "Homologação Final ABNT", modelo: "openai/gpt-6-astra", status: "PENDING", score: null },
-    ];
+    <div class="sidebar-footer">
+      <div class="sidebar-chip">
+        <span class="status-dot-green"></span>
+        <span>MCP Cloudflare: Conectado</span>
+      </div>
+      <div class="sidebar-chip" id="side-corpus-count">
+        Corpus RAG: 1 precedentes
+      </div>
+      <button type="button" class="sidebar-theme-btn" onclick="toggleTheme()" id="side-theme-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <span id="side-theme-label">Modo Carbono Escuro</span>
+      </button>
+    </div>
+  </aside>
 
-    let activePollTimer = null;
+  <!-- ========================================================================
+       CONTEÚDO PRINCIPAL (TOPBAR SUPERIOR LIMPA + WORKBENCH GRID)
+       ======================================================================== -->
+  <div class="main-wrapper">
 
-    function escapeHtml(str) {
-      if (str === null || str === undefined) return "";
-      return String(str)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#39;");
-    }
+    <!-- Topbar Superior Limpa (Branco/Alabaster sem poluição de card escuro) -->
+    <header class="topbar-clean">
+      <div class="topbar-title-group">
+        <div class="topbar-divider"></div>
+        <div>
+          <div class="topbar-main-title">Sistema de Geração Científica · AI Scientific Engine</div>
+          <div class="topbar-sub">Orquestração Multi-Agente · JurisprudênciaIA MCP · Compilação Nativa LaTeX/PDF & DOCX</div>
+        </div>
+      </div>
 
-    function toggleTheme() {
-      const root = document.documentElement;
-      const current = root.getAttribute("data-theme") || "light";
-      const next = current === "light" ? "dark" : "light";
-      root.setAttribute("data-theme", next);
-      document.getElementById("theme-toggle-btn").textContent =
-        next === "light" ? "Modo Carbono Escuro" : "Modo Estúdio Claro";
-      try {
-        localStorage.setItem("strictosensu_theme", next);
-      } catch (_) {}
-    }
+      <div class="topbar-pills">
+        <div class="status-chip-clean">
+          <span class="status-dot-green"></span>
+          <span>MCP Cloudflare: Conectado</span>
+        </div>
+        <div class="status-chip-clean mono" id="corpus-count-text">
+          Corpus RAG: 1 precedentes
+        </div>
+        <button type="button" class="mode-pill-btn" onclick="toggleTheme()" id="theme-toggle-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          <span id="topbar-theme-label">Modo Carbono Escuro</span>
+        </button>
+      </div>
+    </header>
 
-    function switchTab(tab) {
-      ["new", "improve", "history"].forEach((t) => {
-        document.getElementById(`tab-btn-${t}`).classList.toggle("active", t === tab);
-        document.getElementById(`tab-panel-${t}`).classList.toggle("hidden", t !== tab);
-      });
-      const footerCard = document.getElementById("execution-footer-card");
-      const footerNew = document.getElementById("footer-panel-new");
-      const footerImprove = document.getElementById("footer-panel-improve");
-      if (footerCard) footerCard.classList.toggle("hidden", tab === "history");
-      if (footerNew) footerNew.classList.toggle("hidden", tab !== "new");
-      if (footerImprove) footerImprove.classList.toggle("hidden", tab !== "improve");
-      if (tab === "history") {
-        loadHistory();
-      }
-    }
+    <!-- Workbench -->
+    <main class="workbench-container">
 
-    function updateGenerateDocType(val) {
-      const isTese = val === "PROJETO_TESE";
-      document.getElementById("gen-opt-artigo").classList.toggle("selected", !isTese);
-      document.getElementById("gen-opt-tese").classList.toggle("selected", isTese);
-      document.getElementById("gen-heading-title").textContent = isTese
-        ? "Gerar Novo Projeto de Tese de Final de Curso"
-        : "Gerar Novo Artigo Científico Qualis A";
-      document.getElementById("gen-heading-desc").textContent = isTese
-        ? "Estruturação autônoma em 6 Quality Gates com Justificativa de Ineditismo, Objetivos, Referencial Teórico, Metodologia e Plano de Capítulos (ABNT NBR 15287 / 14724)."
-        : "Execução autônoma governada por 6 Quality Gates eliminatórios, consulta de teses vinculantes via MCP e redação científica densa (ABNT NBR 6022).";
-      document.getElementById("btn-submit-generate").innerHTML = isTese
-        ? "<span>Iniciar Geração de Projeto de Tese de Final de Curso (6 Quality Gates)</span>"
-        : "<span>Iniciar Geração de Artigo Científico Qualis A (6 Quality Gates)</span>";
-    }
+      <!-- Linha de Botões de Modo em Pílula (Topo dos Cards) -->
+      <div class="mode-pills-row">
+        <button type="button" class="mode-pill-btn active" id="tab-btn-new" onclick="switchTab('new')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+          <span>Gerar Novo Paper / Tese</span>
+        </button>
 
-    function updateImproveDocType(val) {
-      const isTese = val === "PROJETO_TESE";
-      document.getElementById("imp-opt-artigo").classList.toggle("selected", !isTese);
-      document.getElementById("imp-opt-tese").classList.toggle("selected", isTese);
-    }
+        <button type="button" class="mode-pill-btn" id="tab-btn-improve" onclick="switchTab('improve')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+          <span>Revisar & Elevar Paper Existente</span>
+        </button>
 
-    function renderGates(gatesList) {
-      const container = document.getElementById("gates-stepper");
-      const statusLabels = {
-        PENDING: "Aguardando",
-        RUNNING: "Em Execução",
-        DONE: "Aprovado",
-        FAILED: "Exige Ajustes",
-      };
+        <button type="button" class="mode-pill-btn" id="tab-btn-history" onclick="switchTab('history')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          <span>Histórico & Acervo Gerado</span>
+        </button>
+      </div>
 
-      container.innerHTML = gatesList.map((g) => {
-        const scoreHtml = g.score !== null && g.score !== undefined
-          ? `<div class="gate-score">${Number(g.score).toFixed(2)}/100</div>`
-          : "";
-        return `
-          <div class="gate-item ${escapeHtml(g.status)}">
-            <div class="gate-left">
-              <div class="gate-num">G${escapeHtml(g.numero)}</div>
-              <div class="gate-info">
-                <h4>${escapeHtml(g.titulo)}</h4>
-                <span>${escapeHtml(g.modelo)}</span>
+      <!-- Grid Principal de 2 Colunas Niveladas -->
+      <div class="workbench-grid">
+
+        <!-- ====================================================================
+             COLUNA ESQUERDA: CARD DE ENTRADA E FORMULÁRIO ACADÊMICO
+             ==================================================================== -->
+        <section class="card-workspace">
+
+          <!-- ABA 1: GERAR NOVO PAPER / TESE -->
+          <div id="tab-panel-new">
+            <!-- Hero Banner Azul Royal com Emblema Dourado -->
+            <div class="hero-banner-blue">
+              <div class="hero-banner-left">
+                <div class="hero-icon-box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                </div>
+                <div class="hero-copy">
+                  <h2 id="gen-heading-title">Gerar Novo Artigo Científico Qualis A</h2>
+                  <p id="gen-heading-desc">Execução autônoma governada por 6 Quality Gates eliminatórios, consulta de teses vinculantes via MCP e redação científica densa (ABNT NBR 6022).</p>
+                </div>
+              </div>
+              <div class="hero-badge-gold">
+                <div class="wreath-badge">
+                  <div class="wreath-inner">
+                    <span>Qualis A</span>
+                    <span>ABNT</span>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="gate-right">
-              <span class="gate-badge badge-${escapeHtml(g.status)}">${escapeHtml(statusLabels[g.status] || g.status)}</span>
-              ${scoreHtml}
+
+            <!-- Formulário -->
+            <form id="form-generate" class="form-stack" style="margin-top: 1.25rem;" onsubmit="handleGenerateSubmit(event)">
+              <div class="form-group">
+                <label class="form-label">
+                  <span class="label-with-icon">
+                    <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                    <span>Natureza e Formato da Obra *</span>
+                    <span class="tooltip-wrap">
+                      <button type="button" class="tooltip-trigger" aria-label="Ajuda">?</button>
+                      <span class="tooltip-bubble" role="tooltip">
+                        <strong>Estrutura Acadêmica ABNT</strong>
+                        Escolha entre Artigo Científico de periódico (ABNT NBR 6022) ou Projeto de Tese de Conclusão de Curso (ABNT NBR 15287 / 14724).
+                      </span>
+                    </span>
+                  </span>
+                </label>
+                <div class="doctype-selector" role="radiogroup">
+                  <label class="doctype-option selected" id="gen-opt-artigo">
+                    <input type="radio" name="gen-tipo-documento" value="ARTIGO_CIENTIFICO" checked onchange="updateGenerateDocType(this.value)" />
+                    <span class="doctype-copy">
+                      <span class="doctype-title">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                        Artigo Científico (Qualis A · ABNT NBR 6022)
+                      </span>
+                      <span class="doctype-desc">Estrutura enxuta e densa de periódico: Introdução, Confrontação Dialética, Jurimetria e Conclusão.</span>
+                    </span>
+                  </label>
+
+                  <label class="doctype-option" id="gen-opt-tese">
+                    <input type="radio" name="gen-tipo-documento" value="PROJETO_TESE" onchange="updateGenerateDocType(this.value)" />
+                    <span class="doctype-copy">
+                      <span class="doctype-title">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+                        Projeto de Tese de Final de Curso (ABNT NBR 15287 / 14724)
+                      </span>
+                      <span class="doctype-desc">Estrutura completa de tese: Justificativa de Ineditismo, Objetivos, Referencial Teórico, Metodologia e Plano Capitular.</span>
+                    </span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="gen-titulo">
+                  <span class="label-with-icon">
+                    <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="9"></line><line x1="9" y1="13" x2="15" y2="13"></line><line x1="9" y1="17" x2="11" y2="17"></line></svg>
+                    <span>Título Provisório ou Definitivo da Obra *</span>
+                    <span class="tooltip-wrap">
+                      <button type="button" class="tooltip-trigger" aria-label="Ajuda">?</button>
+                      <span class="tooltip-bubble" role="tooltip">
+                        <strong>Título Acadêmico</strong>
+                        Informe o objeto e recorte dogmático da pesquisa.
+                      </span>
+                    </span>
+                  </span>
+                </label>
+                <input type="text" id="gen-titulo" class="form-input" required placeholder="Ex: O Princípio da Confiança Legítima no Overruling Tributário" value="O Princípio da Confiança Legítima no Overruling Tributário" />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="gen-tema">
+                  <span class="label-with-icon">
+                    <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    <span>Tema Central ou Questão Norteadora de Pesquisa *</span>
+                    <span class="tooltip-wrap">
+                      <button type="button" class="tooltip-trigger" aria-label="Ajuda">?</button>
+                      <span class="tooltip-bubble" role="tooltip">
+                        <strong>Tema Central</strong>
+                        Eixo temático para consulta jurisprudencial via MCP.
+                      </span>
+                    </span>
+                  </span>
+                </label>
+                <input type="text" id="gen-tema" class="form-input" required placeholder="Ex: Confiança Legítima e Modulação de Efeitos em Matéria Tributária" value="Confiança Legítima e Modulação de Efeitos em Matéria Tributária" />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="gen-recorte">
+                  <span class="label-with-icon">
+                    <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 2v7.31"></path><path d="M14 9.3V2"></path><path d="M8.5 2h7"></path><path d="M14 9.3a6.5 6.5 0 1 1-4 0"></path><path d="M5.52 16h12.96"></path></svg>
+                    <span>Recorte Epistemológico, Problema ou Hipótese Preliminar</span>
+                    <span class="tooltip-wrap">
+                      <button type="button" class="tooltip-trigger" aria-label="Ajuda">?</button>
+                      <span class="tooltip-bubble" role="tooltip">
+                        <strong>Recorte e Hipótese</strong>
+                        Dispositivos de lei, súmulas ou teses que deseja ver enfrentadas.
+                      </span>
+                    </span>
+                  </span>
+                  <span class="form-hint">Opcional</span>
+                </label>
+                <textarea id="gen-recorte" class="form-textarea" placeholder="Especifique tribunais-alvo (STF/STJ), dispositivos legais (ex: art. 927, § 3º do CPC) ou sua hipótese de partida..."></textarea>
+                <span class="form-hint">ⓘ O Agente Epistemológico (GPT-6 Astra) formulará a problematização e a hipótese falseável no Gate 1.</span>
+              </div>
+
+              <!-- Controles de Configuração Integrados -->
+              <input type="hidden" id="gen-threshold" value="85.0" />
+              <input type="checkbox" id="gen-pdf" checked style="display:none;" />
+              <input type="checkbox" id="gen-docx" checked style="display:none;" />
+
+              <!-- Botão Principal de Submissão -->
+              <button type="submit" class="btn-submit-hero" id="btn-submit-generate">
+                <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                <span id="btn-submit-generate-label">Gerar Novo Artigo Científico (Qualis A)</span>
+              </button>
+            </form>
+          </div>
+
+          <!-- ABA 2: REVISAR & ELEVAR PAPER EXISTENTE -->
+          <div id="tab-panel-improve" class="hidden">
+            <div class="hero-banner-blue">
+              <div class="hero-banner-left">
+                <div class="hero-icon-box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                </div>
+                <div class="hero-copy">
+                  <h2 id="imp-heading-title">Revisar, Auditar e Elevar Paper Existente</h2>
+                  <p id="imp-heading-desc">Submete seu manuscrito à Banca Examinadora Sintética (DeepSeek), corrige citações via MCP e aprofunda o rigor dialético com Claude Fable 5.2.</p>
+                </div>
+              </div>
+            </div>
+
+            <form id="form-improve" class="form-stack" style="margin-top: 1.25rem;" onsubmit="handleImproveSubmit(event)">
+              <div class="form-group">
+                <label class="form-label"><span>Formato Alvo da Obra Refatorada *</span></label>
+                <div class="doctype-selector">
+                  <label class="doctype-option selected" id="imp-opt-artigo">
+                    <input type="radio" name="imp-tipo-documento" value="ARTIGO_CIENTIFICO" checked onchange="updateImproveDocType(this.value)" />
+                    <span class="doctype-copy">
+                      <span class="doctype-title">Artigo Científico (Qualis A)</span>
+                      <span class="doctype-desc">Eleva o manuscrito para submissão em periódico Qualis A.</span>
+                    </span>
+                  </label>
+                  <label class="doctype-option" id="imp-opt-tese">
+                    <input type="radio" name="imp-tipo-documento" value="PROJETO_TESE" onchange="updateImproveDocType(this.value)" />
+                    <span class="doctype-copy">
+                      <span class="doctype-title">Projeto de Tese de Final de Curso</span>
+                      <span class="doctype-desc">Eleva para defesa em banca de qualificação ou tese final.</span>
+                    </span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="imp-file"><span>Upload do Manuscrito (.pdf, .docx, .md, .txt)</span></label>
+                <div class="dropzone" id="improve-dropzone" style="border: 2px dashed var(--border); border-radius: 8px; padding: 1.5rem; text-align: center; cursor: pointer; background: var(--surface-card);" onclick="document.getElementById('imp-file').click()">
+                  <div style="font-weight: 700; font-size: 0.9rem;">Selecione um arquivo ou arraste seu paper aqui</div>
+                  <div style="font-size: 0.75rem; color: var(--muted); margin-top: 0.25rem;">Suporta PDF, DOCX, Markdown e TXT (até 25MB)</div>
+                  <div id="imp-file-pill" class="hidden" style="margin-top: 0.5rem; font-weight: 700; color: var(--primary);"></div>
+                </div>
+                <input type="file" id="imp-file" accept=".pdf,.docx,.md,.txt,.markdown" style="display:none;" onchange="handleFileSelect(this)" />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="imp-texto"><span>OU Cole o Texto do Paper Diretamente</span><span class="form-hint">Opcional</span></label>
+                <textarea id="imp-texto" class="form-textarea" placeholder="Cole aqui o conteúdo do seu artigo ou capítulos caso prefira não enviar arquivo..."></textarea>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="imp-titulo"><span>Título Customizado (Opcional)</span></label>
+                <input type="text" id="imp-titulo" class="form-input" placeholder="Em branco preserva automaticamente o título do arquivo" />
+              </div>
+
+              <input type="hidden" id="imp-threshold" value="85.0" />
+              <input type="checkbox" id="imp-pdf" checked style="display:none;" />
+              <input type="checkbox" id="imp-docx" checked style="display:none;" />
+
+              <button type="submit" class="btn-submit-hero" id="btn-submit-improve">
+                <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                <span>Executar Auditoria de Banca & Elevação</span>
+              </button>
+            </form>
+          </div>
+
+          <!-- ABA 3: HISTÓRICO & ACERVO GERADO -->
+          <div id="tab-panel-history" class="hidden">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+              <div>
+                <h3 style="font-size:1.1rem; font-weight:800;">Histórico de Trabalhos e Dossiês</h3>
+                <p style="font-size:0.75rem; color:var(--muted);">Download imediato de artigos e teses em PDF (ABNT), DOCX e Markdown.</p>
+              </div>
+              <button type="button" class="btn-dl" onclick="loadHistory()">Atualizar Acervo</button>
+            </div>
+            <div id="history-container" style="display:flex; flex-direction:column; gap:0.75rem;">
+              <div style="padding: 1.5rem; color: var(--muted);">Carregando acervo acadêmico...</div>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- ====================================================================
+             COLUNA DIREITA: MONITOR DE QUALITY GATES EM TEMPO REAL
+             ==================================================================== -->
+        <aside class="card-monitor" id="monitor-rail-card">
+          <!-- Cabeçalho do Monitor -->
+          <div class="monitor-header">
+            <div class="monitor-title-box">
+              <div class="monitor-icon-badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+              </div>
+              <div class="monitor-titles">
+                <h2>Monitor de Quality Gates em Tempo Real</h2>
+                <p id="active-job-subtitle">Aguardando submissão de novo paper ou auditoria de banca.</p>
+              </div>
+            </div>
+            <div class="monitor-status-pill">
+              <span class="dot"></span>
+              <span>Em espera</span>
+            </div>
+          </div>
+
+          <!-- Barra de Progresso Superior com Nó G1 .. G6 -->
+          <div class="progress-stepper-box">
+            <div class="stepper-header">
+              <span>Progresso dos Gates</span>
+              <span class="stepper-counter" id="stepper-counter-text">0/6</span>
+            </div>
+            <div class="stepper-track-wrap">
+              <div class="stepper-line"></div>
+              <div class="stepper-node" id="step-node-1"><div class="stepper-dot"></div><span class="stepper-label">G1</span></div>
+              <div class="stepper-node" id="step-node-2"><div class="stepper-dot"></div><span class="stepper-label">G2</span></div>
+              <div class="stepper-node" id="step-node-3"><div class="stepper-dot"></div><span class="stepper-label">G3</span></div>
+              <div class="stepper-node" id="step-node-4"><div class="stepper-dot"></div><span class="stepper-label">G4</span></div>
+              <div class="stepper-node" id="step-node-5"><div class="stepper-dot"></div><span class="stepper-label">G5</span></div>
+              <div class="stepper-node" id="step-node-6"><div class="stepper-dot"></div><span class="stepper-label">G6</span></div>
+            </div>
+          </div>
+
+          <!-- Linha do Tempo Vertical com Gates G1 a G6 e Ícones Elegantes -->
+          <div id="gates-stepper" class="timeline-gates-list"></div>
+
+          <!-- Console de Atividade Terminal -->
+          <div class="terminal-console-box">
+            <div class="terminal-header">
+              <div class="terminal-header-title">
+                <span>&gt;_</span>
+                <span>Console de Atividade</span>
+              </div>
+              <div class="terminal-header-badge">
+                <span class="status-dot-green"></span>
+                <span>Tempo real</span>
+              </div>
+            </div>
+            <div class="terminal-body" id="telemetry-log">
+              <div>[Sistema] Arquitetura Multi-Modelo OpenRouter pronta.</div>
+              <div>[Sistema] Servidor JurisprudênciaIA MCP vinculado.</div>
+            </div>
+          </div>
+
+          <!-- Resultado Final e Downloads -->
+          <div id="job-result-box" class="result-banner hidden">
+            <h3 id="res-box-title" style="font-size:0.95rem; font-weight:800; color:var(--ink);">Homologação Concluída</h3>
+            <p id="res-box-summary" style="font-size:0.75rem; color:var(--ink-secondary); margin-top:0.25rem;"></p>
+            <div class="download-actions" id="res-download-links" style="display:flex; gap:0.4rem; flex-wrap:wrap; margin-top:0.75rem;"></div>
+          </div>
+        </aside>
+
+      </div>
+
+    </main>
+  </div>
+
+</div>
+
+<!-- Modal Leitor Acadêmico -->
+<div class="modal-backdrop" id="reader-modal" role="dialog" aria-modal="true" aria-labelledby="reader-title" onclick="if(event.target === this) closeReader()">
+  <div class="modal-reader">
+    <div class="modal-header">
+      <h3 id="reader-title">Leitor Acadêmico</h3>
+      <div style="display:flex; gap:0.5rem; align-items:center;">
+        <div id="reader-dl-buttons" style="display:flex; gap:0.4rem;"></div>
+        <button type="button" class="btn-dl" onclick="closeReader()">Fechar</button>
+      </div>
+    </div>
+    <div class="modal-body" id="reader-content"></div>
+  </div>
+</div>
+
+<script>
+  const DEFAULT_GATES = [
+    { gate: "GATE_1_EPISTEMICO", numero: 1, titulo: "Epistemologia & Problematização", modelo: "openai/gpt-6-astra", status: "PENDING", score: null, icon: '<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>' },
+    { gate: "GATE_2_BIBLIOGRAFICO", numero: 2, titulo: "Revisão Sistemática PRISMA & MCP", modelo: "google/gemini-4-argon", status: "PENDING", score: null, icon: '<circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>' },
+    { gate: "GATE_3_METODOLOGICO", numero: 3, titulo: "Metodologia & Jurimetria Empírica", modelo: "openai/gpt-6.1-sol-pro", status: "PENDING", score: null, icon: '<line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line>' },
+    { gate: "GATE_4_REDACAO_SECCIONAL", numero: 4, titulo: "Redação Seccional Dialética", modelo: "anthropic/claude-fable-5.2", status: "PENDING", score: null, icon: '<path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>' },
+    { gate: "GATE_5_CITACOES_BANCA", numero: 5, titulo: "Auditoria Anti-Alucinação & Banca", modelo: "deepseek/deepseek-chat", status: "PENDING", score: null, icon: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>' },
+    { gate: "GATE_6_HOMOLOGACAO_FINAL", numero: 6, titulo: "Homologação Final ABNT", modelo: "openai/gpt-6-astra", status: "PENDING", score: null, icon: '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline>' },
+  ];
+
+  let activePollTimer = null;
+
+  function escapeHtml(str) {
+    if (str === null || str === undefined) return "";
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+
+  function toggleTheme() {
+    const root = document.documentElement;
+    const current = root.getAttribute("data-theme") || "light";
+    const next = current === "light" ? "dark" : "light";
+    root.setAttribute("data-theme", next);
+    const label = next === "light" ? "Modo Carbono Escuro" : "Modo Estúdio Claro";
+    const sideLbl = document.getElementById("side-theme-label");
+    const topLbl = document.getElementById("topbar-theme-label");
+    if (sideLbl) sideLbl.textContent = label;
+    if (topLbl) topLbl.textContent = label;
+    try {
+      localStorage.setItem("strictosensu_theme", next);
+    } catch (_) {}
+  }
+
+  function switchTab(tab) {
+    ["new", "improve", "history"].forEach((t) => {
+      const topBtn = document.getElementById(`tab-btn-${t}`);
+      const sideBtn = document.getElementById(`side-btn-${t}`);
+      const panel = document.getElementById(`tab-panel-${t}`);
+      if (topBtn) topBtn.classList.toggle("active", t === tab);
+      if (sideBtn) sideBtn.classList.toggle("active", t === tab);
+      if (panel) panel.classList.toggle("hidden", t !== tab);
+    });
+
+    if (tab === "history") {
+      loadHistory();
+    }
+  }
+
+  function scrollToMonitor() {
+    const el = document.getElementById("monitor-rail-card");
+    if (el) el.scrollIntoView({ behavior: "smooth" });
+  }
+
+  function updateGenerateDocType(val) {
+    const isTese = val === "PROJETO_TESE";
+    document.getElementById("gen-opt-artigo").classList.toggle("selected", !isTese);
+    document.getElementById("gen-opt-tese").classList.toggle("selected", isTese);
+    document.getElementById("gen-heading-title").textContent = isTese
+      ? "Gerar Novo Projeto de Tese de Final de Curso"
+      : "Gerar Novo Artigo Científico Qualis A";
+    document.getElementById("gen-heading-desc").textContent = isTese
+      ? "Estruturação autônoma com Justificativa de Ineditismo, Objetivos, Referencial Teórico, Metodologia e Plano Capitular (ABNT NBR 15287 / 14724)."
+      : "Execução autônoma governada por 6 Quality Gates eliminatórios, consulta de teses vinculantes via MCP e redação científica densa (ABNT NBR 6022).";
+    document.getElementById("btn-submit-generate-label").textContent = isTese
+      ? "Gerar Novo Projeto de Tese (ABNT)"
+      : "Gerar Novo Artigo Científico (Qualis A)";
+  }
+
+  function updateImproveDocType(val) {
+    const isTese = val === "PROJETO_TESE";
+    document.getElementById("imp-opt-artigo").classList.toggle("selected", !isTese);
+    document.getElementById("imp-opt-tese").classList.toggle("selected", isTese);
+  }
+
+  function renderGates(gatesList) {
+    const container = document.getElementById("gates-stepper");
+    const statusLabels = {
+      PENDING: "AGUARDANDO",
+      RUNNING: "EM EXECUÇÃO",
+      DONE: "APROVADO",
+      FAILED: "AJUSTES",
+    };
+
+    let doneCount = 0;
+    container.innerHTML = gatesList.map((g) => {
+      if (g.status === "DONE") doneCount++;
+      const scoreHtml = g.score !== null && g.score !== undefined
+        ? `<div style="font-family:var(--font-mono); font-size:0.68rem; font-weight:700; color:var(--ink);">${Number(g.score).toFixed(1)}/100</div>`
+        : "";
+
+      const nodeEl = document.getElementById(`step-node-${g.numero}`);
+      if (nodeEl) {
+        nodeEl.className = `stepper-node ${g.status === "DONE" ? "done" : g.status === "RUNNING" ? "active" : ""}`;
+      }
+
+      const iconPath = g.icon || '<circle cx="12" cy="12" r="10"></circle>';
+
+      return `
+        <div class="timeline-item ${escapeHtml(g.status)}">
+          <div class="timeline-left">
+            <span class="gate-badge-pill">G${escapeHtml(g.numero)}</span>
+            <svg class="gate-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              ${iconPath}
+            </svg>
+            <div class="timeline-details">
+              <h4>${escapeHtml(g.titulo)}</h4>
+              <span>${escapeHtml(g.modelo)}</span>
+            </div>
+          </div>
+          <div class="timeline-right">
+            <span class="timeline-status ts-${escapeHtml(g.status)}">${escapeHtml(statusLabels[g.status] || g.status)}</span>
+            ${scoreHtml}
+          </div>
+        </div>
+      `;
+    }).join("");
+
+    const counter = document.getElementById("stepper-counter-text");
+    if (counter) counter.textContent = `${doneCount}/6`;
+  }
+
+  function handleFileSelect(input) {
+    const pill = document.getElementById("imp-file-pill");
+    if (input.files && input.files[0]) {
+      pill.textContent = `Selecionado: ${input.files[0].name}`;
+      pill.classList.remove("hidden");
+    } else {
+      pill.classList.add("hidden");
+    }
+  }
+
+  const dropzone = document.getElementById("improve-dropzone");
+  if (dropzone) {
+    dropzone.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      dropzone.style.borderColor = "var(--primary)";
+    });
+    dropzone.addEventListener("dragleave", () => {
+      dropzone.style.borderColor = "var(--border)";
+    });
+    dropzone.addEventListener("drop", (e) => {
+      e.preventDefault();
+      dropzone.style.borderColor = "var(--border)";
+      if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+        const fileInput = document.getElementById("imp-file");
+        fileInput.files = e.dataTransfer.files;
+        handleFileSelect(fileInput);
+      }
+    });
+  }
+
+  async function loadSystemConfig() {
+    try {
+      const res = await fetch("/api/config");
+      if (!res.ok) return;
+      const data = await res.json();
+      const txt = `Corpus RAG: ${data.corpus_count} precedentes`;
+      document.getElementById("corpus-count-text").textContent = txt;
+      const sideTxt = document.getElementById("side-corpus-count");
+      if (sideTxt) sideTxt.textContent = txt;
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  async function handleGenerateSubmit(e) {
+    e.preventDefault();
+    const btn = document.getElementById("btn-submit-generate");
+    btn.disabled = true;
+    document.getElementById("job-result-box").classList.add("hidden");
+
+    const tipoRadio = document.querySelector('input[name="gen-tipo-documento"]:checked');
+    const payload = {
+      titulo: document.getElementById("gen-titulo").value.trim(),
+      tema: document.getElementById("gen-tema").value.trim(),
+      tipo_documento: tipoRadio ? tipoRadio.value : "ARTIGO_CIENTIFICO",
+      recorte_tematico: document.getElementById("gen-recorte").value.trim() || null,
+      threshold: parseFloat(document.getElementById("gen-threshold").value || "85.0"),
+      gerar_pdf: true,
+      gerar_docx: true,
+    };
+
+    try {
+      const res = await fetch("/api/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.detail || "Falha ao iniciar pipeline.");
+      }
+      const data = await res.json();
+      startJobPolling(data.job_id);
+    } catch (err) {
+      alert("Erro na submissão: " + err.message);
+      btn.disabled = false;
+    }
+  }
+
+  async function handleImproveSubmit(e) {
+    e.preventDefault();
+    const btn = document.getElementById("btn-submit-improve");
+    btn.disabled = true;
+    document.getElementById("job-result-box").classList.add("hidden");
+
+    const fileInput = document.getElementById("imp-file");
+    const texto = document.getElementById("imp-texto").value.trim();
+    const titulo = document.getElementById("imp-titulo").value.trim();
+    const tipoRadio = document.querySelector('input[name="imp-tipo-documento"]:checked');
+
+    if (!fileInput.files[0] && !texto) {
+      alert("Por favor, selecione um arquivo ou cole o texto do seu paper.");
+      btn.disabled = false;
+      return;
+    }
+
+    const formData = new FormData();
+    if (fileInput.files[0]) formData.append("arquivo", fileInput.files[0]);
+    if (texto) formData.append("texto_colado", texto);
+    if (titulo) formData.append("titulo_customizado", titulo);
+    formData.append("tipo_documento", tipoRadio ? tipoRadio.value : "ARTIGO_CIENTIFICO");
+    formData.append("threshold", document.getElementById("imp-threshold").value || "85.0");
+    formData.append("gerar_pdf", "true");
+    formData.append("gerar_docx", "true");
+
+    try {
+      const res = await fetch("/api/improve", { method: "POST", body: formData });
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.detail || "Falha ao enviar paper.");
+      }
+      const data = await res.json();
+      startJobPolling(data.job_id);
+    } catch (err) {
+      alert("Erro na submissão: " + err.message);
+      btn.disabled = false;
+    }
+  }
+
+  function startJobPolling(jobId) {
+    if (activePollTimer) clearInterval(activePollTimer);
+    document.getElementById("active-job-subtitle").textContent = `Job em execução: ${jobId}`;
+
+    const poll = async () => {
+      try {
+        const res = await fetch(`/api/jobs/${jobId}`);
+        if (!res.ok) return;
+        const job = await res.json();
+
+        if (job.gates && job.gates.length > 0) {
+          renderGates(job.gates);
+        }
+
+        if (job.logs && job.logs.length > 0) {
+          const logBox = document.getElementById("telemetry-log");
+          logBox.innerHTML = job.logs.map((l) => `<div>${escapeHtml(l)}</div>`).join("");
+          logBox.scrollTop = logBox.scrollHeight;
+        }
+
+        if (job.status === "COMPLETED" || job.status === "FAILED") {
+          clearInterval(activePollTimer);
+          document.getElementById("btn-submit-generate").disabled = false;
+          document.getElementById("btn-submit-improve").disabled = false;
+          loadSystemConfig();
+
+          if (job.status === "COMPLETED" && job.result) {
+            showJobResult(job);
+          } else {
+            document.getElementById("active-job-subtitle").textContent =
+              "Execução interrompida: " + (job.error || "Verifique os logs.");
+          }
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    poll();
+    activePollTimer = setInterval(poll, 1800);
+  }
+
+  function showJobResult(job) {
+    const r = job.result;
+    const box = document.getElementById("job-result-box");
+    const titleEl = document.getElementById("res-box-title");
+    const sumEl = document.getElementById("res-box-summary");
+    const linksEl = document.getElementById("res-download-links");
+
+    document.getElementById("active-job-subtitle").textContent = `Concluído: ${r.titulo}`;
+
+    if (job.mode === "IMPROVE") {
+      titleEl.textContent = r.homologado
+        ? "Paper Elevado e Aprovado pela Banca de Doutorado"
+        : "Paper Refatorado com Parecer da Banca Examinadora";
+      sumEl.textContent = `Score evoluiu de ${Number(r.score_inicial).toFixed(2)}/100 para ${Number(r.score_medio).toFixed(2)}/100`;
+    } else {
+      titleEl.textContent = r.homologado
+        ? "Obra Homologada nos 6 Quality Gates"
+        : "Obra Compilada com Diretrizes do Revisor Geral";
+      sumEl.textContent = `Score Global Médio: ${Number(r.score_medio).toFixed(2)}/100 · Status: ${r.status_geral}`;
+    }
+
+    const files = r.files || {};
+    let buttonsHtml = "";
+
+    if (files.md) {
+      buttonsHtml += `<button type="button" class="btn-dl" data-md="${escapeHtml(files.md)}" data-title="${escapeHtml(r.titulo)}" onclick="openReader(this.dataset.md, this.dataset.title)">Ler Artigo na Tela</button>`;
+    }
+    if (files.pdf) {
+      buttonsHtml += `<a class="btn-dl pdf-highlight" href="/api/download/${encodeURIComponent(files.pdf)}" download>Baixar PDF (ABNT)</a>`;
+    }
+    if (files.docx) {
+      buttonsHtml += `<a class="btn-dl" href="/api/download/${encodeURIComponent(files.docx)}" download>Baixar DOCX (Word)</a>`;
+    }
+    if (files.md) {
+      buttonsHtml += `<a class="btn-dl" href="/api/download/${encodeURIComponent(files.md)}" download>Baixar Markdown</a>`;
+    }
+    if (files.dossie_md) {
+      buttonsHtml += `<button type="button" class="btn-dl" data-md="${escapeHtml(files.dossie_md)}" data-title="Dossiê da Banca" onclick="openReader(this.dataset.md, this.dataset.title)">Ler Dossiê da Banca</button>`;
+    }
+    if (files.dossie_pdf) {
+      buttonsHtml += `<a class="btn-dl" href="/api/download/${encodeURIComponent(files.dossie_pdf)}" download>Dossiê em PDF</a>`;
+    }
+
+    linksEl.innerHTML = buttonsHtml;
+    box.classList.remove("hidden");
+  }
+
+  async function loadHistory() {
+    const container = document.getElementById("history-container");
+    try {
+      const res = await fetch("/api/history");
+      const data = await res.json();
+      const items = data.items || [];
+
+      if (items.length === 0) {
+        container.innerHTML = `<div style="padding: 1.5rem; color: var(--muted);">Nenhum documento encontrado em output/.</div>`;
+        return;
+      }
+
+      container.innerHTML = items.map((item) => {
+        const badgeColor = item.is_dossie ? "#d97706" : "#2563eb";
+        const dossieBtn = item.files.dossie_md
+          ? `<button type="button" class="btn-dl" data-md="${escapeHtml(item.files.dossie_md)}" data-title="Dossiê da Banca" onclick="openReader(this.dataset.md, this.dataset.title)">Ver Dossiê</button>`
+          : "";
+
+        return `
+          <div style="background:var(--surface-card); border:1px solid var(--border); border-radius:8px; padding:1rem 1.25rem;">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.4rem;">
+              <div>
+                <span style="font-family:var(--font-mono); font-size:0.65rem; font-weight:800; color:${badgeColor}; text-transform:uppercase;">${escapeHtml(item.tipo)}</span>
+                <h4 style="font-size:1rem; font-weight:800; margin-top:0.2rem;">${escapeHtml(item.titulo)}</h4>
+              </div>
+              <span style="font-family:var(--font-mono); font-size:0.7rem; color:var(--muted);">${escapeHtml(item.created_at)} · ${escapeHtml(item.size_kb)} KB</span>
+            </div>
+            <p style="font-size:0.8rem; color:var(--ink-secondary); margin-bottom:0.75rem;">${escapeHtml(item.preview)}</p>
+            <div style="display:flex; gap:0.4rem; flex-wrap:wrap;">
+              <button type="button" class="btn-dl" data-md="${escapeHtml(item.files.md)}" data-title="${escapeHtml(item.titulo)}" onclick="openReader(this.dataset.md, this.dataset.title)">Ler na Tela</button>
+              <a class="btn-dl pdf-highlight" href="/api/download/${encodeURIComponent(item.files.pdf)}" download>PDF (ABNT)</a>
+              <a class="btn-dl" href="/api/download/${encodeURIComponent(item.files.docx)}" download>DOCX</a>
+              <a class="btn-dl" href="/api/download/${encodeURIComponent(item.files.md)}" download>Markdown</a>
+              ${dossieBtn}
             </div>
           </div>
         `;
       }).join("");
+    } catch (err) {
+      container.innerHTML = `<div style="padding: 1.5rem; color: var(--status-err);">Erro ao carregar histórico: ${escapeHtml(err.message)}</div>`;
     }
+  }
 
-    function handleFileSelect(input) {
-      const pill = document.getElementById("imp-file-pill");
-      if (input.files && input.files[0]) {
-        pill.textContent = `Selecionado: ${input.files[0].name}`;
-        pill.classList.remove("hidden");
-      } else {
-        pill.classList.add("hidden");
-      }
+  async function openReader(filename, title) {
+    try {
+      const res = await fetch(`/api/preview/${encodeURIComponent(filename)}`);
+      if (!res.ok) throw new Error("Não foi possível carregar o documento.");
+      const data = await res.json();
+
+      const stem = filename.replace(/\.md$/i, "");
+      document.getElementById("reader-title").textContent = title || stem;
+      document.getElementById("reader-content").textContent = data.content;
+      document.getElementById("reader-dl-buttons").innerHTML = `
+        <a class="btn-dl pdf-highlight" href="/api/download/${encodeURIComponent(stem + '.pdf')}" download>PDF</a>
+        <a class="btn-dl" href="/api/download/${encodeURIComponent(stem + '.docx')}" download>DOCX</a>
+      `;
+      document.getElementById("reader-modal").classList.add("open");
+    } catch (err) {
+      alert(err.message);
     }
+  }
 
-    const dropzone = document.getElementById("improve-dropzone");
-    if (dropzone) {
-      dropzone.addEventListener("dragover", (e) => {
-        e.preventDefault();
-        dropzone.classList.add("dragover");
-      });
-      dropzone.addEventListener("dragleave", () => dropzone.classList.remove("dragover"));
-      dropzone.addEventListener("drop", (e) => {
-        e.preventDefault();
-        dropzone.classList.remove("dragover");
-        if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-          const fileInput = document.getElementById("imp-file");
-          fileInput.files = e.dataTransfer.files;
-          handleFileSelect(fileInput);
-        }
-      });
-    }
+  function closeReader() {
+    document.getElementById("reader-modal").classList.remove("open");
+  }
 
-    async function loadSystemConfig() {
-      try {
-        const res = await fetch("/api/config");
-        if (!res.ok) return;
-        const data = await res.json();
-        document.getElementById("corpus-count-text").textContent = `Corpus RAG: ${data.corpus_count} precedentes`;
-      } catch (e) {
-        console.error(e);
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      const modal = document.getElementById("reader-modal");
+      if (modal && modal.classList.contains("open")) {
+        closeReader();
       }
     }
+  });
 
-    async function handleGenerateSubmit(e) {
-      e.preventDefault();
-      const btn = document.getElementById("btn-submit-generate");
-      btn.disabled = true;
-      document.getElementById("job-result-box").classList.add("hidden");
-
-      const tipoRadio = document.querySelector('input[name="gen-tipo-documento"]:checked');
-      const payload = {
-        titulo: document.getElementById("gen-titulo").value.trim(),
-        tema: document.getElementById("gen-tema").value.trim(),
-        tipo_documento: tipoRadio ? tipoRadio.value : "ARTIGO_CIENTIFICO",
-        recorte_tematico: document.getElementById("gen-recorte").value.trim() || null,
-        threshold: parseFloat(document.getElementById("gen-threshold").value),
-        gerar_pdf: document.getElementById("gen-pdf").checked,
-        gerar_docx: document.getElementById("gen-docx").checked,
-      };
-
-      try {
-        const res = await fetch("/api/generate", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.detail || "Falha ao iniciar geração");
-        startPollingJob(data.job_id);
-      } catch (err) {
-        alert("Erro: " + err.message);
-        btn.disabled = false;
+  (function initTheme() {
+    try {
+      const saved = localStorage.getItem("strictosensu_theme");
+      if (saved === "dark" || saved === "light") {
+        document.documentElement.setAttribute("data-theme", saved);
+        const label = saved === "light" ? "Modo Carbono Escuro" : "Modo Estúdio Claro";
+        const sideLbl = document.getElementById("side-theme-label");
+        const topLbl = document.getElementById("topbar-theme-label");
+        if (sideLbl) sideLbl.textContent = label;
+        if (topLbl) topLbl.textContent = label;
       }
-    }
+    } catch (_) {}
+  })();
 
-    async function handleImproveSubmit(e) {
-      e.preventDefault();
-      const btn = document.getElementById("btn-submit-improve");
-      const fileInput = document.getElementById("imp-file");
-      const textoColado = document.getElementById("imp-texto").value.trim();
-
-      if ((!fileInput.files || fileInput.files.length === 0) && textoColado.length < 30) {
-        alert("Por favor, selecione um arquivo (.pdf, .docx, .md, .txt) ou cole o texto do paper (mínimo 30 caracteres).");
-        return;
-      }
-
-      btn.disabled = true;
-      document.getElementById("job-result-box").classList.add("hidden");
-
-      const formData = new FormData();
-      if (fileInput.files && fileInput.files[0]) {
-        formData.append("arquivo", fileInput.files[0]);
-      }
-      if (textoColado) {
-        formData.append("texto_colado", textoColado);
-      }
-      const titulo = document.getElementById("imp-titulo").value.trim();
-      if (titulo) {
-        formData.append("titulo", titulo);
-      }
-      const impTipoRadio = document.querySelector('input[name="imp-tipo-documento"]:checked');
-      formData.append("tipo_documento", impTipoRadio ? impTipoRadio.value : "ARTIGO_CIENTIFICO");
-      formData.append("threshold", document.getElementById("imp-threshold").value);
-      formData.append("gerar_pdf", document.getElementById("imp-pdf").checked);
-      formData.append("gerar_docx", document.getElementById("imp-docx").checked);
-
-      try {
-        const res = await fetch("/api/improve", {
-          method: "POST",
-          body: formData,
-        });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.detail || "Falha ao iniciar revisão");
-        startPollingJob(data.job_id);
-      } catch (err) {
-        alert("Erro: " + err.message);
-        btn.disabled = false;
-      }
-    }
-
-    function startPollingJob(jobId) {
-      if (activePollTimer) clearInterval(activePollTimer);
-      document.getElementById("active-job-subtitle").textContent = "Orquestração Multi-Agente em andamento...";
-
-      const poll = async () => {
-        try {
-          const res = await fetch(`/api/jobs/${jobId}`);
-          if (!res.ok) return;
-          const job = await res.json();
-
-          const orderedGates = Object.values(job.gates).sort((a, b) => a.numero - b.numero);
-          renderGates(orderedGates);
-
-          const logBox = document.getElementById("telemetry-log");
-          logBox.innerHTML = (job.logs || [])
-            .map((l) => `<div class="telemetry-line">${escapeHtml(l)}</div>`)
-            .join("");
-          logBox.scrollTop = logBox.scrollHeight;
-
-          if (job.status === "COMPLETED" || job.status === "FAILED") {
-            clearInterval(activePollTimer);
-            document.getElementById("btn-submit-generate").disabled = false;
-            document.getElementById("btn-submit-improve").disabled = false;
-            loadSystemConfig();
-
-            if (job.status === "COMPLETED" && job.result) {
-              showJobResult(job);
-            } else {
-              document.getElementById("active-job-subtitle").textContent =
-                "Execução interrompida: " + (job.error || "Verifique os logs.");
-            }
-          }
-        } catch (err) {
-          console.error(err);
-        }
-      };
-
-      poll();
-      activePollTimer = setInterval(poll, 1800);
-    }
-
-    function showJobResult(job) {
-      const r = job.result;
-      const box = document.getElementById("job-result-box");
-      const titleEl = document.getElementById("res-box-title");
-      const sumEl = document.getElementById("res-box-summary");
-      const linksEl = document.getElementById("res-download-links");
-
-      document.getElementById("active-job-subtitle").textContent =
-        `Concluído: ${r.titulo}`;
-
-      if (job.mode === "IMPROVE") {
-        titleEl.textContent = r.homologado
-          ? "Paper Elevado e Aprovado pela Banca de Doutorado"
-          : "Paper Refatorado com Parecer da Banca Examinadora";
-        sumEl.textContent = `Score evoluiu de ${Number(r.score_inicial).toFixed(2)}/100 para ${Number(r.score_medio).toFixed(2)}/100 · Inconsistências de citação: ${r.inconsistencias_antes} → ${r.inconsistencias_depois}`;
-      } else {
-        titleEl.textContent = r.homologado
-          ? "Obra Homologada nos 6 Quality Gates"
-          : "Obra Compilada com Diretrizes do Revisor Geral";
-        sumEl.textContent = `Score Global Médio: ${Number(r.score_medio).toFixed(2)}/100 · Status: ${r.status_geral}`;
-      }
-
-      const files = r.files || {};
-      let buttonsHtml = "";
-
-      if (files.md) {
-        buttonsHtml += `<button type="button" class="btn-dl" data-md="${escapeHtml(files.md)}" data-title="${escapeHtml(r.titulo)}" onclick="openReader(this.dataset.md, this.dataset.title)">Ler Artigo na Tela</button>`;
-      }
-      if (files.pdf) {
-        buttonsHtml += `<a class="btn-dl pdf-highlight" href="/api/download/${encodeURIComponent(files.pdf)}" download>Baixar PDF (ABNT)</a>`;
-      }
-      if (files.docx) {
-        buttonsHtml += `<a class="btn-dl" href="/api/download/${encodeURIComponent(files.docx)}" download>Baixar DOCX (Word)</a>`;
-      }
-      if (files.md) {
-        buttonsHtml += `<a class="btn-dl" href="/api/download/${encodeURIComponent(files.md)}" download>Baixar Markdown</a>`;
-      }
-      if (files.dossie_md) {
-        buttonsHtml += `<button type="button" class="btn-dl" data-md="${escapeHtml(files.dossie_md)}" data-title="Dossiê da Banca Examinadora" onclick="openReader(this.dataset.md, this.dataset.title)">Ler Dossiê da Banca</button>`;
-      }
-      if (files.dossie_pdf) {
-        buttonsHtml += `<a class="btn-dl" href="/api/download/${encodeURIComponent(files.dossie_pdf)}" download>Dossiê em PDF</a>`;
-      }
-
-      linksEl.innerHTML = buttonsHtml;
-      box.classList.remove("hidden");
-    }
-
-    async function loadHistory() {
-      const container = document.getElementById("history-container");
-      try {
-        const res = await fetch("/api/history");
-        const data = await res.json();
-        const items = data.items || [];
-
-        if (items.length === 0) {
-          container.innerHTML = `<div style="padding: 1.5rem; color: var(--muted);">Nenhum documento encontrado em output/.</div>`;
-          return;
-        }
-
-        container.innerHTML = items.map((item) => {
-          const badgeClass = item.is_dossie ? "badge-dossie" : "badge-paper";
-          const dossieBtn = item.files.dossie_md
-            ? `<button type="button" class="btn-dl" data-md="${escapeHtml(item.files.dossie_md)}" data-title="Dossiê da Banca" onclick="openReader(this.dataset.md, this.dataset.title)">Ver Dossiê da Banca</button>`
-            : "";
-
-          return `
-            <div class="history-card">
-              <div class="history-top">
-                <div>
-                  <span class="history-badge ${badgeClass}">${escapeHtml(item.tipo)}</span>
-                  <h3 class="history-title">${escapeHtml(item.titulo)}</h3>
-                </div>
-                <span class="history-meta">${escapeHtml(item.created_at)} · ${escapeHtml(item.size_kb)} KB</span>
-              </div>
-              <p class="history-preview">${escapeHtml(item.preview)}</p>
-              <div class="download-actions">
-                <button type="button" class="btn-dl" data-md="${escapeHtml(item.files.md)}" data-title="${escapeHtml(item.titulo)}" onclick="openReader(this.dataset.md, this.dataset.title)">Ler na Tela</button>
-                <a class="btn-dl pdf-highlight" href="/api/download/${encodeURIComponent(item.files.pdf)}" download>PDF (ABNT)</a>
-                <a class="btn-dl" href="/api/download/${encodeURIComponent(item.files.docx)}" download>DOCX (Word)</a>
-                <a class="btn-dl" href="/api/download/${encodeURIComponent(item.files.md)}" download>Markdown (.md)</a>
-                ${dossieBtn}
-              </div>
-            </div>
-          `;
-        }).join("");
-      } catch (err) {
-        container.innerHTML = `<div style="padding: 1.5rem; color: var(--status-err);">Erro ao carregar histórico: ${escapeHtml(err.message)}</div>`;
-      }
-    }
-
-    async function openReader(filename, title) {
-      try {
-        const res = await fetch(`/api/preview/${encodeURIComponent(filename)}`);
-        if (!res.ok) throw new Error("Não foi possível carregar o documento.");
-        const data = await res.json();
-
-        const stem = filename.replace(/\.md$/i, "");
-        document.getElementById("reader-title").textContent = title || stem;
-        document.getElementById("reader-content").textContent = data.content;
-        document.getElementById("reader-dl-buttons").innerHTML = `
-          <a class="btn-dl pdf-highlight" href="/api/download/${encodeURIComponent(stem + '.pdf')}" download>PDF</a>
-          <a class="btn-dl" href="/api/download/${encodeURIComponent(stem + '.docx')}" download>DOCX</a>
-        `;
-        document.getElementById("reader-modal").classList.add("open");
-      } catch (err) {
-        alert(err.message);
-      }
-    }
-
-    function closeReader() {
-      document.getElementById("reader-modal").classList.remove("open");
-    }
-
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") {
-        const modal = document.getElementById("reader-modal");
-        if (modal && modal.classList.contains("open")) {
-          closeReader();
-        }
-      }
-    });
-
-    (function initTheme() {
-      try {
-        const saved = localStorage.getItem("strictosensu_theme");
-        if (saved === "dark" || saved === "light") {
-          document.documentElement.setAttribute("data-theme", saved);
-          document.getElementById("theme-toggle-btn").textContent =
-            saved === "light" ? "Modo Carbono Escuro" : "Modo Estúdio Claro";
-        }
-      } catch (_) {}
-    })();
-
-    renderGates(DEFAULT_GATES);
-    loadSystemConfig();
-  </script>
+  renderGates(DEFAULT_GATES);
+  loadSystemConfig();
+</script>
 </body>
 </html>

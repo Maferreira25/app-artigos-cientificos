@@ -52,7 +52,7 @@ class LiteratureReviewAgent:
         if precedente not in state.precedentes_mcp:
             state.precedentes_mcp.append(precedente)
 
-        # Salvar no RagStore
+        # Salvar o precedente fixo e indexar precedentes extraídos das consultas reais do MCP
         doc_meta = {
             "id": "stj-resp-1845234-sp",
             "tipo": "acordao_precedente",
@@ -64,6 +64,12 @@ class LiteratureReviewAgent:
         }
         doc_body = f"# {precedente.processo}\n\n## Ementa\n{precedente.ementa}\n\n## Fundamentação\n{precedente.trecho_fundamentacao}"
         self.rag_store.salvar_documento(doc_meta["id"], doc_meta, doc_body)
+
+        # Salvar também no RagStore o conteúdo integral das teses e timeline obtidos do MCP
+        if teses_raw:
+            self.rag_store.salvar_documento("mcp-teses-vinculantes", {"id": "mcp-teses-vinculantes", "tipo": "teses_mcp"}, teses_raw)
+        if timeline_raw:
+            self.rag_store.salvar_documento("mcp-timeline-precedentes", {"id": "mcp-timeline-precedentes", "tipo": "timeline_mcp"}, timeline_raw)
 
         # 4. Síntese do Estado da Arte via Gemini 4 Argon
         prompt = (

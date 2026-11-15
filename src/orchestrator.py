@@ -35,7 +35,7 @@ class AcademicPipelineOrchestrator:
         self.epistemic_agent = EpistemicAgent(self.mcp_client, self.llm_client)
         self.lit_review_agent = LiteratureReviewAgent(self.mcp_client, self.rag_store, self.llm_client)
         self.methodology_agent = MethodologyAgent(self.mcp_client, self.llm_client)
-        self.writer_agent = SectionalWriterAgent(self.mcp_client, self.llm_client)
+        self.writer_agent = SectionalWriterAgent(self.mcp_client, self.llm_client, rag_store=self.rag_store)
         self.defense_agent = DefenseValidatorAgent(self.mcp_client, self.rag_store, self.llm_client)
 
     async def executar_pipeline_completo(

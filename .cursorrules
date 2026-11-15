@@ -1,0 +1,24 @@
+# Regras do Projeto StrictoSensu para Agentes de IA
+
+## REGISTRO CONTÍNUO EM MEMORIA.MD (OBRIGATÓRIO)
+Toda e qualquer alteração no código-fonte, correção de bugs, implementação de novas features ou melhorias de interface realizada neste repositório DEVE ser sumariada e salva no arquivo:
+`c:\App_Artigos_Cientificos\docs\memoria.md`
+
+### Formato do Registro no docs/memoria.md:
+```markdown
+## [AAAA-MM-DD] — Título da Melhoria / Correção
+
+### 1. Escopo das Alterações
+- Detalhe claro e objetivo do que foi alterado, criado ou corrigido.
+
+### 2. Módulos Afetados
+- Lista dos arquivos modificados (ex: `src/web.py`, `src/static/index.html`).
+
+### 3. Resultados dos Testes & Verificação
+- Status da bateria de testes e confirmação de não regressão.
+```
+
+## DIRETRIZES TÉCNICAS DO PROJETO
+1. **Zero Alucinação:** Preservar a integração resiliente com o servidor MCP e validação pelo Gate 5.
+2. **Quality Gates:** Manter o Revisor Geral e os 6 Quality Gates eliminatórios íntegros.
+3. **Clean Code & Testes:** Sempre rodar `python -m pytest -q` para garantir que os 34 testes passem sem quebra.

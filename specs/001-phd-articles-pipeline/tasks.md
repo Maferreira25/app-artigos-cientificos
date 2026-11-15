@@ -59,3 +59,14 @@
 - [x] T019 Implementar `src/exporter.py`: gerador de Markdown consolidado e exportador para Pandoc (PDF via LaTeX e DOCX formatado nas normas ABNT NBR 14724, 6023 e 10520).
 - [x] T020 Implementar `src/cli.py`: interface de linha de comando com Rich para inicializar projetos de tese, executar gates interativamente ou em lote e visualizar relatórios do revisor.
 - [x] T021 Criar teste end-to-end em `tests/test_orchestrator.py` validando o fluxo completo com simulação de tese piloto.
+
+---
+
+## Phase 7: User Story 6 - Higiene Acadêmica, ABNT NBR 6022 e Síntese Orgânica (Priority: P1)
+
+- [x] T022 Implementar `src/sanitizer.py`: sanitizador de texto acadêmico para expurgo de logs MCP/RAG, detecção determinística de vazamentos, cálculo de proporção de bullets (com exclusão de títulos de seção) e conversão de jurimetria em prosa contínua.
+- [x] T023 Expandir `src/schemas.py`: novos campos de `DocumentoAcademicoState` para autoria qualificada, filiações, resumo vernáculo (NBR 6028), abstract em língua estrangeira, keywords e conclusão.
+- [x] T024 Reestruturar `src/agents/sectional_writer_agent.py` e `src/agents/methodology_agent.py`: erradicação de ementas brutas coladas, adoção de redação em prosa dissertativa e inclusão de fallbacks doutrinários especializados contextuais.
+- [x] T025 Endurecer os Quality Gates em `src/agents/chief_academic_reviewer.py`: Gate 4 com validação de vazamentos, proporção de bullets <= 15% e trava da Seção 1 (Introdução); Gate 6 com checagem pré-textual ABNT NBR 6022 e expurgo global.
+- [x] T026 Atualizar `src/exporter.py`: algoritmo de ordenação canônica estrita (`_ordenar_chaves_capitulos`), cabeçalho ABNT NBR 6022, higienização de pontuação de palavras-chave e montagem bibliográfica contextualizada ABNT NBR 6023.
+- [x] T027 Criar suite de testes em `tests/test_sanitizer_and_abnt_nbr6022.py` cobrindo vazamentos, bullets, ordenação, resumo/abstract e casos de borda (43 testes aprovados na suíte total).

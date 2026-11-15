@@ -73,6 +73,20 @@ class DocumentoAcademicoState(BaseModel):
     titulo: str = ""
     tema: str = ""
     tipo_documento: TipoDocumentoEnum = TipoDocumentoEnum.ARTIGO_CIENTIFICO
+    autores: List[str] = Field(default_factory=lambda: [
+        "Pesquisador Acadêmico (Doutorando em Direito)",
+        "Prof. Orientador Dr. (Docente Permanente do Programa de Pós-Graduação)"
+    ])
+    filiacoes: List[str] = Field(default_factory=lambda: [
+        "Pontifícia Universidade Católica - Programa de Pós-Graduação Stricto Sensu em Direito",
+        "Pontifícia Universidade Católica - Escola de Direito e Sociedade"
+    ])
+    resumo: str = ""
+    palavras_chave: List[str] = Field(default_factory=list)
+    titulo_en: str = ""
+    abstract: str = ""
+    keywords: List[str] = Field(default_factory=list)
+    conclusao: str = ""
     problema_pesquisa: str = ""
     hipotese: str = ""
     marco_teorico: str = ""

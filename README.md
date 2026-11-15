@@ -8,16 +8,16 @@ Desenvolvido segundo a metodologia **Spec-Driven Development (SDD)** do **GitHub
 
 ## 🏛️ Princípios Arquiteturais e Governança
 
-1. **Supervisão Contínua (Supervisor Pattern):** O `chief_academic_reviewer` avalia cada avanço através de 6 Quality Gates eliminatórios com nota de corte mínima de **85.0/100**.
-2. **Zero Alucinação Jurisprudencial:** Conexão direta com 14 ferramentas MCP via JSON-RPC 2.0 e indexação no corpus local com metadados em **YAML Frontmatter**.
-3. **Densidade Dialética:** Confrontação de correntes doutrinárias, *overruling*, *distinguishing* e jurimetria descritiva.
-4. **Conformidade ABNT:** Exportação automática em Markdown, DOCX e PDF conforme as normas NBR 14724, NBR 6023 e NBR 10520.
+1. **Supervisão Contínua (Supervisor Pattern):** O `chief_academic_reviewer` avalia cada avanço através de 6 Quality Gates eliminatórios com nota de corte mínima de **85.0/100**, incluindo travas estritas contra inversão de capítulos, proporção de bullets (>15%) e vazamentos de depuração.
+2. **Zero Alucinação & Zero Tool Leakage:** Conexão direta com ferramentas MCP via JSON-RPC 2.0, indexação no corpus local com metadados em **YAML Frontmatter** e sanitização determinística para expurgo de logs de APIs, comandos de prompt e ementas brutas coladas.
+3. **Densidade Dialética em Prosa Contínua:** Confrontação de correntes doutrinárias, *overruling*, *distinguishing* e síntese orgânica de precedentes vinculantes (ex.: Tema 1249/STJ) sem formatação esquemática.
+4. **Conformidade ABNT NBR 6022, 6028, 6023 e 14724:** Ordenação canônica inalterável (Seção 1 Introdução $\rightarrow$ Seção 2 Marco Teórico $\rightarrow$ Seção 3 Desenvolvimento $\rightarrow$ Seção 4 Considerações Finais), elementos pré-textuais completos (autoria, filiações, resumo vernáculo, abstract e keywords) e referências contextuais, com exportação automática em Markdown, DOCX e PDF nativo.
 
 ---
 
 ## 🚀 Como Executar
 
-### 1. Testes Automatizados
+### 1. Testes Automatizados (43 Testes · 100% Aprovados)
 ```bash
 python -m pytest tests/ -v
 ```
@@ -43,15 +43,22 @@ python -m src.cli test-mcp --url http://localhost:8787
 
 - `.specify/`: Framework GitHub Spec Kit (Constituição, templates e workflows)
 - `specs/001-phd-articles-pipeline/`: Especificação formal, plano de implementação e lista de tarefas
+- `docs/`:
+  - `especificacao_tecnica_strictosensu.md`: Arquitetura completa, diagramas e matriz de modelos
+  - `memoria.md`: Rastreabilidade de engenharia e decisões técnicas
 - `src/`:
   - `mcp_client.py`: Cliente JSON-RPC 2.0 assíncrono com fallback resiliente
   - `rag_store.py`: Armazenamento e conferência de citações em Markdown com YAML
-  - `schemas.py`: Modelos de dados e validação Pydantic v2
+  - `sanitizer.py`: Sanitizador universal de logs, bullets e vazamentos de ferramentas
+  - `schemas.py`: Modelos de dados e validação Pydantic v2 com suporte ABNT
   - `agents/`: Agente Revisor Geral e os 5 agentes especialistas
   - `orchestrator.py`: Grafo de estados e supervisor com Quality Gates
-  - `exporter.py`: Compilador acadêmico ABNT (Pandoc / DOCX / PDF)
+  - `exporter.py`: Compilador acadêmico ABNT com ordenação canônica e PDF nativo
+  - `improver.py`: Módulo de elevação e refatoração de papers externos
+  - `importer.py`: Extrator de textos multi-formato (PDF/DOCX/MD)
+  - `web.py`: Backend FastAPI com dashboard web em tempo real
   - `cli.py`: Interface de linha de comando com Rich
 - `corpus/`: Repositório local de precedentes autênticos indexados
-- `output/`: Documentos finais consolidados (Markdown e DOCX)
-- `tests/`: Bateria completa de testes unitários e de integração
+- `output/`: Documentos finais consolidados (Markdown, PDF ABNT e DOCX)
+- `tests/`: Bateria completa com 43 testes unitários e de integração
 

@@ -231,6 +231,20 @@ class AcademicPaperImprover:
         print("\n[Fase 3/3] Avaliando Quality Gates Finais e Homologação...")
         _notify("GATE_5_CITACOES_BANCA", "RUNNING", "Fase 3/3: Auditando citações e submetendo à Banca Sintética Final...")
 
+        # Garantir elementos pré-textuais normativos ABNT NBR 6022
+        if not state.resumo:
+            state.resumo = (
+                f"O presente estudo investiga as repercussões dogmáticas e práticas de {state.tema} no ordenamento jurídico "
+                f"brasileiro. A partir de abordagem metodológica dedutiva e analítico-crítica, confrontam-se as inovações normativas "
+                f"e os precedentes qualificados dos tribunais superiores, investigando-se a conformação da segurança jurídica e da isonomia."
+            )
+        if not state.abstract:
+            state.abstract = (
+                f"This paper investigates the dogmatic and practical dimensions of {state.tema} within the Brazilian legal system. "
+                f"Applying a deductive and analytical methodology, it analyzes normative developments and superior court precedents, "
+                f"investigating the preservation of legal certainty and fundamental equality."
+            )
+
         # Gate 1
         p_g1 = self.reviewer.avaliar_gate_1_epistemico(state)
         state.pareceres_gates[GateAvaliadoEnum.GATE_1_EPISTEMICO.value] = p_g1

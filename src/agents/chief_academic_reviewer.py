@@ -5,8 +5,10 @@ from src.schemas import (
     ScoresPorCriterioSchema,
     DiretrizRefatoracaoSchema,
     ParecerRevisaoGeralSchema,
-    DocumentoAcademicoState
+    DocumentoAcademicoState,
+    TipoDocumentoEnum
 )
+from src.sanitizer import verificar_vazamentos, calcular_proporcao_bullets
 
 class ChiefAcademicReviewer:
     """Agente Revisor Geral (Supervisor / Chief Academic Auditor / Gatekeeper).
@@ -178,6 +180,34 @@ class ChiefAcademicReviewer:
                         instrucao_correcao="Expandir a discussão dialética confrontando posições antagônicas."
                     ))
 
+            # 1. Auditoria de vazamentos de logs, prompts ou termos proibidos de depuração
+            texto_completo = " ".join(state.capitulos.values())
+            vazamentos = verificar_vazamentos(texto_completo)
+            for vaz in vazamentos:
+                diretrizes.append(DiretrizRefatoracaoSchema(
+                    topico_ou_paragrafo="Higiene Acadêmica e Integridade Textual",
+                    problema_identificado=vaz,
+                    instrucao_correcao="Sanitizar o texto eliminando comandos literais de ferramentas, notas de API e logs do RAG."
+                ))
+
+            # 2. Checagem de formato esquemático / excesso de bullets no corpo do texto
+            prop_bullets = calcular_proporcao_bullets(texto_completo)
+            if prop_bullets > 0.15:
+                diretrizes.append(DiretrizRefatoracaoSchema(
+                    topico_ou_paragrafo="Estilo Redacional e Decoro Acadêmico",
+                    problema_identificado=f"Excesso de marcadores de lista ({prop_bullets*100:.1f}% das linhas). Tom esquemático inadequado.",
+                    instrucao_correcao="Reescrever o desenvolvimento estritamente em prosa dissertativa contínua e parágrafos coesos."
+                ))
+
+            # 3. Checagem da ordem sequencial dos capítulos (1. Introdução deve ser o primeiro)
+            titulos = list(state.capitulos.keys())
+            if titulos and not ("1." in titulos[0] or "introdução" in titulos[0].lower()):
+                diretrizes.append(DiretrizRefatoracaoSchema(
+                    topico_ou_paragrafo="Arquitetura do Documento (ABNT NBR 6022)",
+                    problema_identificado="A primeira seção do corpo textual não é a Introdução (ordem das seções subvertida).",
+                    instrucao_correcao="Estruturar a progressão lógica iniciando obrigatoriamente pela Seção 1 (Introdução)."
+                ))
+
         if diretrizes:
             scores = ScoresPorCriterioSchema(
                 rigor_conceitual=65.0,
@@ -185,7 +215,7 @@ class ChiefAcademicReviewer:
                 ineditismo=70.0,
                 fidelidade_metodologica=70.0
             )
-            diag = "Gate 4 Reprovado: Seções com desenvolvimento analítico aquém do esperado."
+            diag = "Gate 4 Reprovado: Seções com desenvolvimento analítico aquém do esperado ou falhas estruturais/vazamentos detectados."
         else:
             scores = ScoresPorCriterioSchema(
                 rigor_conceitual=92.0,
@@ -247,13 +277,26 @@ class ChiefAcademicReviewer:
                     problema_identificado=f"Gate prévio não aprovado ou pendente: {f}",
                     instrucao_correcao=f"Retornar ao gate {f} e obter parecer favorável do Revisor Geral."
                 ))
+        else:
+            # Se os 5 gates anteriores estão aprovados, valida vazamentos no texto real
+            texto_consolidado = " ".join(state.capitulos.values()) + " " + (state.resumo or "") + " " + (state.desenho_metodologico or "")
+            if texto_consolidado.strip():
+                vazamentos_finais = verificar_vazamentos(texto_consolidado)
+                for vaz in vazamentos_finais:
+                    diretrizes.append(DiretrizRefatoracaoSchema(
+                        topico_ou_paragrafo="Homologação Final - Higiene Normativa",
+                        problema_identificado=vaz,
+                        instrucao_correcao="Expurgar quaisquer vestígios de logs ou comandos antes da compilação gráfica."
+                    ))
+
+        if diretrizes:
             scores = ScoresPorCriterioSchema(
                 rigor_conceitual=50.0,
                 coerencia_estrutural=50.0,
                 ineditismo=50.0,
                 fidelidade_metodologica=50.0
             )
-            diag = "Gate 6 Reprovado: Impossível homologar compilação com etapas anteriores incompletas."
+            diag = "Gate 6 Reprovado: Impossível homologar compilação com etapas anteriores incompletas ou desconformidade ABNT NBR 6022."
         else:
             scores = ScoresPorCriterioSchema(
                 rigor_conceitual=96.0,

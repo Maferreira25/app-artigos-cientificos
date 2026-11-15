@@ -54,5 +54,6 @@ O pipeline final deve gerar documentos prontos para submissão em programas de p
 
 - Esta Constituição tem prevalência sobre quaisquer especificações de funcionalidade, decisões de implementação ou templates individuais.
 - Alterações nos princípios de governança exigem justificativa arquitetural e incremento de versão semântica.
+- **Registro Obrigatório em `docs/memoria.md`:** Todas as melhorias, correções e novas funcionalidades implementadas no projeto devem ser obrigatoriamente documentadas de forma resumida e cronológica no arquivo `docs/memoria.md` para preservar o histórico evolutivo de engenharia.
 
-**Versão**: 1.0.0 | **Ratificado**: 2026-11-11 | **Última Atualização**: 2026-11-11
+**Versão**: 1.1.0 | **Ratificado**: 2026-11-11 | **Última Atualização**: 2026-11-14

@@ -93,7 +93,8 @@ async def test_web_index_and_config():
         res_logo = await client.get("/static/logo_emblem.png")
         assert res_logo.status_code == 200
         assert res_logo.headers["content-type"].startswith("image/png")
-        assert "line-clamp: 2;" in html
+        assert "align-items: stretch;" in html
+        assert "min-height: 9.5rem;" in html
         assert 'role="dialog"' in html
         assert 'aria-modal="true"' in html
 

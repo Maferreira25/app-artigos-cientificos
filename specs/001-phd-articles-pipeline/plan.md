@@ -106,3 +106,11 @@ App_Artigos_Cientificos/
 ### Fase 6: Validação de Testes e Demonstração End-to-End
 - Executar suíte de testes unitários e de integração (`pytest`).
 - Validar caso piloto simulado gerando artefatos completos.
+
+### Fase 7: Reforma Estrutural ABNT NBR 6022, Sanitização Universal e Síntese Orgânica
+- Criar `src/sanitizer.py` com rotinas determinísticas de higienização de logs RAG, auditoria de vazamentos, proporção de bullets e conversão de dados jurimétricos em prosa contínua.
+- Expandir `src/schemas.py` com autoria qualificada, filiação institucional, resumo vernáculo NBR 6028, abstract e keywords.
+- Reformular `src/agents/sectional_writer_agent.py` para erradicar ementas brutas coladas e fallbacks descontextualizados, adotando síntese doutrinária contínua.
+- Endurecer Gate 4 e Gate 6 em `src/agents/chief_academic_reviewer.py` contra desordem capitular, bullets (>15%) e vazamento de depuração.
+- Implementar algoritmo de ordenação canônica estrita (`_ordenar_chaves_capitulos`) e referências contextuais ABNT NBR 6023 em `src/exporter.py`.
+- Expandir bateria de testes para 43 testes automatizados (100% aprovados).
