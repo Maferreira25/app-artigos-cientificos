@@ -16,6 +16,7 @@ from src.agents.literature_review_agent import LiteratureReviewAgent
 from src.agents.methodology_agent import MethodologyAgent
 from src.agents.sectional_writer_agent import SectionalWriterAgent
 from src.agents.defense_validator_agent import DefenseValidatorAgent
+from src.web_researcher import AcademicWebResearcher
 
 class AcademicPipelineOrchestrator:
     """Orquestrador do Pipeline de Agentes com Supervisão e Quality Gates Eliminatórios."""
@@ -30,12 +31,13 @@ class AcademicPipelineOrchestrator:
         self.mcp_client = mcp_client or JurisprudenciaMcpClient()
         self.rag_store = rag_store or RagStore()
         self.llm_client = llm_client or LlmClient()
+        self.web_researcher = AcademicWebResearcher()
         self.reviewer = ChiefAcademicReviewer(threshold=threshold)
         
         self.epistemic_agent = EpistemicAgent(self.mcp_client, self.llm_client)
-        self.lit_review_agent = LiteratureReviewAgent(self.mcp_client, self.rag_store, self.llm_client)
+        self.lit_review_agent = LiteratureReviewAgent(self.mcp_client, self.rag_store, self.llm_client, web_researcher=self.web_researcher)
         self.methodology_agent = MethodologyAgent(self.mcp_client, self.llm_client)
-        self.writer_agent = SectionalWriterAgent(self.mcp_client, self.llm_client, rag_store=self.rag_store)
+        self.writer_agent = SectionalWriterAgent(self.mcp_client, self.llm_client, rag_store=self.rag_store, web_researcher=self.web_researcher)
         self.defense_agent = DefenseValidatorAgent(self.mcp_client, self.rag_store, self.llm_client)
 
     async def executar_pipeline_completo(

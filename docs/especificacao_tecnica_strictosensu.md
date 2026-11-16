@@ -186,7 +186,8 @@ c:\App_Artigos_Cientificos\
 │   ├── rag_store.py        # Gerenciador de metadados e persistência de precedentes
 │   ├── sanitizer.py        # Sanitizador universal de logs, bullets e vazamentos de RAG
 │   ├── schemas.py          # Schemas Pydantic v2 (DTOs, Enums, ABNT State)
-│   └── web.py              # Backend FastAPI com endpoints REST e Streaming de Jobs
+│   ├── web.py              # Backend FastAPI com endpoints REST e Streaming de Jobs
+│   └── web_researcher.py   # Módulo de pesquisa acadêmica profunda na web (OpenAlex, Crossref, BDJur, SciELO)
 └── tests/                  # Bateria de testes automatizados (Pytest / AsyncIO)
     ├── test_improver.py
     ├── test_llm.py
@@ -195,7 +196,8 @@ c:\App_Artigos_Cientificos\
     ├── test_reviewer_gates.py
     ├── test_sanitizer_and_abnt_nbr6022.py
     ├── test_schemas.py
-    └── test_web_and_pdf.py
+    ├── test_web_and_pdf.py
+    └── test_web_researcher.py
 ```
 
 ---
@@ -225,4 +227,4 @@ Para rodar a verificação de integridade e regressão:
 ```powershell
 python -m pytest -q
 ```
-*Garantia de 43 testes automatizados aprovados (100% de cobertura funcional e testes de regressão dos módulos principais).*
+*Garantia de 46 testes automatizados aprovados (100% de cobertura funcional e testes de regressão dos módulos principais, incluindo pesquisa acadêmica web profunda).*

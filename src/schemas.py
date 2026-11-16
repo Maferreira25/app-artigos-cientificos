@@ -25,6 +25,15 @@ class PrecedenteJudicialSchema(BaseModel):
     trecho_fundamentacao: Optional[str] = Field(None, description="Trecho literal de fundamentação do voto")
     link_oficial: Optional[str] = Field(None, description="URL pública oficial do acórdão")
 
+class ArtigoCientificoPesquisadoSchema(BaseModel):
+    titulo: str = Field(..., description="Título do artigo científico ou obra doutrinária")
+    autores: str = Field(..., description="Nome dos autores")
+    ano: Optional[str] = Field(None, description="Ano de publicação")
+    periodico_ou_repositorio: str = Field(..., description="Nome do periódico, repositório ou editora (ex: SciELO, BDJur/STJ, PUC)")
+    doi_ou_url: Optional[str] = Field(None, description="Link DOI ou URL pública oficial")
+    resumo_doutrinario: Optional[str] = Field(None, description="Resumo ou síntese das teses do artigo")
+    fonte_pesquisa: str = Field("openalex", description="Base de dados de origem (openalex, crossref, bdjur, scielo)")
+
 class JurisprudenciaMcpPayloadSchema(BaseModel):
     tool_executada: str = Field(..., description="Nome da ferramenta MCP executada")
     parametros_consulta: Dict[str, Any] = Field(default_factory=dict, description="Parâmetros enviados à tool")
@@ -93,6 +102,8 @@ class DocumentoAcademicoState(BaseModel):
     desenho_metodologico: str = ""
     dados_jurimetria: Dict[str, Any] = Field(default_factory=dict)
     precedentes_mcp: List[PrecedenteJudicialSchema] = Field(default_factory=list)
+    artigos_pesquisados_web: List[ArtigoCientificoPesquisadoSchema] = Field(default_factory=list)
+    estudos_empiricos_web: List[str] = Field(default_factory=list)
     capitulos: Dict[str, str] = Field(default_factory=dict) # chave: titulo do capitulo/secao, valor: texto markdown
     pareceres_gates: Dict[str, ParecerRevisaoGeralSchema] = Field(default_factory=dict)
     gate_atual: GateAvaliadoEnum = GateAvaliadoEnum.GATE_1_EPISTEMICO

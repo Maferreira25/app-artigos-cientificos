@@ -83,3 +83,29 @@ Este documento registra cronologicamente todas as novas alterações, melhorias 
 - **Higienização de Pontuação Pré-Textual:** Aplicado `strip(". ")` em `src/exporter.py` para palavras-chave e keywords, garantindo separação conforme a ABNT NBR 6022 sem pontos duplicados (`..`).
 - **Resgate Seguro de Conclusão:** Salvaguarda em `src/exporter.py` para injetar a seção de considerações finais a partir de `state.conclusao` caso não indexada previamente no dicionário de capítulos.
 - **Atualização da Especificação Técnica:** Atualizados [especificacao_tecnica_strictosensu.md](file:///c:/App_Artigos_Cientificos/docs/especificacao_tecnica_strictosensu.md), [spec.md](file:///c:/App_Artigos_Cientificos/specs/001-phd-articles-pipeline/spec.md), [plan.md](file:///c:/App_Artigos_Cientificos/specs/001-phd-articles-pipeline/plan.md), [tasks.md](file:///c:/App_Artigos_Cientificos/specs/001-phd-articles-pipeline/tasks.md) e [README.md](file:///c:/App_Artigos_Cientificos/README.md).
+
+---
+
+## Sessão 2026-11-15 - Pesquisa Acadêmica Profunda em Repositórios Web e Expansão da Densidade Científica
+
+### 1. Diagnóstico do Usuário
+- O artigo anterior gerado para o tema da Lei Maria da Penha foi considerado superficial e com pouco conteúdo.
+- Demanda explícita: inclusão de reforço para os agentes pesquisarem o tema na web em repositórios de credibilidade acadêmica.
+
+### 2. Implementações Realizadas
+- **Módulo de Pesquisa Acadêmica Web (`src/web_researcher.py`):**
+  - Integração com OpenAlex API (`api.openalex.org`) e Crossref API (`api.crossref.org`), com buscas direcionadas a repositórios confiáveis (BDJur/STJ, SciELO).
+  - Reconstrutor de resumos a partir do índice invertido (`abstract_inverted_index`) da OpenAlex.
+  - Síntese estruturada em Markdown de achados acadêmicos indexados dinamicamente no RAG (`corpus/web-doutrina-pesquisada.md`).
+- **Expansão dos Schemas Pydantic (`src/schemas.py`):**
+  - Novo DTO `ArtigoCientificoPesquisadoSchema` (título, autores, ano, periódico, resumo, doi, url).
+  - Integração de `artigos_pesquisados_web` e `estudos_empiricos_web` em `DocumentoAcademicoState`.
+- **Enriquecimento dos Agentes:**
+  - `LiteratureReviewAgent`: Pesquisa e indexação de artigos revisados por pares, alimentando a revisão bibliográfica com doutrina contemporânea.
+  - `SectionalWriterAgent`: Substituição completa de esquemas curtos por geradores de prosa densa e aprofundada (6 a 12 parágrafos robustos por seção), com diálogo interdisciplinar e referências a precedentes vinculantes (Tema 1249/STJ).
+  - `AcademicExporter`: Inclusão automática das referências ABNT NBR 6023 para artigos web com DOI no corpo bibliográfico.
+  - `AcademicExporter.compilar_pdf`: Resiliência operacional com fallback para `_atualizado.pdf` quando o arquivo estiver com trava de leitura em leitores de PDF no Windows (ex: Acrobat).
+- **Testes & Qualidade:**
+  - Criação de `tests/test_web_researcher.py` com testes unitários e de integração mock/live.
+  - Bateria ampliada para **46 testes automatizados**, todos aprovados com 100% de sucesso.
+  - Novo artigo gerado com densidade substancialmente expandida (18 KB de Markdown / ~30 KB de PDF).

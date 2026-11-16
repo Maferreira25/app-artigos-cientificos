@@ -94,6 +94,22 @@ class AcademicExporter:
             if ref_prec not in refs:
                 refs.append(ref_prec)
 
+        # Adicionar artigos e doutrinas recuperados na pesquisa web acadêmica (ABNT NBR 6023)
+        for art in state.artigos_pesquisados_web:
+            nome_autor = art.autores.strip()
+            if "," in nome_autor:
+                sobrenome_fmt = nome_autor
+            else:
+                partes = nome_autor.split()
+                if len(partes) > 1:
+                    sobrenome_fmt = f"{partes[-1].upper()}, {' '.join(partes[:-1])}"
+                else:
+                    sobrenome_fmt = nome_autor.upper()
+
+            ref_art = f"{sobrenome_fmt}. {art.titulo}. *{art.periodico_ou_repositorio}*{f', {art.ano}' if art.ano else ''}.{f' Disponível em: <{art.doi_ou_url}>.' if art.doi_ou_url else ''}"
+            if ref_art not in refs:
+                refs.append(ref_art)
+
         return sorted(refs)
 
     def gerar_markdown_consolidado(self, state: DocumentoAcademicoState) -> Path:
@@ -258,8 +274,8 @@ class AcademicExporter:
         # Fallback garantido: Compilador PDF ABNT Nativo em Python (A4, margens 3cm/2cm, Times)
         try:
             markdown_text = md_path.read_text(encoding="utf-8")
-            self._gerar_pdf_abnt_nativo(markdown_text, pdf_path)
-            return pdf_path if pdf_path.exists() else None
+            target_pdf = self._gerar_pdf_abnt_nativo(markdown_text, pdf_path)
+            return target_pdf if target_pdf and target_pdf.exists() else None
         except Exception:
             return None
 
@@ -290,7 +306,7 @@ class AcademicExporter:
         raw = raw.replace(b"\\", b"\\\\").replace(b"(", b"\\(").replace(b")", b"\\)")
         return raw
 
-    def _gerar_pdf_abnt_nativo(self, markdown_text: str, pdf_path: Path) -> None:
+    def _gerar_pdf_abnt_nativo(self, markdown_text: str, pdf_path: Path) -> Optional[Path]:
         """Gera arquivo PDF 1.4 estruturado nas normas ABNT NBR 14724 (A4, margens 3cm/2cm)."""
         # Dimensões A4 em pontos (1 cm = 28.346 pt)
         page_w = 595.28
@@ -429,4 +445,12 @@ class AcademicExporter:
         out.extend(
             f"trailer\n<< /Size {len(objetos) + 1} /Root 1 0 R >>\nstartxref\n{xref_pos}\n%%EOF\n".encode("ascii")
         )
-        pdf_path.write_bytes(bytes(out))
+        try:
+            pdf_path.write_bytes(bytes(out))
+            return pdf_path
+        except PermissionError:
+            # Caso o arquivo PDF esteja aberto e travado no Windows por leitor de PDF (ex: Acrobat),
+            # grava versão atualizada com sufixo preservando integridade sem falhar a compilação
+            alt_path = pdf_path.with_name(f"{pdf_path.stem}_atualizado.pdf")
+            alt_path.write_bytes(bytes(out))
+            return alt_path
