@@ -12,7 +12,7 @@ class PipelineConfig:
     # Servidor MCP de Jurisprudência (Padrão: Bridge Cloudflare Workers HTTPS)
     mcp_url: str = os.getenv("MCP_URL", os.getenv("MCP_SERVER_URL", os.getenv("JURISPRUDENCIA_MCP_URL", "https://jurisprudenciaia-mcp.michel-aires2012.workers.dev")))
     mcp_bearer_token: str | None = os.getenv("MCP_BEARER_TOKEN", None)
-    mcp_timeout: float = float(os.getenv("MCP_TIMEOUT", "120.0"))
+    mcp_timeout: float = float(os.getenv("MCP_TIMEOUT", "10.0"))
     
     # Limiar acadêmico eliminatório
     approval_threshold: float = float(os.getenv("APPROVAL_THRESHOLD", "85.0"))
@@ -29,10 +29,10 @@ class PipelineConfig:
     openrouter_api_key: str | None = os.getenv("OPENROUTER_API_KEY", None)
 
     # Modelos por Papel Acadêmico (Quadro 2)
-    model_supervisor: str = os.getenv("MODEL_SUPERVISOR", "openai/gpt-6-astra")
-    model_writer: str = os.getenv("MODEL_WRITER", "anthropic/claude-fable-5.2")
-    model_literature: str = os.getenv("MODEL_LITERATURE", "google/gemini-4-argon")
-    model_methodology: str = os.getenv("MODEL_METHODOLOGY", "openai/gpt-6.1-sol-pro")
+    model_supervisor: str = os.getenv("MODEL_SUPERVISOR", "deepseek/deepseek-chat")
+    model_writer: str = os.getenv("MODEL_WRITER", "deepseek/deepseek-chat")
+    model_literature: str = os.getenv("MODEL_LITERATURE", "deepseek/deepseek-chat")
+    model_methodology: str = os.getenv("MODEL_METHODOLOGY", "deepseek/deepseek-chat")
     model_defense: str = os.getenv("MODEL_DEFENSE", "deepseek/deepseek-chat")
 
     def ensure_directories(self) -> None:

@@ -55,28 +55,41 @@ class LlmClient:
 
         endpoint = f"{self.base_url}/chat/completions"
 
-        for attempt in range(2):
+        for attempt in range(3):
             try:
                 async with httpx.AsyncClient(timeout=self.timeout, transport=self.transport) as client:
                     response = await client.post(endpoint, json=payload, headers=self.headers)
+                    if response.status_code == 402:
+                        err_text = response.text
+                        afford_match = re.search(r'can only afford (\d+)', err_text)
+                        if afford_match:
+                            afford_tokens = int(afford_match.group(1))
+                            novo_max = max(350, afford_tokens - 50)
+                            if novo_max < payload.get("max_tokens", 4000):
+                                payload["max_tokens"] = novo_max
+                                await asyncio.sleep(0.5)
+                                continue
                     response.raise_for_status()
                     data = response.json()
 
                     choices = data.get("choices", [])
                     if choices:
                         msg = choices[0].get("message", {})
-                        raw_content = msg.get("content") or msg.get("refusal") or ""
+                        raw_content = msg.get("content") or msg.get("reasoning_content") or msg.get("reasoning") or msg.get("refusal") or ""
                         # Remove blocos de raciocinio interno (<think>...</think>) do texto final se presentes
                         content = re.sub(r'<think>.*?</think>', '', raw_content, flags=re.DOTALL).strip()
                         if content:
                             return content
                     raise RuntimeError(f"Payload de resposta sem 'content' válido retornado pela API: {data}")
             except Exception as e:
-                if attempt == 0 and fallback_model and fallback_model != model:
+                if attempt == 0 and fallback_model and fallback_model != payload.get("model"):
                     payload["model"] = fallback_model
                     await asyncio.sleep(1.0)
                     continue
-                # Se falhar após retry, levanta ou retorna mensagem descritiva
+                if attempt < 2:
+                    await asyncio.sleep(1.0)
+                    continue
+                # Se falhar após retries, levanta erro descritivo
                 raise RuntimeError(f"Falha na chamada LLM para o modelo {model}: {e}")
 
         return ""

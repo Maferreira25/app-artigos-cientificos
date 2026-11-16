@@ -9,6 +9,53 @@ from src.schemas import DocumentoAcademicoState, TipoDocumentoEnum
 from src.config import config
 from src.sanitizer import sanitizar_texto_academico
 
+try:
+    from reportlab.lib.pagesizes import A4
+    from reportlab.lib.units import cm
+    from reportlab.lib.styles import ParagraphStyle
+    from reportlab.lib.enums import TA_JUSTIFY, TA_LEFT, TA_CENTER
+    from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+    from reportlab.pdfgen import canvas
+    REPORTLAB_AVAILABLE = True
+except ImportError:
+    REPORTLAB_AVAILABLE = False
+
+try:
+    import docx
+    from docx.shared import Cm, Pt
+    from docx.enum.text import WD_ALIGN_PARAGRAPH
+    PYTHON_DOCX_AVAILABLE = True
+except ImportError:
+    PYTHON_DOCX_AVAILABLE = False
+
+
+if REPORTLAB_AVAILABLE:
+    class ABNTNumberedCanvas(canvas.Canvas):
+        """Canvas do ReportLab que calcula a paginação e insere no canto superior direito (ABNT NBR 14724)."""
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            self._saved_page_states = []
+
+        def showPage(self):
+            self._saved_page_states.append(dict(self.__dict__))
+            self._startPage()
+
+        def save(self):
+            num_pages = len(self._saved_page_states)
+            for state in self._saved_page_states:
+                self.__dict__.update(state)
+                self.draw_page_number(num_pages)
+                super().showPage()
+            super().save()
+
+        def draw_page_number(self, page_count):
+            self.saveState()
+            self.setFont("Times-Roman", 10)
+            page_w, page_h = A4
+            # ABNT NBR 14724: número da página no canto superior direito a 2cm da borda
+            self.drawRightString(page_w - 2.0 * cm, page_h - 2.0 * cm, str(self._pageNumber))
+            self.restoreState()
+
 
 def _resolver_ambiente_tex() -> Dict[str, str]:
     """Garante que os diretórios do Scoop, MiKTeX e Pandoc estejam no PATH do processo atual."""
@@ -227,34 +274,57 @@ class AcademicExporter:
         return md_file
 
     def compilar_docx(self, md_path: Path) -> Optional[Path]:
-        """Converte o arquivo Markdown para DOCX formatado via Pandoc se disponível."""
+        """Converte o arquivo Markdown para DOCX formatado estritamente nas normas ABNT."""
+        if not md_path.exists():
+            return None
+        docx_path = md_path.with_suffix(".docx")
+        markdown_text = md_path.read_text(encoding="utf-8")
+
+        # 1. Prioridade: Compilação nativa ABNT via python-docx (Justificado, 1.25cm, 1.5 entrelinhas)
+        if PYTHON_DOCX_AVAILABLE:
+            res_docx = self._gerar_docx_nativo(markdown_text, docx_path)
+            if res_docx and res_docx.exists():
+                return res_docx
+
+        # 2. Fallback via Pandoc se disponível
         env = _resolver_ambiente_tex()
         pandoc_bin = shutil.which("pandoc", path=env.get("PATH"))
-        if not pandoc_bin or not md_path.exists():
-            return None
-
-        docx_path = md_path.with_suffix(".docx")
-        try:
-            cmd = [pandoc_bin, str(md_path), "-o", str(docx_path), "--standalone"]
-            subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=env, timeout=60)
-            return docx_path
-        except Exception:
-            return None
+        if pandoc_bin:
+            try:
+                cmd = [pandoc_bin, str(md_path), "-o", str(docx_path), "--standalone"]
+                subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=env, timeout=60)
+                return docx_path if docx_path.exists() else None
+            except Exception:
+                return None
+        return None
 
     def compilar_pdf(self, md_path: Path) -> Optional[Path]:
-        """Converte o arquivo Markdown para PDF nas normas ABNT.
+        """Converte o arquivo Markdown para PDF nas normas ABNT com texto estritamente justificado.
         
-        Tenta inicialmente Pandoc + LaTeX (Tectonic/LuaLaTeX/XeLaTeX/PDFLaTeX) ou Typst. Caso o ambiente
-        não possua distribuição TeX instalada, utiliza o compilador PDF ABNT nativo em Python.
+        Prioridade 1: ReportLab com paginação superior direita (ABNT NBR 14724), alinhamento TA_JUSTIFY,
+        recuo de 1,25cm e espaçamento 1,5.
+        Prioridade 2: Pandoc + LaTeX / Typst.
+        Prioridade 3: Compilador nativo direto em Python.
         """
         if not md_path.exists():
             return None
 
         pdf_path = md_path.with_suffix(".pdf")
+        markdown_text = md_path.read_text(encoding="utf-8")
+
+        # 1. Compilador de Alta Precisão Tipográfica: ReportLab (100% justificado, ABNT NBR 14724)
+        if REPORTLAB_AVAILABLE:
+            try:
+                res_pdf = self._gerar_pdf_reportlab(markdown_text, pdf_path)
+                if res_pdf and res_pdf.exists() and res_pdf.stat().st_size > 0:
+                    return res_pdf
+            except Exception:
+                pass
+
+        # 2. Fallback via Pandoc + TeX / Typst
         env = _resolver_ambiente_tex()
         search_path = env.get("PATH")
         pandoc_bin = shutil.which("pandoc", path=search_path)
-
         if pandoc_bin:
             pdf_engines = ["tectonic", "lualatex", "xelatex", "pdflatex", "typst"]
             latex_template = config.templates_dir / "abnt_article.latex"
@@ -271,11 +341,323 @@ class AcademicExporter:
                     except Exception:
                         continue
 
-        # Fallback garantido: Compilador PDF ABNT Nativo em Python (A4, margens 3cm/2cm, Times)
+        # 3. Fallback nativo direto em Python
         try:
-            markdown_text = md_path.read_text(encoding="utf-8")
             target_pdf = self._gerar_pdf_abnt_nativo(markdown_text, pdf_path)
             return target_pdf if target_pdf and target_pdf.exists() else None
+        except Exception:
+            return None
+
+    @staticmethod
+    def _formatar_tags_inline_reportlab(texto: str) -> str:
+        """Formata marcações Markdown simples para tags XML suportadas pelo ReportLab Paragraph."""
+        # Escapar caracteres HTML/XML especiais
+        texto = texto.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+        texto = re.sub(r'\*\*(.+?)\*\*', r'<b>\1</b>', texto)
+        texto = re.sub(r'\*(.+?)\*', r'<i>\1</i>', texto)
+        texto = re.sub(r'`(.+?)`', r'<font face="Courier">\1</font>', texto)
+        return texto
+
+    @staticmethod
+    def _obter_caminho_gravavel(caminho_base: Path, sufixo_padrao: str = "_abnt_justificado") -> Path:
+        """Retorna o próprio caminho se gravável, ou o primeiro alternativo disponível sem colisão de lock (Windows)."""
+        candidatos = [
+            caminho_base,
+            caminho_base.with_name(f"{caminho_base.stem}{sufixo_padrao}{caminho_base.suffix}"),
+            caminho_base.with_name(f"{caminho_base.stem}_atualizado{caminho_base.suffix}"),
+            caminho_base.with_name(f"{caminho_base.stem}_v2{caminho_base.suffix}"),
+        ]
+        for c in candidatos:
+            try:
+                with open(c, "ab"):
+                    pass
+                return c
+            except Exception:
+                continue
+        import time
+        return caminho_base.with_name(f"{caminho_base.stem}_{int(time.time())}{caminho_base.suffix}")
+
+    def _gerar_pdf_reportlab(self, markdown_text: str, pdf_path: Path) -> Optional[Path]:
+        """Gera PDF estritamente conforme as normas da ABNT (NBR 14724/6022/10520) com texto justificado."""
+        if not REPORTLAB_AVAILABLE:
+            return None
+
+        # Estilos ABNT estritos
+        estilo_corpo = ParagraphStyle(
+            "ABNT_Corpo",
+            fontName="Times-Roman",
+            fontSize=12,
+            leading=18.0,  # Espaçamento 1,5 entrelinhas (12 * 1.5 = 18)
+            alignment=TA_JUSTIFY,  # Alinhamento estritamente JUSTIFICADO
+            firstLineIndent=1.25 * cm,  # Recuo de parágrafo ABNT de 1,25 cm
+            spaceAfter=6.0
+        )
+
+        estilo_resumo = ParagraphStyle(
+            "ABNT_Resumo",
+            fontName="Times-Roman",
+            fontSize=12,
+            leading=14.0,  # Espaçamento simples
+            alignment=TA_JUSTIFY,
+            firstLineIndent=0,
+            spaceAfter=6.0
+        )
+
+        estilo_citacao_longa = ParagraphStyle(
+            "ABNT_CitacaoLonga",
+            fontName="Times-Roman",
+            fontSize=10,  # Fonte tamanho 10 para citações diretas longas (> 3 linhas)
+            leading=12.0,  # Espaçamento simples
+            alignment=TA_JUSTIFY,
+            leftIndent=4.0 * cm,  # Recuo de 4 cm da margem esquerda (ABNT NBR 10520)
+            firstLineIndent=0,
+            spaceBefore=6.0,
+            spaceAfter=6.0
+        )
+
+        estilo_titulo_artigo = ParagraphStyle(
+            "ABNT_TituloArtigo",
+            fontName="Times-Bold",
+            fontSize=13,
+            leading=18.0,
+            alignment=TA_CENTER,
+            spaceAfter=14.0,
+            keepWithNext=True
+        )
+
+        estilo_autoria = ParagraphStyle(
+            "ABNT_Autoria",
+            fontName="Times-Italic",
+            fontSize=11,
+            leading=14.0,
+            alignment=TA_LEFT,
+            firstLineIndent=0,
+            spaceAfter=4.0
+        )
+
+        estilo_h1 = ParagraphStyle(
+            "ABNT_H1",
+            fontName="Times-Bold",
+            fontSize=12,
+            leading=18.0,
+            alignment=TA_LEFT,
+            firstLineIndent=0,
+            spaceBefore=18.0,
+            spaceAfter=10.0,
+            keepWithNext=True
+        )
+
+        estilo_h2 = ParagraphStyle(
+            "ABNT_H2",
+            fontName="Times-Bold",
+            fontSize=12,
+            leading=16.0,
+            alignment=TA_LEFT,
+            firstLineIndent=0,
+            spaceBefore=14.0,
+            spaceAfter=8.0,
+            keepWithNext=True
+        )
+
+        estilo_h3 = ParagraphStyle(
+            "ABNT_H3",
+            fontName="Times-BoldItalic",
+            fontSize=12,
+            leading=16.0,
+            alignment=TA_LEFT,
+            firstLineIndent=0,
+            spaceBefore=12.0,
+            spaceAfter=6.0,
+            keepWithNext=True
+        )
+
+        estilo_referencia = ParagraphStyle(
+            "ABNT_Referencia",
+            fontName="Times-Roman",
+            fontSize=12,
+            leading=14.0,
+            alignment=TA_LEFT,  # ABNT NBR 6023: referências alinhadas à esquerda
+            firstLineIndent=0,
+            spaceAfter=8.0
+        )
+
+        story = []
+        primeiro_h1 = True
+        em_referencias = False
+
+        for raw_line in markdown_text.splitlines():
+            line = raw_line.strip()
+            if not line or line == "---":
+                continue
+
+            if line.startswith("# "):
+                texto_h1 = self._limpar_markdown_inline(line[2:])
+                if "referência" in texto_h1.lower() or "referencia" in texto_h1.lower():
+                    em_referencias = True
+                if primeiro_h1:
+                    primeiro_h1 = False
+                    story.append(Paragraph(texto_h1.upper(), estilo_titulo_artigo))
+                else:
+                    story.append(Paragraph(texto_h1.upper(), estilo_h1))
+            elif line.startswith("## "):
+                sub = self._limpar_markdown_inline(line[3:])
+                story.append(Paragraph(sub, estilo_h2))
+            elif line.startswith("### "):
+                sub3 = self._limpar_markdown_inline(line[4:])
+                story.append(Paragraph(sub3, estilo_h3))
+            elif line.startswith(">"):
+                cit = self._limpar_markdown_inline(line.lstrip(">").strip())
+                story.append(Paragraph(cit, estilo_citacao_longa))
+            elif line.startswith("**") and ("Pesquisador" in line or "Prof." in line or "Orientador" in line or "Natureza da Obra" in line):
+                txt = self._formatar_tags_inline_reportlab(line)
+                story.append(Paragraph(txt, estilo_autoria))
+            elif line.startswith("*") and ("Universidade" in line or "Programa" in line or "Escola" in line):
+                txt = self._formatar_tags_inline_reportlab(line)
+                story.append(Paragraph(txt, estilo_autoria))
+            elif em_referencias:
+                txt = self._formatar_tags_inline_reportlab(line)
+                story.append(Paragraph(txt, estilo_referencia))
+            elif "Palavras-chave:" in line or "Keywords:" in line:
+                txt = self._formatar_tags_inline_reportlab(line)
+                story.append(Paragraph(txt, estilo_resumo))
+            elif line.startswith("O presente artigo") or line.startswith("This scientific paper"):
+                txt = self._formatar_tags_inline_reportlab(line)
+                story.append(Paragraph(txt, estilo_resumo))
+            else:
+                txt = self._formatar_tags_inline_reportlab(line)
+                story.append(Paragraph(txt, estilo_corpo))
+
+        target_path = self._obter_caminho_gravavel(pdf_path, "_abnt_justificado")
+        try:
+            doc = SimpleDocTemplate(
+                str(target_path),
+                pagesize=A4,
+                leftMargin=3.0 * cm,
+                rightMargin=2.0 * cm,
+                topMargin=3.0 * cm,
+                bottomMargin=2.0 * cm
+            )
+            doc.build(story, canvasmaker=ABNTNumberedCanvas)
+            return target_path if target_path.exists() else None
+        except Exception:
+            return None
+
+    def _gerar_docx_nativo(self, markdown_text: str, docx_path: Path) -> Optional[Path]:
+        """Gera DOCX conforme normas ABNT (margens 3/3/2/2, Times 12, justificado, 1.25cm indent, 1.5 espaçamento)."""
+        if not PYTHON_DOCX_AVAILABLE:
+            return None
+        try:
+            doc = docx.Document()
+            section = doc.sections[0]
+            section.top_margin = Cm(3.0)
+            section.left_margin = Cm(3.0)
+            section.right_margin = Cm(2.0)
+            section.bottom_margin = Cm(2.0)
+
+            em_referencias = False
+            primeiro_h1 = True
+
+            for raw_line in markdown_text.splitlines():
+                line = raw_line.strip()
+                if not line or line == "---":
+                    continue
+
+                if line.startswith("# "):
+                    texto_h1 = self._limpar_markdown_inline(line[2:])
+                    if "referência" in texto_h1.lower() or "referencia" in texto_h1.lower():
+                        em_referencias = True
+                    p = doc.add_paragraph()
+                    p.paragraph_format.first_line_indent = Cm(0)
+                    p.paragraph_format.space_before = Pt(14)
+                    p.paragraph_format.space_after = Pt(8)
+                    p.paragraph_format.keep_with_next = True
+                    if primeiro_h1:
+                        primeiro_h1 = False
+                        p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+                        run = p.add_run(texto_h1)
+                        run.font.name = "Times New Roman"
+                        run.font.size = Pt(13)
+                        run.bold = True
+                    else:
+                        p.alignment = WD_ALIGN_PARAGRAPH.LEFT
+                        run = p.add_run(texto_h1)
+                        run.font.name = "Times New Roman"
+                        run.font.size = Pt(12)
+                        run.bold = True
+                elif line.startswith("## "):
+                    sub = self._limpar_markdown_inline(line[3:])
+                    p = doc.add_paragraph()
+                    p.alignment = WD_ALIGN_PARAGRAPH.LEFT
+                    p.paragraph_format.first_line_indent = Cm(0)
+                    p.paragraph_format.space_before = Pt(12)
+                    p.paragraph_format.space_after = Pt(6)
+                    p.paragraph_format.keep_with_next = True
+                    run = p.add_run(sub)
+                    run.font.name = "Times New Roman"
+                    run.font.size = Pt(12)
+                    run.bold = True
+                elif line.startswith("### "):
+                    sub3 = self._limpar_markdown_inline(line[4:])
+                    p = doc.add_paragraph()
+                    p.alignment = WD_ALIGN_PARAGRAPH.LEFT
+                    p.paragraph_format.first_line_indent = Cm(0)
+                    p.paragraph_format.space_before = Pt(10)
+                    p.paragraph_format.space_after = Pt(4)
+                    p.paragraph_format.keep_with_next = True
+                    run = p.add_run(sub3)
+                    run.font.name = "Times New Roman"
+                    run.font.size = Pt(12)
+                    run.bold = True
+                    run.italic = True
+                elif line.startswith(">"):
+                    cit = self._limpar_markdown_inline(line.lstrip(">").strip())
+                    p = doc.add_paragraph()
+                    p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+                    p.paragraph_format.left_indent = Cm(4.0)
+                    p.paragraph_format.first_line_indent = Cm(0)
+                    p.paragraph_format.line_spacing = 1.0
+                    p.paragraph_format.space_before = Pt(6)
+                    p.paragraph_format.space_after = Pt(6)
+                    run = p.add_run(cit)
+                    run.font.name = "Times New Roman"
+                    run.font.size = Pt(10)
+                elif em_referencias:
+                    limpo = self._limpar_markdown_inline(line)
+                    p = doc.add_paragraph()
+                    p.alignment = WD_ALIGN_PARAGRAPH.LEFT
+                    p.paragraph_format.first_line_indent = Cm(0)
+                    p.paragraph_format.line_spacing = 1.0
+                    p.paragraph_format.space_after = Pt(6)
+                    run = p.add_run(limpo)
+                    run.font.name = "Times New Roman"
+                    run.font.size = Pt(12)
+                elif "Palavras-chave:" in line or "Keywords:" in line or line.startswith("O presente artigo") or line.startswith("This scientific paper"):
+                    limpo = self._limpar_markdown_inline(line)
+                    p = doc.add_paragraph()
+                    p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+                    p.paragraph_format.first_line_indent = Cm(0)
+                    p.paragraph_format.line_spacing = 1.0
+                    p.paragraph_format.space_after = Pt(6)
+                    run = p.add_run(limpo)
+                    run.font.name = "Times New Roman"
+                    run.font.size = Pt(12)
+                else:
+                    limpo = self._limpar_markdown_inline(line)
+                    p = doc.add_paragraph()
+                    p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+                    p.paragraph_format.first_line_indent = Cm(1.25)
+                    p.paragraph_format.line_spacing = 1.5
+                    p.paragraph_format.space_after = Pt(6)
+                    run = p.add_run(limpo)
+                    run.font.name = "Times New Roman"
+                    run.font.size = Pt(12)
+
+            target_docx = self._obter_caminho_gravavel(docx_path, "_abnt_justificado")
+            try:
+                doc.save(str(target_docx))
+                return target_docx if target_docx.exists() else None
+            except Exception:
+                return None
         except Exception:
             return None
 

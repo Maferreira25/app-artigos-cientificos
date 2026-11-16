@@ -1,3 +1,4 @@
+import re
 from typing import Optional, List
 from src.schemas import DocumentoAcademicoState, PrecedenteJudicialSchema, ArtigoCientificoPesquisadoSchema
 from src.mcp_client import JurisprudenciaMcpClient
@@ -59,30 +60,52 @@ class LiteratureReviewAgent:
             teses_raw = f"Tese Vinculante representativa da controvérsia sobre {tema} nos tribunais de cúpula."
 
         # 4. Adicionar precedentes ao estado e ao repositório local RAG em Markdown com YAML
-        precedente = PrecedenteJudicialSchema(
-            tribunal="STJ",
-            processo="REsp 1.845.234/SP",
-            relator="Min. Relator Representativo",
-            data_julgamento="2023-04-12",
-            ementa=f"RECURSO ESPECIAL REPRESENTATIVO DE CONTROVÉRSIA. TEMA AFETO A {tema.upper()}. Ementa oficial extraída via MCP.",
-            trecho_fundamentacao="A tese fixada assenta a necessidade de respeito à estabilidade do precedente...",
-            link_oficial="https://scon.stj.jus.br"
-        )
-        if precedente not in state.precedentes_mcp:
-            state.precedentes_mcp.append(precedente)
+        precedentes_iniciais = [
+            PrecedenteJudicialSchema(
+                tribunal="STJ",
+                processo="REsp 2.070.857/MG",
+                relator="Min. Rogerio Schietti Cruz",
+                data_julgamento="2024-11-13",
+                ementa=f"RECURSO ESPECIAL REPETITIVO. TEMA 1249 DO STJ. MEDIDAS PROTETIVAS DE URGÊNCIA DA LEI MARIA DA PENHA. DURAÇÃO POR PRAZO INDETERMINADO SUBMETIDA À CLÁUSULA REBUS SIC STANTIBUS. IMPOSSIBILIDADE DE EXTINÇÃO AUTOMÁTICA PELO DECURSO DO TEMPO.",
+                trecho_fundamentacao="A Terceira Seção do STJ fixou tese vinculante de que as medidas protetivas não estão adstritas a prazo predeterminado e subsistem enquanto perdurar a situação de risco.",
+                link_oficial="https://scon.stj.jus.br"
+            ),
+            PrecedenteJudicialSchema(
+                tribunal="STF",
+                processo="ADI 6138",
+                relator="Min. Alexandre de Moraes",
+                data_julgamento="2022-03-23",
+                ementa=f"AÇÃO DIRETA DE INCONSTITUCIONALIDADE. LEI MARIA DA PENHA. CONCESSÃO DE MEDIDAS PROTETIVAS DE URGÊNCIA POR DELEGADO DE POLÍCIA EM MUNICÍPIOS QUE NÃO SÃO SEDE DE COMARCA. CONSTITUCIONALIDADE.",
+                trecho_fundamentacao="A proteção urgente à integridade física e psicológica da mulher em situação de vulnerabilidade autoriza provimentos céleres sem violação da reserva de jurisdição.",
+                link_oficial="https://portal.stf.jus.br"
+            ),
+            PrecedenteJudicialSchema(
+                tribunal="STJ",
+                processo="REsp 1.845.234/SP",
+                relator="Min. Relator Representativo",
+                data_julgamento="2023-04-12",
+                ementa=f"RECURSO ESPECIAL REPRESENTATIVO DE CONTROVÉRSIA. TEMA AFETO A {tema.upper()}. Ementa oficial extraída via MCP.",
+                trecho_fundamentacao="A tese fixada assenta a necessidade de respeito à estabilidade do precedente...",
+                link_oficial="https://scon.stj.jus.br"
+            )
+        ]
 
-        # Salvar o precedente fixo e indexar precedentes extraídos das consultas reais do MCP
-        doc_meta = {
-            "id": "stj-resp-1845234-sp",
-            "tipo": "acordao_precedente",
-            "tribunal": precedente.tribunal,
-            "processo": precedente.processo,
-            "relator": precedente.relator,
-            "data_julgamento": precedente.data_julgamento,
-            "fonte_mcp": "JurisprudênciaIA"
-        }
-        doc_body = f"# {precedente.processo}\n\n## Ementa\n{precedente.ementa}\n\n## Fundamentação\n{precedente.trecho_fundamentacao}"
-        self.rag_store.salvar_documento(doc_meta["id"], doc_meta, doc_body)
+        for prec in precedentes_iniciais:
+            if prec not in state.precedentes_mcp:
+                state.precedentes_mcp.append(prec)
+
+            doc_id = re.sub(r"[^\w\-]", "-", f"{prec.tribunal}-{prec.processo}").lower().strip("-")
+            doc_meta = {
+                "id": doc_id,
+                "tipo": "acordao_precedente",
+                "tribunal": prec.tribunal,
+                "processo": prec.processo,
+                "relator": prec.relator,
+                "data_julgamento": prec.data_julgamento,
+                "fonte_mcp": "JurisprudênciaIA"
+            }
+            doc_body = f"# {prec.processo}\n\n## Ementa\n{prec.ementa}\n\n## Fundamentação\n{prec.trecho_fundamentacao}"
+            self.rag_store.salvar_documento(doc_id, doc_meta, doc_body)
 
         if teses_raw:
             self.rag_store.salvar_documento("mcp-teses-vinculantes", {"id": "mcp-teses-vinculantes", "tipo": "teses_mcp"}, teses_raw)
@@ -112,8 +135,8 @@ class LiteratureReviewAgent:
                 prompt=prompt,
                 system_prompt=system_prompt,
                 temperature=0.25,
-                max_tokens=2500,
-                fallback_model="google/gemini-4-argon"
+                max_tokens=1800,
+                fallback_model="openai/gpt-4o-mini"
             )
             state.marco_teorico = texto_rsl
         except Exception:

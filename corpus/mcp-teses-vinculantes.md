@@ -6,84 +6,92 @@ tipo: teses_mcp
 # Resultado JurisprudenciaIA
 
 Consulta: Busque precedentes vinculantes ou qualificados sobre: Efetividade da Proteção à Mulher em Situação de Violência e as Alterações na Lei Maria da Penha (2025-2026). Priorize Sumula Vinculante, controle concentrado, repercussao geral, recursos repetitivos, IRDR e IAC antes de acordaos comuns. Identifique categoria, tema, sumula ou incidente, numero, tese, situacao atual e alcance vinculante ou persuasivo; nao atribua qualificacao sem identificador verificavel. Responda diretamente, sem pedir esclarecimentos. Estruture a resposta com tese principal, precedentes citados por referencia, tribunal, tipo/numero, data de julgamento, ementa, inteiro teor ou transcricao integral disponibilizada pela fonte, link quando disponivel e pontos de cautela. Nao substitua o inteiro teor por resumo, recorte ou excerto; quando a fonte nao disponibilizar inteiro teor, informe isso explicitamente.
-Executado em: 2026-11-16T02:13:03.446Z
+Executado em: 2026-11-16T03:00:41.357Z
 Fonte: https://www.jurisprudenciaia.com.br/
 
 ## Resposta do JurisprudenciaIA
 
-A jurisprudência dos Tribunais Superiores tem consolidado e expandido as balizas de proteção à integridade física e psíquica no âmbito das relações domésticas e familiares, assegurando a máxima efetividade dos mecanismos de tutela previstos na Lei Maria da Penha.
+A jurisprudência dos Tribunais Superiores consolidou importantes balizas sobre a efetividade da proteção à mulher em situação de violência doméstica e familiar, definindo o alcance da Lei Maria da Penha (Lei nº 11.340/2006) por meio de precedentes vinculantes e qualificados.
 
-### Tese Principal
-A aplicação das medidas protetivas e dos mecanismos de tutela da Lei Maria da Penha fundamenta-se na vulnerabilidade e subalternidade no contexto doméstico, familiar ou de afeto, estendendo-se a proteção de gênero de forma ampla e prevalente sobre critérios etários ou de coabitação, inclusive com recentes delimitações de alcance subjetivo pelo Supremo Tribunal Federal.
+Abaixo, são apresentados os principais entendimentos fixados pelo Supremo Tribunal Federal (STF) e pelo Superior Tribunal de Justiça (STJ).
 
 ---
 
-### Precedentes Qualificados e Vinculantes
+### 1. Constitucionalidade e Afastamento dos Institutos Despenalizadores (STF)
 
-#### 1. Supremo Tribunal Federal (STF)
+O Supremo Tribunal Federal, em sede de controle concentrado de constitucionalidade (ADC 19) e em julgamento de Habeas Corpus sob o rito de plenário, assentou a plena constitucionalidade do tratamento diferenciado de gênero e o afastamento dos institutos da Lei nº 9.099/1995 no âmbito da violência doméstica.
 
-No âmbito do controle de constitucionalidade e da garantia de direitos fundamentais, o STF definiu balizas essenciais sobre a constitucionalidade da norma e, recentemente, sobre a extensão subjetiva de sua proteção.
+A Suprema Corte declarou a constitucionalidade dos mecanismos protetivos da Lei Maria da Penha:
 
-Sobre a constitucionalidade dos mecanismos de diferenciação protetiva de gênero e o afastamento dos institutos despenalizadores:
+[J1 - STF]
+
+O STF também consolidou o entendimento de que o afastamento da Lei nº 9.099/1995 se aplica de forma ampla a todas as infrações penais cometidas no contexto doméstico contra a mulher, inclusive contravenções penais:
 
 [J2 - STF]
 
-Em recente julgamento em sede de controle de omissão constitucional, o Plenário do STF estendeu o alcance das medidas protetivas no âmbito das relações familiares:
+Adicionalmente, a Primeira Turma do STF delimitou o rito processual quanto à necessidade de manifestação da vítima para a retratação da representação:
 
-[J1 - STF](https://portal.stf.jus.br/jurisprudencia/obterInteiroTeor.asp?idDocumento=785360035)
-
-*Nota: O inteiro teor e os links oficiais para os acórdãos do STF devem ser consultados diretamente nos portais de jurisprudência da respectiva Corte, uma vez que as bases de dados integradas disponibilizam as ementas completas e os dados de autuação estruturados nos blocos de referência.*
+[J3 - STF]
 
 ---
 
-#### 2. Superior Tribunal de Justiça (STJ)
+### 2. Critérios de Aplicação e Proteção Qualificada (STJ)
 
-O STJ possui entendimentos sumulados e teses fixadas em recursos repetitivos que pacificam a aplicação prática da Lei Maria da Penha no cotidiano forense.
+O Superior Tribunal de Justiça editou súmula e fixou teses em recursos repetitivos para delimitar os critérios de incidência da proteção legal, afastando exigências que pudessem restringir a eficácia da norma protetiva.
 
-A respeito da desnecessidade de convivência sob o mesmo teto para a incidência do microssistema protetivo:
+A Terceira Seção do STJ pacificou que a coabitação não é requisito essencial para a incidência da Lei Maria da Penha:
 
 [J4 - STJ](https://scon.stj.jus.br/SCON/SearchBRS?b=SUMU&livre=@NUM=600)
 
-Em sede de recurso especial repetitivo (precedente qualificado), a Corte fixou tese sobre a prevalência do critério de gênero e a especialidade da norma protetiva:
+Em tese fixada sob a sistemática dos Recursos Repetitivos (Tema 1186), o STJ definiu a prevalência do critério de gênero sobre o etário para fins de aplicação da proteção legal:
 
 [J5 - STJ](https://scon.stj.jus.br/SCON/jurisprudencia/toc.jsp?O=JT&b=ACOR&livre=202202269500.REG. E 13/02/2025.FONT.)
 
-Adicionalmente, a jurisprudência recente das turmas criminais do STJ delimita a incidência da lei em relações de trabalho doméstico quando evidenciada a vulnerabilidade:
+Por fim, o STJ afetou controvérsia sob o rito dos recursos repetitivos (Tema 1197) para analisar a aplicação de agravantes penais em conjunto com as disposições da Lei Maria da Penha, conforme ilustrado no seguinte julgado:
 
-[J6 - STJ](https://scon.stj.jus.br/SCON/GetInteiroTeorDoAcordao?num_registro=202500197357&dt_publicacao=20/08/2025)
+[J6 - STJ](https://scon.stj.jus.br/SCON/GetInteiroTeorDoAcordao?num_registro=202302355799&dt_publicacao=11/10/2023)
 
 ---
 
-### Pontos de Cautela e Aplicação Prática
+### Pontos de Cautela e Eficácia das Decisões
 
-1. **Aferição da Vulnerabilidade no Caso Concreto:** Embora a condição de gênero feminino atraia a incidência da lei [J5 - STJ](https://scon.stj.jus.br/SCON/jurisprudencia/toc.jsp?O=JT&b=ACOR&livre=202202269500.REG. E 13/02/2025.FONT.), a aplicação em relações de trabalho doméstico exige a demonstração inequívoca de vulnerabilidade decorrente do contexto doméstico ou familiar [J6 - STJ](https://scon.stj.jus.br/SCON/GetInteiroTeorDoAcordao?num_registro=202500197357&dt_publicacao=20/08/2025).
-2. **Inaplicabilidade da Lei nº 9.099/95:** Crimes praticados com violência doméstica e familiar contra a mulher não admitem a aplicação de institutos como transação penal, suspensão condicional do processo ou composição civil dos danos [J2 - STF].
-3. **Prescindibilidade de Coabitação:** A proteção legal estende-se a ex-companheiros, namorados ou familiares que não residam sob o mesmo teto, bastando o nexo de causalidade entre a relação de afeto/familiar e a violência praticada [J4 - STJ](https://scon.stj.jus.br/SCON/SearchBRS?b=SUMU&livre=@NUM=600).
-4. **Novos Parâmetros de Extensão Subjetiva:** Deve-se observar a recente orientação do STF que estende as garantias da Lei Maria da Penha a casais homoafetivos masculinos e a pessoas travestis ou transexuais no ambiente intrafamiliar [J1 - STF](https://portal.stf.jus.br/jurisprudencia/obterInteiroTeor.asp?idDocumento=785360035).
+* **Efeito Vinculante e Erga Omnes:** A decisão proferida pelo STF na ADC 19 [J1 - STF] possui eficácia contra todos (*erga omnes*) e efeito vinculante em relação aos demais órgãos do Poder Judiciário e à Administração Pública direta e indireta.
+* **Sistemática de Repetitivos:** As teses firmadas pelo STJ em sede de Recursos Repetitivos (como o Tema 1186 [J5 - STJ](https://scon.stj.jus.br/SCON/jurisprudencia/toc.jsp?O=JT&b=ACOR&livre=202202269500.REG. E 13/02/2025.FONT.)) devem ser obrigatoriamente observadas pelas instâncias ordinárias, nos termos do art. 927 do Código de Processo Civil.
+* **Inaplicabilidade da Lei nº 9.099/95:** A vedação à aplicação dos institutos despenalizadores (como transação penal e suspensão condicional do processo) é absoluta para crimes e contravenções penais praticados contra a mulher no ambiente doméstico e familiar [J2 - STF].
 
 ## Tese principal identificada
 
-A jurisprudência dos Tribunais Superiores tem consolidado e expandido as balizas de proteção à integridade física e psíquica no âmbito das relações domésticas e familiares, assegurando a máxima efetividade dos mecanismos de tutela previstos na Lei Maria da Penha.
+A jurisprudência dos Tribunais Superiores consolidou importantes balizas sobre a efetividade da proteção à mulher em situação de violência doméstica e familiar, definindo o alcance da Lei Maria da Penha (Lei nº 11.340/2006) por meio de precedentes vinculantes e qualificados.
 
 ## Precedentes citados
 
 ### Precedente J1
-- Tribunal: STF
-- Tipo/numero: MANDADO DE INJUNÇÃO 7452
-- Data de julgamento: 2025-02-24
-- Link: https://portal.stf.jus.br/jurisprudencia/obterInteiroTeor.asp?idDocumento=785360035
-- Ementa: Ementa: CONSTITUCIONAL. MANDADO DE INJUNÇÃO. LEI MARIA DA PENHA. VIOLÊNCIA DOMÉSTICA OU INTRAFAMILIAR. RELAÇÕES FAMILIARES HOMOAFETIVAS. HOMENS GBTI+. TRAVESTIS. TRANSEXUAIS. DIREITO FUNDAMENTAL À SEGURANÇA. PRINCÍPIO DA IGUALDADE. CONFIGURADA A OMISSÃO LEGISLATIVA DO CONGRESSO NACIONAL. ORDEM CONCEDIDA. I. CASO EM EXAME 1. Mandado de Injunção Coletivo impetrado em face de omissão legislativa atribuída ao Congresso Nacional, relativamente à edição de legislação específica contra a violência doméstica ou intrafamiliar que proteja homens GBTI+, bem como legislação preventiva e supressiva do controle coercitivo contra homens GBTI+ e mulheres. II. QUESTÃO EM DISCUSSÃO 2. Verificar a existência de omissão, caracterizadora do estado de mora constitucional, na legislação brasileira contra violência doméstica ou intrafamiliar, no âmbito de proteção das pessoas em relações familiares homoafetivas, quando as vítimas não sejam mulheres. III. RAZÕES DE DECIDIR 3. O Mandado de Injunção é uma ação constitucional autoaplicável, de caráter civil e de procedimento especial, que visa suprir uma omissão do Poder Público, no intuito de viabilizar o exercício de um direito, uma liberdade ou uma prerrogativa prevista na Constituição Federal, visando afastar o que ARICÊ MOACYR AMARAL SANTOS aponta como a inércia da norma constitucional, decorrente da omissão normativa (Mandado de injunção. São Paulo: Revista dos Tribunais, 1989, p. 31), ou no dizer de CANOTILHO, buscando destruir o rochedo de bronze da incensurabilidade do silêncio legislativo (As garantias do cidadão na justiça. Coord. Sálvio de Figueiredo Teixeira. São Paulo: Saraiva, 1993, p. 367). 4. A comparação entre o consenso nacional e internacional sobre as medidas necessárias para a efetiva proteção contra violência doméstica nas relações homoafetivas da população GBTI+ e a legislação nacional demonstra a existência de significativa omissão constitucional do Poder Legislativo em efetivar a devida proteção legal aos direitos e liberdades fundamentais da comunidade GBTI+. 5. Considerando que a Lei Maria da Penha foi editada para proteger a mulher contra violência doméstica, a partir da compreensão de subordinação cultural da mulher na sociedade, é possível estender a incidência da norma aos casais homoafetivos do sexo masculino, se estiverem presentes fatores contextuais que insiram o homem vítima da violência na posição de subalternidade dentro da relação. 6. A não incidência da Lei Maria da Penha aos casais homoafetivos masculinos e às mulheres travestis ou transexuais nas relações intrafamiliares pode gerar uma lacuna na proteção e punição contra a violência doméstica, já que esses acontecimentos permeiam a sociedade de forma atroz. Há, portanto, uma responsabilidade do Estado em garantir a proteção, no campo doméstico, a todos os tipos de entidades familiares. 7. Configurada a omissão legislativa, ante a ausência de norma que estenda a proteção da Lei Maria da Penha aos homens GBTI+, vítimas de violência doméstica, circunstância que tem inviabilizado a fruição do direito fundamental à segurança por este grupo social, considerada especialmente a proibição de proteção deficiente oriunda do princípio da proporcionalidade. IV. DISPOSITIVO 8. ORDEM CONCEDIDA para reconhecer a mora legislativa e determinar a incidência da norma protetiva da Lei Maria da Penha aos casais homoafetivos do sexo masculino e às mulheres travestis ou transexuais nas relações intrafamiliares. _________ Dispositivos relevantes citados: Constituição Federal, art. 1º, III, art. 3º, art. 5º, caput, I, LXXI, XLI, art. 226, § 8º; Lei 11.340/2006.
-(MI 7452, Relator(a): ALEXANDRE DE MORAES, Tribunal Pleno, julgado em 24-02-2025, PROCESSO ELETRÔNICO DJe-s/n  DIVULG 25-03-2025  PUBLIC 26-03-2025)
-- Inteiro teor: nao informado pela fonte consultada
-- Metadados ausentes: inteiro teor
-
-### Precedente J2
 - Tribunal: STF
 - Tipo/numero: AÇÃO DECLARATÓRIA DE CONSTITUCIONALIDADE 19
 - Data de julgamento: 2012-02-09
 - Link: nao informado
 - Ementa: VIOLÊNCIA DOMÉSTICA – LEI Nº 11.340/06 – GÊNEROS MASCULINO E FEMININO – TRATAMENTO DIFERENCIADO. O artigo 1º da Lei nº 11.340/06 surge, sob o ângulo do tratamento diferenciado entre os gêneros – mulher e homem –, harmônica com a Constituição Federal, no que necessária a proteção ante as peculiaridades física e moral da mulher e a cultura brasileira. COMPETÊNCIA – VIOLÊNCIA DOMÉSTICA – LEI Nº 11.340/06 – JUIZADOS DE VIOLÊNCIA DOMÉSTICA E FAMILIAR CONTRA A MULHER. O artigo 33 da Lei nº 11.340/06, no que revela a conveniência de criação dos juizados de violência doméstica e familiar contra a mulher, não implica usurpação da competência normativa dos estados quanto à própria organização judiciária. VIOLÊNCIA DOMÉSTICA E FAMILIAR CONTRA A MULHER – REGÊNCIA – LEI Nº 9.099/95 – AFASTAMENTO. O artigo 41 da Lei nº 11.340/06, a afastar, nos crimes de violência doméstica contra a mulher, a Lei nº 9.099/95, mostra-se em consonância com o disposto no § 8º do artigo 226 da Carta da República, a prever a obrigatoriedade de o Estado adotar mecanismos que coíbam a violência no âmbito das relações familiares.
 (ADC 19, Relator(a): MARCO AURÉLIO, Tribunal Pleno, julgado em 09-02-2012, ACÓRDÃO ELETRÔNICO DJe-080  DIVULG 28-04-2014  PUBLIC 29-04-2014 RTJ VOL-00229-01 PP-00011)
+- Inteiro teor: nao informado pela fonte consultada
+- Metadados ausentes: link, inteiro teor
+
+### Precedente J2
+- Tribunal: STF
+- Tipo/numero: HABEAS CORPUS 106212
+- Data de julgamento: 2011-03-24
+- Link: nao informado
+- Ementa: VIOLÊNCIA DOMÉSTICA – ARTIGO 41 DA LEI Nº 11.340/06 – ALCANCE. O preceito do artigo 41 da Lei nº 11.340/06 alcança toda e qualquer prática delituosa contra a mulher, até mesmo quando consubstancia contravenção penal, como é a relativa a vias de fato. VIOLÊNCIA DOMÉSTICA – ARTIGO 41 DA LEI Nº 11.340/06 – AFASTAMENTO DA LEI Nº 9.099/95 – CONSTITUCIONALIDADE. Ante a opção político-normativa prevista no artigo 98, inciso I, e a proteção versada no artigo 226, § 8º, ambos da Constituição Federal, surge harmônico com esta última o afastamento peremptório da Lei nº 9.099/95 – mediante o artigo 41 da Lei nº 11.340/06 – no processo-crime a revelar violência contra a mulher.
+(HC 106212, Relator(a): MARCO AURÉLIO, Tribunal Pleno, julgado em 24-03-2011, PROCESSO ELETRÔNICO DJe-112 DIVULG 10-06-2011 PUBLIC 13-06-2011 RTJ VOL-00219-01 PP-00521 RT v. 100, n. 910, 2011, p. 307-327)
+- Inteiro teor: nao informado pela fonte consultada
+- Metadados ausentes: link, inteiro teor
+
+### Precedente J3
+- Tribunal: STF
+- Tipo/numero: HABEAS CORPUS 98880
+- Data de julgamento: 2011-10-04
+- Link: nao informado
+- Ementa: CRIME – VIOLÊNCIA DOMÉSTICA – LEI Nº 11.340/06 – INADEQUAÇÃO DA LEI Nº 9.099/95. O Pleno, no julgamento do Habeas Corpus nº 106.212/MS, assentou a harmonia do disposto no artigo 41 da Lei nº 11.340/06 – afastando a aplicação da Lei nº 9.099/95 – com a Constituição Federal, uma vez verificada a prática criminosa doméstica. AÇÃO PÚBLICA CONDICIONADA – LEI Nº 11.340/06 – REPRESENTAÇÃO – RECUO. A audiência prevista no artigo 16 da Lei nº 11.340/06, específica, pressupõe a iniciativa da vítima visando a afastar a representação.
+(HC 98880, Relator(a): MARCO AURÉLIO, Primeira Turma, julgado em 04-10-2011, DJe-201 DIVULG 18-10-2011 PUBLIC 19-10-2011 EMENT VOL-02610-01 PP-00057 RT v. 101, n. 915, 2012, p. 421-426)
 - Inteiro teor: nao informado pela fonte consultada
 - Metadados ausentes: link, inteiro teor
 
@@ -107,10 +115,10 @@ A jurisprudência dos Tribunais Superiores tem consolidado e expandido as baliza
 
 ### Precedente J6
 - Tribunal: STJ
-- Tipo/numero: Agravo Regimental no Agravo em Recurso Especial 2.839.366/ES
-- Data de julgamento: 2025-08-05
-- Link: https://scon.stj.jus.br/SCON/GetInteiroTeorDoAcordao?num_registro=202500197357&dt_publicacao=20/08/2025
-- Ementa: AGRAVO REGIMENTAL NO AGRAVO EM RECURSO ESPECIAL. PROCESSO PENAL. IMPORTUNAÇÃO SEXUAL. VARA ESPECIALIZADA EM VIOLÊNCIA DOMÉSTICA. EMPREGADA DOMÉSTICA. VULNERABILIDADE DE GÊNERO. INCIDÊNCIA DA LEI MARIA DA PENHA. SÚMULA 83/STJ. PRECEDENTES. AGRAVO REGIMENTAL DESPROVIDO. 1. O Tribunal de origem, mediante análise das circunstâncias fáticas, reconheceu a vulnerabilidade da vítima empregada doméstica, determinando a competência da Vara Especializada em Violência Doméstica. 2. A jurisprudência do Superior Tribunal de Justiça é firme no sentido de reconhecer a aplicabilidade da Lei Maria da Penha em casos envolvendo empregadas domésticas quando verificada a vulnerabilidade da vítima no contexto doméstico. 3. Agravo regimental desprovido. (AgRg no AREsp n. 2.839.366/ES, relator Ministro Antonio Saldanha Palheiro, Sexta Turma, julgado em 5/8/2025, DJEN de 20/8/2025.)
+- Tipo/numero: Agravo Regimental no Agravo em Recurso Especial 2.406.002/MS
+- Data de julgamento: 2023-10-03
+- Link: https://scon.stj.jus.br/SCON/GetInteiroTeorDoAcordao?num_registro=202302355799&dt_publicacao=11/10/2023
+- Ementa: AGRAVO REGIMENTAL NO AGRAVO EM RECURSO ESPECIAL. LESÃO CORPORAL NO CONTEXTO DE VIOLÊNCIA DOMÉSTICA E DISPARO DE ARMA DE FOGO. TESE ABSOLUTÓRIA. SÚMULA N. 7, STJ. REEXAME DE FATOS E PROVAS. PEDIDO DE AFASTAMENTO DA AGRAVANTE DO ART. 61, II, 'F', CP. INEXISTÊNCIA DE BIS IN IDEM. CONSONÂNCIA COM PRECEDENTES DO SUPERIOR TRIBUNAL DE JUSTIÇA. I - A pretensão absolutória esbarra no óbice da Sumula n. 7, STJ, não cabendo ao Superior Tribunal de Justiça reexaminar o conjunto fático-probatório dos autos, por ser inviável nesta via estreita. II - O Superior Tribunal de Justiça afetou à sistemática dos recursos repetitivos - Tema Repetitivo 1197 - , a questão da configuração, ou não, do bis in idem no caso de aplicação da agravante do art. 61, II, f, do Código Penal, em conjunto com as disposições da Lei Maria da Penha (Lei 11.340/2006). A hipótese dos autos, todavia, trata de controvérsia distinta, qual seja, a possibilidade de aplicação da agravante do art. 61, II, f, do Código Penal, em contexto estranho aos dispositivos da Lei Maria da Penha - disparo de arma de fogo, com previsão no art. 15 da Lei 10.826/2003 - portanto, não há falar em bis in idem, de acordo com a orientação extraída de precedentes do Superior Tribunal de Justiça. Agravo regimental desprovido. (AgRg no AREsp n. 2.406.002/MS, relator Ministro Messod Azulay Neto, Quinta Turma, julgado em 3/10/2023, DJe de 11/10/2023.)
 - Inteiro teor: nao informado pela fonte consultada
 - Metadados ausentes: inteiro teor
 

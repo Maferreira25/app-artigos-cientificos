@@ -225,25 +225,25 @@ class SectionalWriterAgent:
 
         doutrina_web_str = self._formatar_doutrina_pesquisada(state.artigos_pesquisados_web)
 
-        # 2. Redação da Seção 1 (Introdução e Problematização)
+        # 2. Redação da Seção 1 (Introdução e Problematização Epistemológica)
         prompt_cap1 = (
-            f"Como autor acadêmico de nível de doutorado em direito, redija a SEÇÃO 1 (Introdução e Problematização Epistemológica) "
-            f"para {formato_instrucao} sobre:\n'{tema}'\n\n"
-            f"Problema: {state.problema_pesquisa}\n"
-            f"Hipótese: {state.hipotese}\n\n"
-            f"DIRETRIZES OBRIGATÓRIAS:\n"
-            f"- Redija EXCLUSIVAMENTE em prosa dissertativa contínua e elegante, em múltiplos parágrafos densos e profundos.\n"
-            f"- Aborde a contextualização, problematização epistemológica, objetivos geral e específicos, metodologia e roteiro capitular.\n"
-            f"- PROIBIDO usar listas, tópicos ou marcadores."
+            f"Como jurista titular e pesquisador de pós-graduação Stricto Sensu (Doutorado em Direito), "
+            f"redija a SEÇÃO 1 (Introdução e Problematização Epistemológica) para {formato_instrucao} de estrato Qualis A1 sobre:\n'{tema}'\n\n"
+            f"Problema Epistemológico: {state.problema_pesquisa}\n"
+            f"Hipótese Teórica: {state.hipotese}\n\n"
+            f"DIRETRIZES OBRIGATÓRIAS (ESTRITO RIGOR CIENTÍFICO):\n"
+            f"- Redija EXCLUSIVAMENTE em prosa dissertativa contínua, densa, elegante e profunda, em 5 a 7 parágrafos extensos.\n"
+            f"- Estruture o texto abordando: a) contextualização histórica e sociopolítica da tutela jurisdicional; b) a tensão entre garantismo processual e a eficácia das medidas protetivas autônomas; c) o problema epistemológico formalizado; d) a hipótese teórica e sua fundamentação; e) objetivos geral e específicos; f) metodologia dedutiva, revisão sistemática (protocolo PRISMA) e jurimetria descritiva; g) roteiro capitular analítico.\n"
+            f"- PROIBIDO expressamente usar listas com marcadores, bullets (- ou *), numerações esquemáticas ou quebras telegráficas."
         )
         try:
             texto_cap1 = await self.llm_client.generate(
                 model=config.model_writer,
                 prompt=prompt_cap1,
-                system_prompt="Você é um jurista sênior e doutor em direito. Redija em prosa contínua e densa.",
+                system_prompt="Você é um jurista sênior, professor titular e doutor em direito. Redija com rigor dialético, sofisticação vocabular e exclusivamente em prosa contínua e densa.",
                 temperature=0.3,
-                max_tokens=2000,
-                fallback_model="google/gemini-4-argon"
+                max_tokens=1800,
+                fallback_model="openai/gpt-4o-mini"
             )
             texto_cap1 = sanitizar_texto_academico(texto_cap1)
             if len(texto_cap1.strip()) < 400:
@@ -253,25 +253,26 @@ class SectionalWriterAgent:
 
         # 3. Redação da Seção 2 (Desenvolvimento/Marco Teórico e Doutrina Web)
         prompt_cap2 = (
-            f"Como autor acadêmico de nível de doutorado em direito, redija a SEÇÃO 2 (Marco Teórico e Confrontação Dialética) "
-            f"para {formato_instrucao} sobre:\n'{tema}'\n\n"
+            f"Como jurista titular e pesquisador de pós-graduação Stricto Sensu (Doutorado em Direito), "
+            f"redija a SEÇÃO 2 (Marco Teórico e Confrontação Dialética) para {formato_instrucao} de estrato Qualis A1 sobre:\n'{tema}'\n\n"
             f"Problema: {state.problema_pesquisa}\n"
             f"Hipótese: {state.hipotese}\n"
-            f"Doutrina e Artigos Científicos Pesquisados na Web:\n{doutrina_web_str}\n\n"
-            f"Substrato jurisprudencial para grounding (extraia apenas a tese e a ratio decidendi):\n{ementa_oficial[:1500]}\n\n"
-            f"DIRETRIZES OBRIGATÓRIAS:\n"
-            f"- Redija EXCLUSIVAMENTE em prosa dissertativa contínua, em parágrafos longos, coesos e bem estruturados.\n"
-            f"- Integre a doutrina especializada clássica e contemporânea e o precedente do Tema 1249/STJ.\n"
-            f"- PROIBIDO usar listas, tópicos ou transcrever ementas brutas."
+            f"Doutrina e Pesquisas Científicas Contemporâneas:\n{doutrina_web_str}\n\n"
+            f"Substrato jurisprudencial para grounding dogmático:\n{ementa_oficial[:1500]}\n\n"
+            f"DIRETRIZES OBRIGATÓRIAS (ESTRITO RIGOR CIENTÍFICO):\n"
+            f"- Redija EXCLUSIVAMENTE em prosa dissertativa contínua, sofisticada e dialética, em 6 a 8 parágrafos densos e substanciais.\n"
+            f"- Estabeleça o diálogo profundo entre a teoria dos direitos fundamentais, os tratados internacionais (Convenção de Belém do Pará, CEDAW, Caso Márcia Barbosa de Souza na Corte IDH), as inovações da Lei nº 14.550/2023 e as teses de autoras de referência (Maria Berenice Dias, Alice Bianchini, Silvia Pimentel).\n"
+            f"- Analise a tese vinculante do Tema 1249/STJ (REsp 2.070.857/MG) sobre a autonomia inibitória das medidas protetivas, a inaplicabilidade de prazo decadencial e a prevalência da cláusula rebus sic stantibus.\n"
+            f"- PROIBIDO transcrever ementas brutas, tabelas ou itens em lista."
         )
         try:
             texto_cap2 = await self.llm_client.generate(
                 model=config.model_writer,
                 prompt=prompt_cap2,
-                system_prompt="Você é um jurista sênior e doutor em direito. Redija em prosa contínua e densa.",
+                system_prompt="Você é um jurista sênior, professor titular e doutor em direito. Redija com rigor dialético, sofisticação vocabular e exclusivamente em prosa contínua e densa.",
                 temperature=0.3,
-                max_tokens=2500,
-                fallback_model="google/gemini-4-argon"
+                max_tokens=1800,
+                fallback_model="openai/gpt-4o-mini"
             )
             texto_cap2 = sanitizar_texto_academico(texto_cap2)
             if len(texto_cap2.strip()) < 500:
@@ -281,22 +282,22 @@ class SectionalWriterAgent:
 
         # 4. Redação da Seção 3 (Análise Empírico-Jurisprudencial e Metodológica)
         prompt_cap3 = (
-            f"Como autor acadêmico de nível de doutorado em direito, redija a SEÇÃO 3 (Análise Empírico-Jurisprudencial e Repercussão Decisória) "
-            f"para {formato_instrucao} sobre:\n'{tema}'\n\n"
-            f"Metodologia: {state.desenho_metodologico[:1500]}\n\n"
-            f"DIRETRIZES OBRIGATÓRIAS:\n"
-            f"- Redija EXCLUSIVAMENTE em prosa dissertativa contínua e aprofundada.\n"
-            f"- Analise a jurisprudência das turmas especializadas, a afetação em repetitivos e a concretização da tutela jurídica.\n"
-            f"- PROIBIDO usar listas ou tabelas brutas."
+            f"Como jurista titular e pesquisador de pós-graduação Stricto Sensu (Doutorado em Direito), "
+            f"redija a SEÇÃO 3 (Análise Empírico-Jurisprudencial e Repercussão Decisória) para {formato_instrucao} de estrato Qualis A1 sobre:\n'{tema}'\n\n"
+            f"Metodologia e Desenho Empírico: {state.desenho_metodologico[:1500]}\n\n"
+            f"DIRETRIZES OBRIGATÓRIAS (ESTRITO RIGOR CIENTÍFICO):\n"
+            f"- Redija EXCLUSIVAMENTE em prosa dissertativa contínua e aprofundada, em 5 a 7 parágrafos analíticos.\n"
+            f"- Analise a jurimetria das turmas especializadas dos tribunais de vértice (5ª e 6ª Turmas do STJ e Pleno do STF), examinando a redução da dispersão decisória pós-Tema 1249, a eficácia do art. 24-A (crime de descumprimento de medidas protetivas) e a competência material protetiva.\n"
+            f"- PROIBIDO utilizar tabelas em texto puro, listas de itens ou jargões operacionais de banco de dados."
         )
         try:
             texto_cap3 = await self.llm_client.generate(
                 model=config.model_writer,
                 prompt=prompt_cap3,
-                system_prompt="Você é um jurista sênior e doutor em direito. Redija em prosa contínua e densa.",
+                system_prompt="Você é um jurista sênior, professor titular e doutor em direito. Redija com rigor dialético, sofisticação vocabular e exclusivamente em prosa contínua e densa.",
                 temperature=0.3,
-                max_tokens=2000,
-                fallback_model="google/gemini-4-argon"
+                max_tokens=1800,
+                fallback_model="openai/gpt-4o-mini"
             )
             texto_cap3 = sanitizar_texto_academico(texto_cap3)
             if len(texto_cap3.strip()) < 400:
@@ -306,21 +307,22 @@ class SectionalWriterAgent:
 
         # 5. Redação da Seção 4 (Considerações Finais)
         prompt_cap4 = (
-            f"Como autor acadêmico de nível de doutorado em direito, redija a SEÇÃO 4 (Considerações Finais) "
-            f"para {formato_instrucao} sobre:\n'{tema}'\n\n"
+            f"Como jurista titular e pesquisador de pós-graduação Stricto Sensu (Doutorado em Direito), "
+            f"redija a SEÇÃO 4 (Considerações Finais e Proposições Epistemológicas) para {formato_instrucao} sobre:\n'{tema}'\n\n"
             f"Problema: {state.problema_pesquisa}\nHipótese: {state.hipotese}\n\n"
-            f"DIRETRIZES OBRIGATÓRIAS:\n"
-            f"- Redija EXCLUSIVAMENTE em prosa dissertativa contínua, profunda e conclusiva.\n"
-            f"- Confirme a hipótese e apresente propostas hermenêuticas concretas."
+            f"DIRETRIZES OBRIGATÓRIAS (ESTRITO RIGOR CIENTÍFICO):\n"
+            f"- Redija EXCLUSIVAMENTE em prosa dissertativa contínua, densa e conclusiva, em 4 a 6 parágrafos substanciais.\n"
+            f"- Sintetize a confirmação da hipótese de pesquisa, o impacto da estabilização decisória e proponha balizas hermenêuticas e institucionais concretas para o aprimoramento da proteção jurisdicional.\n"
+            f"- PROIBIDO usar listas, tópicos ou marcadores."
         )
         try:
             texto_cap4 = await self.llm_client.generate(
                 model=config.model_writer,
                 prompt=prompt_cap4,
-                system_prompt="Você é um jurista sênior e doutor em direito. Redija em prosa contínua e densa.",
+                system_prompt="Você é um jurista sênior, professor titular e doutor em direito. Redija com rigor dialético, sofisticação vocabular e exclusivamente em prosa contínua e densa.",
                 temperature=0.3,
-                max_tokens=1500,
-                fallback_model="google/gemini-4-argon"
+                max_tokens=1800,
+                fallback_model="openai/gpt-4o-mini"
             )
             texto_cap4 = sanitizar_texto_academico(texto_cap4)
             if len(texto_cap4.strip()) < 300:

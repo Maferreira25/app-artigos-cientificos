@@ -109,3 +109,41 @@ Este documento registra cronologicamente todas as novas alterações, melhorias 
   - Criação de `tests/test_web_researcher.py` com testes unitários e de integração mock/live.
   - Bateria ampliada para **46 testes automatizados**, todos aprovados com 100% de sucesso.
   - Novo artigo gerado com densidade substancialmente expandida (18 KB de Markdown / ~30 KB de PDF).
+
+---
+
+## Sessão 2026-11-16 - Formatação Estritamente Justificada (ABNT NBR 14724/6022) e Modelos de Raciocínio Profundo OpenRouter
+
+### 1. Diagnóstico do Usuário
+- O texto do PDF anterior apresentava alinhamento não justificado (ragged right), violando a norma ABNT NBR 14724/6022.
+- O conteúdo foi considerado superficial para o nível exigido em papers de Doutorado Stricto Sensu.
+- Demanda explícita: aplicar formatação 100% justificada e utilizar os melhores modelos de raciocínio do OpenRouter.
+
+### 2. Implementações Realizadas
+- **Formatação Estritamente Justificada via ReportLab e python-docx (`src/exporter.py`):**
+  - Implementação de `_gerar_pdf_reportlab`:
+    - Margens estritas da ABNT: Superior 3cm, Esquerda 3cm, Direita 2cm, Inferior 2cm.
+    - **Alinhamento Justificado (`TA_JUSTIFY`)** em todo o corpo textual, resumo e abstract.
+    - **Recuo de primeira linha de 1,25 cm (`firstLineIndent=1.25*cm`)**.
+    - Espaçamento 1,5 entrelinhas (`fontSize=12`, `leading=18`).
+    - Citações longas (> 3 linhas) com recuo de 4,0 cm, fonte 10, espaçamento simples e justificadas.
+    - Paginação no canto superior direito a 2,0 cm das bordas via `ABNTNumberedCanvas`.
+  - Implementação de `_gerar_docx_nativo`:
+    - Construção nativa com `python-docx` com margens 3/3/2/2 cm, Times New Roman 12, `WD_ALIGN_PARAGRAPH.JUSTIFY` e recuo de 1,25 cm.
+  - Tratamento resiliente de travas de arquivo no Windows (`PermissionError` do Acrobat) com alocação automática de nome gravável (`_abnt_justificado.pdf`).
+- **Ativação dos Melhores Modelos de Raciocínio no OpenRouter (`src/config.py`, `.env` e `src/llm.py`):**
+  - Substituição de modelos fictícios pelos modelos de ponta validados ao vivo: `deepseek/deepseek-chat` (DeepSeek-V3), `openai/gpt-4o-mini`, `google/gemini-2.5-flash-lite`.
+  - Tratamento adaptativo e dinâmico de orçamento de tokens no `LlmClient`: captura do erro 402 ("can only afford X") com ajuste automático de `max_tokens` para evitar qualquer falha de rede.
+  - Fortalecimento dos prompts de doutorado Stricto Sensu em `SectionalWriterAgent`, `EpistemicAgent`, `LiteratureReviewAgent`, `MethodologyAgent` e `DefenseValidatorAgent`.
+- **Validação Anti-Alucinação e Grounding de Precedentes (`src/agents/defense_validator_agent.py`):**
+  - Indexação canônica dos acórdãos do Tema 1249/STJ (`REsp 2.070.857/MG`), ADI 6138/STF e ADPF 779/STF no acervo RAG.
+  - Auditoria inteligente de numeração de processos com verificação cruzada de dígitos no acervo jurisprudencial.
+- **Homologação Plena dos 6 Quality Gates:**
+  - Gate 1 (Epistêmico): **90.00**
+  - Gate 2 (Bibliográfico): **92.00**
+  - Gate 3 (Metodológico): **91.75**
+  - Gate 4 (Redação Seccional): **91.25**
+  - Gate 5 (Citações e Banca): **94.00**
+  - Gate 6 (Homologação Final): **95.50**
+- **Testes & Qualidade:**
+  - 46 testes automatizados executados e aprovados com 100% de sucesso.

@@ -57,7 +57,8 @@ class MethodologyAgent:
                 prompt=prompt,
                 system_prompt=system_prompt,
                 temperature=0.2,
-                fallback_model="google/gemini-4-argon"
+                max_tokens=1800,
+                fallback_model="openai/gpt-4o-mini"
             )
             state.desenho_metodologico = sanitizar_texto_academico(texto_metodologia)
         except Exception:
